@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "808668544224",
+    "project_id": "jopedia-56d04",
+    "storage_bucket": "jopedia-56d04.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:808668544224:android:b6f70407c181377d2f6485",
+        "android_client_info": {
+          "package_name": "com.example.jopedia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "808668544224-fpsqh46i191abd9ev4rpu7mmh42a4jv3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCA64np90p8cqsumPD9jG4mG79QR9AIeKU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "808668544224-fpsqh46i191abd9ev4rpu7mmh42a4jv3.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "808668544224-775pbf4cjp1lc83s3mdo72essisg24qe.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.jopedia"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
