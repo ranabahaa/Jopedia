@@ -6,12 +6,7 @@ import 'package:jopedia/modules/my_profile/ProfilePage.dart';
 import 'package:jopedia/modules/notification/NotificationScreen.dart';
 import 'package:jopedia/modules/requests/RequestScreen.dart';
 import 'package:jopedia/modules/saved_jobs/SavedJobScreen.dart';
-//import 'package:fluttertrain/modules/archived_tasks/archived_tasks_screen.dart';
-//import 'package:fluttertrain/modules/done_tasks/done_tasks_screen.dart';
-//import 'package:fluttertrain/modules/new_tasks/new_tasks_screen.dart';
-import 'package:jopedia/shared/components/component.dart';
 import 'package:jopedia/modules/wallet/WalletScreen.dart';
-//import 'package:sqflite/sqflite.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class home_layout extends StatefulWidget {
@@ -22,7 +17,6 @@ class home_layout extends StatefulWidget {
 class _home_layoutState extends State<home_layout> {
   int currentIndex = 0;
   List<Widget> screen = [
-    //home_layout(),
     HomeScreen(),
     NotificationScreen(),
     SavedJobScreen(),
@@ -30,7 +24,6 @@ class _home_layoutState extends State<home_layout> {
   ];
   //late Database database;
   var scaffoldKey = GlobalKey<ScaffoldState>();
-  IconData fabIcon = Icons.add;
   @override
   void initState() {
     super.initState();

@@ -12,6 +12,9 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   bool isAllTrue = true;
   bool isSaveTrue = false;
+  bool isDuration = true;
+  RangeValues _currentRangeValues = const RangeValues(100, 500);
+  String dropdownvalue = 'Cairo';
 
 
   @override
@@ -231,6 +234,12 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               IconButton(onPressed: ()
                               {
+                                showModalBottomSheet(
+                                  context: context,
+                                  enableDrag: false,
+                                  builder: (context)=> buildSheet(),
+                                );
+
 
                               },
                                 icon: SvgPicture.asset(
@@ -444,4 +453,191 @@ class _HomeScreenState extends State<HomeScreen> {
       ],
     );
   }
+  Widget buildSheet()=> Container(
+    height: 500.0,
+    decoration: BoxDecoration(
+      color: Colors.white,
+      borderRadius: BorderRadius.only(
+        topRight: Radius.circular(50.0),
+        topLeft: Radius.circular(50.0),
+      ),
+    ),
+
+    child: Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Column(
+        children:
+        [
+          Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5.0),
+              color: Color(0xffA2BBCD),
+            ),
+            child: Padding(
+
+              padding: const EdgeInsets.all(5.0),
+              child: Center(
+                child: Text(
+                  'Filter',
+                  style: TextStyle(
+                    fontFamily: 'Poppins',
+                    fontWeight: FontWeight.w500,
+                    fontSize: 20.0,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          SizedBox(height: 20.0,),
+          Text(
+            'Salary',
+            style: TextStyle(
+              fontFamily: 'Poppins',
+              fontWeight: FontWeight.w500,
+              fontSize: 18.0,
+              color: Color(0xff0F4C5C),
+            ),
+          ),
+          SizedBox(height: 20.0,),
+          RangeSlider(
+            activeColor: Color(0xff50B3CF),
+            values: _currentRangeValues,
+            max: 1000,
+            divisions: 20,
+            labels: RangeLabels(
+              _currentRangeValues.start.round().toString(),
+              _currentRangeValues.end.round().toString(),
+            ),
+            onChanged: (RangeValues values) {
+              setState(() {
+                _currentRangeValues = values;
+              });
+            },
+          ),
+          SizedBox(height: 15.0,),
+          Text(
+            'Duration',
+            style: TextStyle(
+              fontFamily: 'Poppins',
+              fontWeight: FontWeight.w500,
+              fontSize: 18.0,
+              color: Color(0xff0F4C5C),
+            ),
+          ),
+          SizedBox(height: 15.0,),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children:
+            [
+              Expanded(
+                child: GestureDetector(
+                  onTap: ()
+                  {
+                    setState(() {
+                      isDuration=true;
+                    });
+                  },
+                  child: Container(
+                    height: 40.0,
+                    color:isDuration ? Color(0xff50B3CF):Colors.white,
+                    child: Center(
+                      child: Text(
+                        'one day',
+                        style: TextStyle(
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w500,
+                          fontSize: 18.0,
+                          color: isDuration ? Colors.white:Color(0xff50B3CF),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: GestureDetector(
+                  onTap: ()
+                  {
+                    setState(() {
+                      isDuration=false;
+                    });
+                  },
+                  child: Container(
+                    height: 40.0,
+                    color: isDuration ? Colors.white:Color(0xff50B3CF),
+                    child: Center(
+                      child: Text(
+                        'more than a day',
+                        style: TextStyle(
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w500,
+                          fontSize: 18.0,
+                          color:isDuration ? Color(0xff50B3CF):Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 20.0,),
+          Text(
+            'Location',
+            style: TextStyle(
+              fontFamily: 'Poppins',
+              fontWeight: FontWeight.w500,
+              fontSize: 18.0,
+              color: Color(0xff0F4C5C),
+            ),
+          ),
+          SizedBox(height: 15.0,),
+          Container(
+            width: double.infinity,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 20.0,right: 20.0,),
+              child: DropdownButton<String>(
+                hint:Text(dropdownvalue),
+                value: dropdownvalue,
+                items: <String>['Cairo', 'Alexandria', 'Marsa Matruh', 'Hurghada','Giza','South Sinai','North Sinai','Suez','Beheira','Sharqia','Dakahlia','Kafr el-Sheikh','Monufia','Minya','Gharbia','Faiyum','Qena','Asyut','Sohag','Ismailia','Beni Suef','Qalyubia','Aswan','Damietta','Port Said','Luxor'].map((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+                onChanged: (String? newValue)
+                {
+                  setState(() {
+                    dropdownvalue=newValue!;
+                  });
+                },
+              ),
+            ),
+          ),
+          SizedBox(height: 20.0,),
+          MaterialButton(
+
+            color: Color(0xff50B3CF),
+            minWidth: double.infinity,
+            height: 40.0,
+            child: Text(
+              'Apply',
+              style: TextStyle(
+                fontFamily: 'Poppins',
+                fontWeight: FontWeight.w500,
+                fontSize: 18.0,
+                color: Colors.white,
+              ),
+            ),
+            onPressed: ()
+            {
+
+            },
+          )
+        ],
+      ),
+    ),
+  );
 }
