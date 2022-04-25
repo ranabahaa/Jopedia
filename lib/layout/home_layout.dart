@@ -45,6 +45,20 @@ class _home_layoutState extends State<home_layout> {
           clipBehavior: Clip.antiAlias,
           notchMargin: 8,
           child: BottomNavigationBar(
+            currentIndex: currentIndex,
+            selectedItemColor:Color(0xff50B3CF),
+            selectedLabelStyle: TextStyle(
+              color: Color(0xff50B3CF),
+              fontWeight: FontWeight.bold,
+              fontSize: 10.0,
+              fontFamily: 'Poppins',
+            ),
+            unselectedLabelStyle: TextStyle(
+              color:Color(0xffA2BBCD),
+              fontWeight: FontWeight.w500,
+              fontSize: 10.0,
+              fontFamily: 'Poppins',
+            ),
             backgroundColor: Color(0xffE9F1F6),
             type: BottomNavigationBarType.fixed,
             onTap: (index) {
@@ -52,6 +66,7 @@ class _home_layoutState extends State<home_layout> {
                 currentIndex = index;
               });
             },
+
             items: [
               BottomNavigationBarItem(
                 icon: SvgPicture.asset(
@@ -97,13 +112,7 @@ class _home_layoutState extends State<home_layout> {
                   'Wallet',
               ),
             ],
-            selectedLabelStyle: TextStyle(
-              color: currentIndex == 1
-                  ? Color(0xff50B3CF)
-                  : Color(0xffA2BBCD),
-              fontWeight: FontWeight.bold,
-              fontSize: 10.0,
-            ),
+
           ),
         ),
       ),
