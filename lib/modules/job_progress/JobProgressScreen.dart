@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../shared/components/component.dart';
+
 class JobProgressScreen extends StatefulWidget {
   const JobProgressScreen({Key? key}) : super(key: key);
 
@@ -125,12 +127,7 @@ Widget _buildPopupDialog(BuildContext context) {
       Row(
         mainAxisAlignment:MainAxisAlignment.center ,
         children: [
-          FlatButton(
-            onPressed: () {
-            },
-            textColor: Colors.white,
-            child: Text('Cancle'),
-          ),
+          DefaultButton(text: 'Cancle',function :(){})
         ],
       ),
 

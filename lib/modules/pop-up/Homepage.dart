@@ -1,8 +1,9 @@
 
 //import 'dart:html';
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
+
+import '../../shared/components/component.dart';
 //import 'package:smooth_star_rating_null_safety/smooth_star_rating_null_safety.dart';
 double rating=3;
 class Homepage extends StatefulWidget {
@@ -81,22 +82,18 @@ Widget _buildPopupDialog(BuildContext context) {
         Row(
           mainAxisAlignment:MainAxisAlignment.center ,
           children: [
-            FlatButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              textColor: Colors.white,
-              child: Text('Close'),
-            ),
+            DefaultButton(
+                text: 'Close',
+                function :()
+                {
+                  Navigator.of(context).pop();
+                }),
             SizedBox(
               width: 40,
             ),
-            FlatButton(
-              onPressed: () {
-              },
-              textColor: Colors.white,
-              child: Text('Submit'),
-            ),
+            DefaultButton(
+                text: 'Submit',
+                function :(){}),
           ],
         ),
 
