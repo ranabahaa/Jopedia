@@ -57,7 +57,7 @@ class HomeScreen extends StatelessWidget {
                           color: Colors.white,
                           fontFamily: 'Poppins',
                           fontSize: 35.0,
-                          fontWeight: FontWeight.w900,
+                          fontWeight: FontWeight.w800,
                           shadows: [
                             Shadow(
                                 color: Colors.black.withOpacity(0.3),
@@ -247,7 +247,7 @@ class HomeScreen extends StatelessWidget {
                                   ),
                                   IconButton(
                                     onPressed: () {
-                                   /*   showModalBottomSheet(
+                                      showModalBottomSheet(
                                       context: context,
                                       enableDrag: false,
                                       builder: (context)=> Container(
@@ -432,8 +432,8 @@ class HomeScreen extends StatelessWidget {
                                             ],
                                           ),
                                         ),
-                                      );
-                                    );*/
+                                      ),
+                                    );
                                     },
                                     icon: SvgPicture.asset(
                                       "assets/icons/settings-sliders (1).svg",
