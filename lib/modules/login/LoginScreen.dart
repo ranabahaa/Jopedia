@@ -50,11 +50,9 @@ class LoginScreen extends StatelessWidget {
                 isPassword:true,
 
               ),
-
               SizedBox(
                 height: 60.0,
               ),
-
               DefaultButton(text: 'LOGIN',function :(){}),
 
               SizedBox(

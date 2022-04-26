@@ -311,22 +311,16 @@ Widget _buildPopupDialog(BuildContext context) {
       Row(
         mainAxisAlignment:MainAxisAlignment.center ,
         children: [
-          FlatButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            textColor: Colors.white,
-            child: Text('Cancel'),
-          ),
+          DefaultButton(
+              text: 'Cancel',
+              function :()
+              {
+                Navigator.of(context).pop();
+              }),
           SizedBox(
             width: 40,
           ),
-          FlatButton(
-            onPressed: () {
-            },
-            textColor: Colors.white,
-            child: Text('Apply'),
-          ),
+          DefaultButton(text: 'Apply',function :(){})
         ],
       ),
 
