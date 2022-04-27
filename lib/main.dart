@@ -24,6 +24,7 @@ import 'modules/pop-up/Homepage.dart';
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
+      name: 'name-here',
       options: FirebaseOptions(
       apiKey: "XXX",
       appId: "XXX",
