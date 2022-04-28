@@ -6,6 +6,7 @@ import 'package:jopedia/modules/home/HomeScreen.dart';
 import 'package:jopedia/modules/job_progress/JobProgressScreen.dart';
 import 'package:jopedia/modules/login/LoginScreen.dart';
 import 'package:jopedia/modules/notification/NotificationScreen.dart';
+import 'package:jopedia/modules/register/RegisterScreen.dart';
 import 'package:jopedia/modules/search/SearchScreen.dart';
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/material.dart';
@@ -24,13 +25,14 @@ import 'modules/pop-up/Homepage.dart';
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-      name: 'name-here',
       options: FirebaseOptions(
-      apiKey: "XXX",
-      appId: "XXX",
-      messagingSenderId: "XXX",
-      projectId: "XXX", ),);
+      apiKey: "AIzaSyAEs7gK2EC-rTaFUSTuAPI5Vp7nsb2HMTc",
+      appId: "1:819907602066:android:9b2ebd5b9ef2bb4767a84b",
+      messagingSenderId: "819907602066",
+      projectId: "jopedia-921b1", ),);
+
   await SystemChrome.setPreferredOrientations([
+
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
@@ -52,7 +54,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           //theme: ThemeProvider.of(context),
           title: title,
-          home: home_layout(),
+          home: RegisterScreen(),
         ),
       ),
     );
