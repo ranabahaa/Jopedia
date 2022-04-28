@@ -1,5 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:jopedia/modules/login/LoginScreen.dart';
 import 'package:jopedia/shared/components/component.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class RegisterScreen extends StatelessWidget {
   var emailController = TextEditingController();
@@ -8,8 +11,11 @@ class RegisterScreen extends StatelessWidget {
   var PhoneNumberController = TextEditingController();
   var NameController = TextEditingController();
 
+  final _auth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(backgroundColor: Color(0xff50B3CF)),
       body: Padding(
@@ -71,7 +77,6 @@ class RegisterScreen extends StatelessWidget {
                 SuffixIcon:Icons.remove_red_eye,
                 hint: 'Password',
                 isPassword:true,
-
               ),
               SizedBox(
                 height: 20.0,
@@ -101,7 +106,39 @@ class RegisterScreen extends StatelessWidget {
                 height: 50.0,
               ),
 
-              DefaultButton(text: 'Register',function :(){}),
+              MaterialButton(
+
+                color: Color(0xff50B3CF),
+                minWidth: double.infinity,
+                height: 40.0,
+                child: Text(
+                  'Register',
+                  style: TextStyle(
+                    fontFamily: 'Poppins',
+                    fontWeight: FontWeight.w500,
+                    fontSize: 18.0,
+                    color: Colors.white,
+                  ),
+                ),
+                onPressed: ()
+                async {
+                  var email= emailController.text;
+                  var password = passwordController.text;
+                 try{
+                   await _auth.createUserWithEmailAndPassword(
+                     email: email,
+                     password: password,
+                   );
+                   Navigator.push(
+                     context,
+                     MaterialPageRoute(builder: (context) => LoginScreen()),
+                   );
+                 }
+                 catch(error){
+                   print(error);
+                 }
+                },
+              ),
 
               SizedBox(
                 height: 10.0,

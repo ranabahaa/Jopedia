@@ -83,7 +83,7 @@ class _ProfilePageState extends State<ProfilePage>
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => home_layout()),
+                        MaterialPageRoute(builder: (context) => Home_layout()),
                       );
                     },
                     icon: SvgPicture.asset(
@@ -97,7 +97,7 @@ class _ProfilePageState extends State<ProfilePage>
                     onTap: (){
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => home_layout()),
+                        MaterialPageRoute(builder: (context) => Home_layout()),
                       );
                     },
                     child: Text(

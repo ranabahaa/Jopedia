@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -5,6 +6,7 @@ import 'package:jopedia/layout/home_layout_cubit.dart';
 import 'package:jopedia/layout/home_layout_state.dart';
 import 'package:jopedia/modules/create_job/CreateJobScreen.dart';
 import 'package:jopedia/modules/home/HomeScreen.dart';
+import 'package:jopedia/modules/login/LoginScreen.dart';
 import 'package:jopedia/modules/my_profile/ProfilePage.dart';
 import 'package:jopedia/modules/notification/NotificationScreen.dart';
 import 'package:jopedia/modules/requests/RequestScreen.dart';
@@ -12,7 +14,8 @@ import 'package:jopedia/modules/saved_jobs/SavedJobScreen.dart';
 import 'package:jopedia/modules/wallet/WalletScreen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class home_layout extends StatelessWidget {
+class Home_layout extends StatelessWidget {
+  final _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -292,17 +295,18 @@ class home_layout extends StatelessWidget {
                       ),
                     ),
                     onTap: ()
-                    {
-
+                    async{
+                      await _auth.signOut();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginScreen()),
+                      );
                     },
                   ),
-
                 ],
               ),
-
             ),
           );
-
         },
       ),
     );

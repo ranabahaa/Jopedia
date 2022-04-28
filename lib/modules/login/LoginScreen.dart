@@ -1,11 +1,17 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:jopedia/layout/home_layout.dart';
+import 'package:jopedia/layout/home_layout_state.dart';
 import 'package:jopedia/modules/forget_pass/ForgetPasswordScreen.dart';
+import 'package:jopedia/modules/home/HomeScreen.dart';
 import 'package:jopedia/modules/register/RegisterScreen.dart';
 import 'package:jopedia/shared/components/component.dart';
 
 class LoginScreen extends StatelessWidget {
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
+
+  final _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +59,42 @@ class LoginScreen extends StatelessWidget {
               SizedBox(
                 height: 60.0,
               ),
-              DefaultButton(text: 'LOGIN',function :(){}),
+              MaterialButton(
+
+                color: Color(0xff50B3CF),
+                minWidth: double.infinity,
+                height: 40.0,
+                child: Text(
+                  'Register',
+                  style: TextStyle(
+                    fontFamily: 'Poppins',
+                    fontWeight: FontWeight.w500,
+                    fontSize: 18.0,
+                    color: Colors.white,
+                  ),
+                ),
+                onPressed: ()
+                async {
+                  var email= emailController.text;
+                  var password = passwordController.text;
+                  try{
+                    final user = await _auth.signInWithEmailAndPassword(
+                      email: email,
+                      password: password,
+                    );
+                    if (user != null)
+                    {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Home_layout()),
+                      );
+                    }
+                  }
+                  catch(error){
+                    print(error);
+                  }
+                },
+              ),
 
               SizedBox(
                 height: 10.0,
