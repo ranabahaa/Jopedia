@@ -65,7 +65,7 @@ class LoginScreen extends StatelessWidget {
                 minWidth: double.infinity,
                 height: 40.0,
                 child: Text(
-                  'Register',
+                  'Login',
                   style: TextStyle(
                     fontFamily: 'Poppins',
                     fontWeight: FontWeight.w500,
