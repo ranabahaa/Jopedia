@@ -25,10 +25,10 @@ Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
       options: FirebaseOptions(
-      apiKey: "XXX",
-      appId: "XXX",
-      messagingSenderId: "XXX",
-      projectId: "XXX", ),);
+      apiKey: "AIzaSyAEs7gK2EC-rTaFUSTuAPI5Vp7nsb2HMTc",
+      appId: "1:819907602066:android:9b2ebd5b9ef2bb4767a84b",
+      messagingSenderId: "819907602066",
+      projectId: "jopedia-921b1", ),);
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           //theme: ThemeProvider.of(context),
           title: title,
-          home: CreateJobScreen(),
+          home: LoginScreen(),
         ),
       ),
     );
