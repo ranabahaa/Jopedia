@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+import '../../bloc/cubit.dart';
 import '../../shared/components/component.dart';
 
 class JobProgressScreen extends StatefulWidget {
@@ -127,7 +129,23 @@ Widget _buildPopupDialog(BuildContext context) {
       Row(
         mainAxisAlignment:MainAxisAlignment.center ,
         children: [
-          DefaultButton(text: 'Cancle',function :(){})
+          TextButton(
+            child: Text("cancle".toUpperCase(),
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 18.0,
+              ),),
+            onPressed: (){
+              FirebaseFirestore.instance.collection('post')
+                  .doc("ov7WJUtAdwxYG7rBv311").delete().then((value) {
+                print("true");
+              }).catchError((onError) {
+                print(onError.toString());
+                print("false");
+              });
+            },
+          )
         ],
       ),
 

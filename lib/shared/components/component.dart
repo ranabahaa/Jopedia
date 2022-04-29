@@ -49,6 +49,7 @@ Widget DefaultTextField({
       },
       decoration: InputDecoration(
         hintText: hint,
+        border: InputBorder.none,
         fillColor: Colors.white.withOpacity(0.6),
         filled: true,
         suffixIcon: Icon(SuffixIcon , color: Color(0xff50B3CF),),

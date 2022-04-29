@@ -4,6 +4,11 @@ class PostDataModel {
   late String JOB_LOCATION;
   late String JOB_TITLE;
   late String JOB_SALARY;
+  late String StartDate;
+  late String EndDate;
+  late String StartTime;
+  late String EndTime;
+  late String PostTime;
   //late final String USER_ID;
   //late final String WORKER_ID;
   //late final String COMPLETED_JOB;
@@ -14,6 +19,11 @@ class PostDataModel {
     required this.JOB_LOCATION,
     required this.JOB_TITLE,
     required this.JOB_SALARY,
+    required this.StartDate,
+    required this.EndDate,
+    required this.StartTime,
+    required this.EndTime,
+    required this.PostTime,
     //required this.USER_ID,
     //required this.WORKER_ID,
     //required this.COMPLETED_JOB,
@@ -26,6 +36,11 @@ class PostDataModel {
     JOB_LOCATION = json['JOB_LOCATION'] ?? '';
     JOB_TITLE = json['JOB_TITLE'] ?? '';
     JOB_SALARY = json['JOB_SALARY'] ?? '';
+    StartDate = json['StartDate'] ?? '';
+    EndDate = json['EndDate'] ?? '';
+    StartTime = json['StartTime'] ?? '';
+    EndTime = json['EndTime'] ?? '';
+    PostTime = json['PostTime'] ?? '';
     //USER_ID = json['USER_ID'] ?? '';
     //WORKER_ID = json['WORKER_ID'] ?? '';
     //COMPLETED_JOB = json['COMPLETED_JOB'] ?? '';
@@ -39,6 +54,11 @@ class PostDataModel {
       'JOB_LOCATION': JOB_LOCATION,
       'JOB_TITLE': JOB_TITLE,
       'JOB_SALARY': JOB_SALARY,
+      'StartDate': StartDate,
+      'EndDate': EndDate,
+      'StartTime': StartTime,
+      'EndTime': EndTime,
+      'PostTime' : PostTime ,
       //'USER_ID': USER_ID,
       //'WORKER_ID': WORKER_ID,
       //'COMPLETED_JOB': COMPLETED_JOB,

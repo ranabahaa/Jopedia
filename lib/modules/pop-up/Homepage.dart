@@ -28,8 +28,7 @@ class _MyAppState extends State<Homepage>{
               Container(
                 height: 30.0,
                 width: 30,
-                child:
-                MaterialButton(
+                child:MaterialButton(
                   onPressed:(){
                       showDialog(
                       context: context,
@@ -82,18 +81,29 @@ Widget _buildPopupDialog(BuildContext context) {
         Row(
           mainAxisAlignment:MainAxisAlignment.center ,
           children: [
-            DefaultButton(
-                text: 'Close',
-                function :()
+            TextButton(
+               child: Text("cancle".toUpperCase(),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18.0,
+                  ),),
+                onPressed :()
                 {
                   Navigator.of(context).pop();
                 }),
             SizedBox(
               width: 40,
             ),
-            DefaultButton(
-                text: 'Submit',
-                function :(){}),
+            TextButton(
+              child: Text("submit".toUpperCase(),
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18.0,
+                ),),
+              onPressed: (){},
+            )
           ],
         ),
 

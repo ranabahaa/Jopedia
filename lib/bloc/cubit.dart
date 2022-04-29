@@ -24,24 +24,34 @@ class AppBloc extends Cubit<AppState> {
     required String JOB_LOCATION,
     required String JOB_TITLE,
     required String JOB_SALARY,
+    required String StartDate,
+    required String EndDate,
+    required String StartTime,
+    required String EndTime,
+    required String PostTime,
     //@required String USER_ID,
     //@required String WORKER_ID,
     //@required String COMPLETED_JOB,
-})  {
-    PostDataModel model= PostDataModel(
-        DISCREPTION : DISCREPTION,
-        JOB_LOCATION : JOB_LOCATION,
-        JOB_TITLE : JOB_TITLE,
-        JOB_SALARY : JOB_SALARY,
-        //USER_ID : USER_ID;
-        //WORKER_ID : WORKER_ID;
-        //COMPLETED_JOB : COMPLETED_JOB;
-        );
+  }) {
+    PostDataModel model = PostDataModel(
+      DISCREPTION: DISCREPTION,
+      JOB_LOCATION: JOB_LOCATION,
+      JOB_TITLE: JOB_TITLE,
+      JOB_SALARY: JOB_SALARY,
+      StartDate : StartDate,
+      EndDate : EndDate,
+      StartTime : StartTime,
+      EndTime : EndTime,
+      PostTime : PostTime ,
+      //USER_ID : USER_ID;
+      //WORKER_ID : WORKER_ID;
+      //COMPLETED_JOB : COMPLETED_JOB;
+    );
 
     FirebaseFirestore.instance.collection('post')
         .add(model.toJson())
         .then((value) {
-          print("ppp");
+      print("ppp");
       emit(CreatJobSuccess());
     }).catchError((error) {
       print("false");
@@ -49,14 +59,6 @@ class AppBloc extends Cubit<AppState> {
       emit(CreatJobError(message: error.toString(),));
     });
 
-
-     /*FirebaseFirestore.instance.collection('post')
-        .doc("8itrczhlAnL7bbmaODoI").delete().then((value) {
-      print("true");
-    }).catchError((onError){
-      print(onError.toString());
-      print("false");}
-      );*/
 
     /*jopRef.doc("3211").set({
       "DISCREPTION" : DISCREPTION,
@@ -67,5 +69,17 @@ class AppBloc extends Cubit<AppState> {
     }).catchError((onError){print(onError.toString()); print("false");});*/
 
 
+  }
+
+
+  void DeleteJob({required String id}) {
+    FirebaseFirestore.instance.collection('post')
+        .doc(id).delete().then((value) {
+      print("true");
+    }).catchError((onError) {
+      print(onError.toString());
+      print("false");
+    }
+    );
   }
 }
