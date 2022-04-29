@@ -64,7 +64,6 @@ class DepositScreen extends StatelessWidget {
                 child: DefaultTextField(
                   controller: DepositAmountController,
                   type: TextInputType.number,
-                  onType:(){},
                   hint: 'Deposit Amount',
                 ),
               ),
@@ -80,7 +79,6 @@ class DepositScreen extends StatelessWidget {
                  child: DefaultTextField(
                    controller: PinController,
                    type: TextInputType.number,
-                   onType:(){},
                    hint: 'Credit Pin',
                  ),
               ),

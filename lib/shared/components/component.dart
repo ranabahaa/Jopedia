@@ -30,20 +30,28 @@ Widget DefaultTextField({
   required controller,
   hint = '',
   required type,
-  required Function onType,
+  onTap,
+  onChange,
   isPassword = false,
   SuffixIcon,
   PrefixIcon,
+  validateTixt,
+  SuffixPress,
+
+
 
 }) => Container(
     child: TextFormField(
+      onTap: onTap,
+      onChanged: onChange,
       controller: controller,
       keyboardType : type ,
+      obscureText: isPassword,
       validator: (value)
       {
       if(value!.isEmpty)
       {
-        return 'title must not be empty';
+        return '$validateTixt must not be empty';
       }
         return null;
       },
@@ -52,8 +60,11 @@ Widget DefaultTextField({
         border: InputBorder.none,
         fillColor: Colors.white.withOpacity(0.6),
         filled: true,
-        suffixIcon: Icon(SuffixIcon , color: Color(0xff50B3CF),),
-        prefixIcon: PrefixIcon != null ? Icon(PrefixIcon , color: Color(0xff50B3CF),):null,
+        prefixIcon: Icon(PrefixIcon , color: Color(0xff50B3CF),),
+        suffixIcon : SuffixIcon != null ? IconButton(
+            onPressed: SuffixPress,
+            icon: Icon(SuffixIcon , color: Color(0xff50B3CF),)
+        ):null,
       ),
 
     ),

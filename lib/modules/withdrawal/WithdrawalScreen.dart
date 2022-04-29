@@ -62,7 +62,6 @@ class WithdrawalScreen extends StatelessWidget {
                 child: DefaultTextField(
                   controller: WithdrawalAmountController,
                   type: TextInputType.number,
-                  onType:(){},
                   hint: 'Withdrawal Amount',
                 ),
               ),
@@ -78,7 +77,6 @@ class WithdrawalScreen extends StatelessWidget {
                 child: DefaultTextField(
                   controller: PinController,
                   type: TextInputType.number,
-                  onType:(){},
                   hint: 'Credit Pin',
                 ),
               ),

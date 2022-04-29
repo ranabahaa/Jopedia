@@ -51,7 +51,6 @@ class YourCard extends StatelessWidget {
               DefaultTextField(
                 controller: CardNumberController,
                 type: TextInputType.number,
-                onType:(){},
                 hint: 'Card Number',
 
               ),
@@ -66,7 +65,6 @@ class YourCard extends StatelessWidget {
                       child: DefaultTextField(
                         controller: ExpiryDateController,
                         type: TextInputType.datetime,
-                        onType:(){},
                         hint: 'Expiry Date(MM/YY)',
                       ),
                     ),
@@ -80,7 +78,6 @@ class YourCard extends StatelessWidget {
                       child: DefaultTextField(
                         controller: CVVController,
                         type: TextInputType.number,
-                        onType:(){},
                         hint: 'CVV',
                       ),
                     ),
@@ -93,7 +90,6 @@ class YourCard extends StatelessWidget {
               DefaultTextField(
                 controller: CardHolderController,
                 type: TextInputType.name,
-                onType:(){},
                 hint: 'CardHolder Name',
               ),
               SizedBox(

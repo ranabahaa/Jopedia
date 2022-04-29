@@ -54,7 +54,6 @@ class RegisterScreen extends StatelessWidget {
               DefaultTextField(
                 controller: NameController,
                 type: TextInputType.text,
-                onType:(){},
                 hint: 'Full name',
               ),
               SizedBox(
@@ -63,7 +62,6 @@ class RegisterScreen extends StatelessWidget {
               DefaultTextField(
                 controller: emailController,
                 type: TextInputType.emailAddress,
-                onType:(){},
                 SuffixIcon:Icons.email,
                 hint: 'Email',
               ),
@@ -73,7 +71,6 @@ class RegisterScreen extends StatelessWidget {
               DefaultTextField(
                 controller: passwordController,
                 type: TextInputType.visiblePassword,
-                onType:(){},
                 SuffixIcon:Icons.remove_red_eye,
                 hint: 'Password',
                 isPassword:true,
@@ -84,7 +81,6 @@ class RegisterScreen extends StatelessWidget {
               DefaultTextField(
                 controller: confirmPasswordController,
                 type: TextInputType.visiblePassword,
-                onType:(){},
                 SuffixIcon:Icons.remove_red_eye,
                 hint: 'Re-Password',
                 isPassword:true,
@@ -96,12 +92,8 @@ class RegisterScreen extends StatelessWidget {
               DefaultTextField(
                 controller: PhoneNumberController,
                 type: TextInputType.number,
-                onType:(){},
                 hint: 'Phone number',
-
-
               ),
-
               SizedBox(
                 height: 50.0,
               ),

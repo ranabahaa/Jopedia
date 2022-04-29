@@ -16,3 +16,9 @@ class CreatJobError extends AppState {
     required this.message,
   });
 }
+
+class SuffixInitialState extends AppState {}
+
+class SuffixVisible extends AppState {}
+
+class SuffixVisibleOff extends AppState {}

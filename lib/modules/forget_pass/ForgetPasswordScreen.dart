@@ -43,12 +43,9 @@ class ForgetPasswordScreen extends StatelessWidget {
                 SizedBox(
                   height: 60.0,
                 ),
-
-
                 DefaultTextField(
                   controller: passwordController,
                   type: TextInputType.visiblePassword,
-                  onType:(){},
                   SuffixIcon:Icons.remove_red_eye,
                   hint: 'New Password',
                   isPassword:true,
@@ -60,24 +57,18 @@ class ForgetPasswordScreen extends StatelessWidget {
                 DefaultTextField(
                   controller: ConfirmpasswordController,
                   type: TextInputType.visiblePassword,
-                  onType:(){},
                   SuffixIcon:Icons.remove_red_eye,
                   hint: 'Confirm-Password',
                   isPassword:true,
 
                 ),
-
-
                 SizedBox(
                   height: 50.0,
                 ),
-
                 DefaultButton(text: 'Save password',function :(){}),
-
                 SizedBox(
                   height: 10.0,
                 ),
-
               ],
             ),
           ),
