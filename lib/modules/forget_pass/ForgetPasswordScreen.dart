@@ -48,7 +48,6 @@ class ForgetPasswordScreen extends StatelessWidget {
                   type: TextInputType.visiblePassword,
                   SuffixIcon:Icons.remove_red_eye,
                   hint: 'New Password',
-                  isPassword:true,
 
                 ),
                 SizedBox(
@@ -59,7 +58,6 @@ class ForgetPasswordScreen extends StatelessWidget {
                   type: TextInputType.visiblePassword,
                   SuffixIcon:Icons.remove_red_eye,
                   hint: 'Confirm-Password',
-                  isPassword:true,
 
                 ),
                 SizedBox(

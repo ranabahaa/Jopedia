@@ -5,10 +5,10 @@ import 'package:bloc/bloc.dart';
 
 
 
-class login_cubit extends Cubit<AppState> {
-  login_cubit() : super(SuffixInitialState());
+class register_cubit extends Cubit<AppState> {
+  register_cubit() : super(SuffixInitialState());
 
-  static login_cubit get(context) => BlocProvider.of(context);
+  static register_cubit get(context) => BlocProvider.of(context);
   bool ispassword = false;
 
   void changVisibility(){
