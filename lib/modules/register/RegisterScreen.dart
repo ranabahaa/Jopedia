@@ -28,6 +28,16 @@ class RegisterScreen extends StatelessWidget {
           return Scaffold(
             backgroundColor: Color(0xffF6F9FA),
             appBar: AppBar(
+              leading: IconButton(
+                onPressed: (){
+                  Navigator.pop(context);
+                },
+                icon: Icon(
+                  Icons.arrow_back,
+                  color: Color(0xff0F4C5C),
+                  size: 25.0,
+                ),
+              ),
               backgroundColor: Color(0xffF6F9FA),
               elevation: 0,
             ),
@@ -78,9 +88,6 @@ class RegisterScreen extends StatelessWidget {
                     DefaultTextField(
                       controller: passwordController,
                       type: TextInputType.visiblePassword,
-                      SuffixIcon: cubit.ispassword
-                          ? Icons.visibility_off
-                          : Icons.visibility,
                       hint: 'Password',
                       isPassword: true,
                     ),
@@ -90,9 +97,6 @@ class RegisterScreen extends StatelessWidget {
                     DefaultTextField(
                       controller: confirmPasswordController,
                       type: TextInputType.visiblePassword,
-                      SuffixIcon: cubit.ispassword
-                          ? Icons.visibility_off
-                          : Icons.visibility,
                       hint: 'Re-Password',
                       isPassword: true,
                     ),
@@ -102,6 +106,7 @@ class RegisterScreen extends StatelessWidget {
                     DefaultTextField(
                       controller: PhoneNumberController,
                       type: TextInputType.number,
+                      SuffixIcon: Icons.phone,
                       hint: 'Phone number',
                     ),
                     SizedBox(

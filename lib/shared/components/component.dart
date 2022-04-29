@@ -61,11 +61,7 @@ Widget DefaultTextField({
           border: InputBorder.none,
           fillColor: Colors.white,
           filled: true,
-          prefixIcon: SuffixIcon != null
-              ? Icon(PrefixIcon ,
-            color: Color(0xff0F4C5C).withOpacity(0.3),
-          )
-              : null,
+          prefixIcon: PrefixIcon != null ? Icon(PrefixIcon , color: Color(0xff0F4C5C).withOpacity(0.3),) : null,
           suffixIcon: SuffixIcon != null
               ? IconButton(
                   onPressed: SuffixPress,
