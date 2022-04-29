@@ -12,6 +12,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jopedia/modules/home/home_states.dart';
 
 import '../models/job/job_model.dart';
+import '../models/request/request_model.dart';
 
 class AppBloc extends Cubit<AppState> {
   AppBloc() : super(InitialState());
@@ -79,6 +80,41 @@ class AppBloc extends Cubit<AppState> {
     }).catchError((onError) {
       print(onError.toString());
       print("false");
+    }
+    );
+  }
+
+  void SendRequest({
+    required String JOB_ID,
+    required String JOB_SALARY,
+    required String USER_ID,
+    required String WORKER_ID,
+  }) {
+    RequestDataModel model = RequestDataModel(
+      JOB_ID: JOB_ID,
+      JOB_SALARY: JOB_SALARY,
+      USER_ID: USER_ID,
+      WORKER_ID : WORKER_ID,
+    );
+
+    FirebaseFirestore.instance.collection('request')
+        .add(model.toJson())
+        .then((value) {
+      print("ppp");
+      emit(SendRequestSuccess());
+    }).catchError((error) {
+      print("false");
+      debugPrint(error.toString());
+      emit(SendRequestError(message: error.toString(),));
+    });
+
+  }
+
+  void RejectRequest({required String id}) {
+    FirebaseFirestore.instance.collection('request')
+        .doc(id).delete().then((value) {
+    }).catchError((onError) {
+      print(onError.toString());
     }
     );
   }

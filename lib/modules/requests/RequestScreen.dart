@@ -43,7 +43,7 @@ class _RequestScreenState extends State<RequestScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'you have',
+                    'you have ',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 20.0,
@@ -179,7 +179,9 @@ class _RequestScreenState extends State<RequestScreen> {
                         child: MaterialButton(
                           padding: EdgeInsets.all(0),
                           minWidth: 0,
-                          onPressed: (){},
+                          onPressed: (){
+
+                          },
                           child: Icon(
                             Icons.close_rounded,
                             color: Color(0xffBB0B0B),

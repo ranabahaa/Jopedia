@@ -1,18 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:jopedia/shared/components/component.dart';
 
 //import 'dart:html';
 import 'dart:ui';
-double rating=3;
-class JobViewScreen extends StatefulWidget {
-  @override
-  State<JobViewScreen> createState() => _JobViewScreenState();
-}
 
-class _JobViewScreenState extends State<JobViewScreen> {
+import '../../bloc/cubit.dart';
+import '../../bloc/states.dart';
 
+class JobViewScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +39,6 @@ class _JobViewScreenState extends State<JobViewScreen> {
           ),
           color: Colors.white,
         ),
-
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           //alignment: Alignment.topCenter,
@@ -234,19 +231,15 @@ class _JobViewScreenState extends State<JobViewScreen> {
                 borderRadius: BorderRadius.circular(10.0),
               ) ,
               child: MaterialButton(
-                child: Text(
-                  "apply".toUpperCase(),
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18.0,
-                  ),
-                ),
-                onPressed:(){
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) => _buildPopupDialog(context),
-                  );
+                  color: Color(0xff50B3CF),
+                  minWidth: double.infinity,
+                  height: 50.0,
+                  child: MyText(text: "apply"),
+                  onPressed:(){
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) => _buildPopupDialog(context),
+                    );
                 },
               ),
             ),  //---->>DefaultButton
@@ -263,67 +256,98 @@ class _JobViewScreenState extends State<JobViewScreen> {
 }
 
 Widget _buildPopupDialog(BuildContext context) {
-  return AlertDialog(
-    backgroundColor: Color(0xffF087874),
-
-    content: Column(
-
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children:[
-        Text(
-          'Are you sure you want to apply for this job',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 20,
-          ),
-        ),
-        SizedBox(
-          height: 5,
-        ),
-        /* SmoothStarRating(
-          size: 40,
-          starCount: 5,
-          rating: rating ,
-          filledIconData: Icons.star,
-          color: Colors.yellow,
-        ),*/
-        Text(
-          'Change price (optional)',
-          style: TextStyle(
-            color: Colors.white60,
-            fontSize: 13.5,
-          ),
-        ),
-        Container(
-          width: double.infinity,
-          child: TextFormField(
-            decoration: InputDecoration(
-              hintText: 'Price',
+  var price_conroller = TextEditingController();
+  return BlocProvider(
+      create: (BuildContext context) => AppBloc(),
+      child:BlocConsumer<AppBloc, AppState>(
+      listener: (BuildContext context, state) {},
+      builder: (BuildContext context, state) {
+        return AlertDialog(
+          backgroundColor: Color(0xffF6F9FA),
+          content: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children:[
+                MyText(
+                  text: 'Are you sure you want to apply for this job',
+                  fontSize: 15,
+                  colors: Color(0xffF087874),
+                  fontWeight: FontWeight.w900,),
+                SizedBox(
+                  height: 5,
+                ),
+                /* SmoothStarRating(
+                  size: 40,
+                  starCount: 5,
+                  rating: rating ,
+                  filledIconData: Icons.star,
+                  color: Colors.yellow,
+                ),*/
+                MyText(
+                    text: 'Change price (optional)',
+                    fontSize: 12,
+                    colors: Color(0xffF087874).withOpacity(0.5),
+                    fontWeight: FontWeight.w900,),
+                Container(
+                  width: double.infinity,
+                  child: TextFormField(
+                    controller: price_conroller,
+                    decoration: InputDecoration(
+                      hintText: 'Price',
+                    ),
+                    keyboardType : TextInputType.number ,
+                  ),
+                ),
+              ],
             ),
-            keyboardType : TextInputType.number ,
-          ),
-        ),
+          actions:[
+            Row(
+              mainAxisAlignment:MainAxisAlignment.center ,
+              children: [
+                TextButton(
+                  child: MyText(
+                      text: 'Cancel',
+                      fontSize: 15,
+                      colors: Color(0xffF087874),
+                      fontWeight: FontWeight.w900,
+                  ),
+                  onPressed: (){
+                    Navigator.of(context).pop();
+                  },
+                ),  //Cancel
+                SizedBox(
+                  width: 40,
+                ),
+                TextButton(
+                  child: MyText(
+                    text: 'Apply',
+                    fontSize: 15,
+                    colors: Color(0xffF087874),
+                    fontWeight: FontWeight.w900,),
+                  onPressed: (){
+                    if(price_conroller.text!=''){
+                      AppBloc.get(context).SendRequest(
+                          JOB_ID: "1111",
+                          JOB_SALARY: price_conroller.text,
+                          USER_ID: "222",
+                          WORKER_ID: "333");
+                      
+                    }
+                    else{
+                      AppBloc.get(context).SendRequest(
+                          JOB_ID: "1111",
+                          JOB_SALARY: "original salary",
+                          USER_ID: "222",
+                          WORKER_ID: "333");
+                    }
+                  }
+                ),//Apply
+              ],
+            ),
 
-      ],
-    ),
-    actions:[
-      Row(
-        mainAxisAlignment:MainAxisAlignment.center ,
-        children: [
-          DefaultButton(
-              text: 'Cancel',
-              function :()
-              {
-                Navigator.of(context).pop();
-              }),
-          SizedBox(
-            width: 40,
-          ),
-          DefaultButton(text: 'Apply',function :(){})
-        ],
+          ],
+        );
+      }
       ),
-
-    ],
-  );
+      );
 }
