@@ -118,4 +118,22 @@ class AppBloc extends Cubit<AppState> {
     }
     );
   }
+
+  Future<PostDataModel?> ShowContract() async{
+
+    final DocPost = FirebaseFirestore.instance.collection('post').doc('bARLIywCJSgrYXQnQil5');
+    final snapshot = await DocPost.get();
+    if(snapshot.exists){
+      return PostDataModel.fromJson(snapshot.data()!);
+    }
+  }
+
+  //this returns a list not one record
+/*
+    Stream<List<PostDataModel>> ShowContract() => FirebaseFirestore.instance.collection('post')
+        .snapshots()
+        .map((snapshot) => snapshot.docs.map((doc) => PostDataModel.fromJson(doc.data())).toList()) ;
+*/
+
+
 }

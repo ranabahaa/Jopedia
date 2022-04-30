@@ -20,6 +20,7 @@ import 'package:jopedia/themes.dart';
 import 'package:jopedia/utils/user_preferences.dart';
 import 'modules/job_view/JobViewScreen.dart';
 import 'modules/pop-up/Homepage.dart';
+import 'package:jopedia/modules/contract/ContractScreen.dart';
 
 
 Future main() async {
@@ -52,7 +53,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           //theme: ThemeProvider.of(context),
           title: title,
-          home: JobViewScreen(),
+          home: ContractScreen(),
         ),
       ),
     );
