@@ -33,7 +33,6 @@ class CreateJobScreen extends StatelessWidget {
         builder: (BuildContext context, state) {
           return Scaffold(
             appBar: AppBar(
-
               title: Text(''),
               // You can add title here
               leading: new IconButton(
@@ -43,7 +42,6 @@ class CreateJobScreen extends StatelessWidget {
               backgroundColor: Colors.blue.withOpacity(0.3),
               //You can make this transparent
               elevation: 0.0, //No shadow
-
             ),
             body: Padding(
               padding: const EdgeInsets.all(20.0),
@@ -57,12 +55,11 @@ class CreateJobScreen extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.all(5.0),
                           child: Center(
-                            child: Text(
-                              'Create Job',
-                              style: TextStyle(
-                                fontSize: 40.0,
-                                fontWeight: FontWeight.bold,
-                              ),
+                            child: MyText(
+                              text: 'Creat Job',
+                              fontSize: 30.0,
+                              fontWeight: FontWeight.w900,
+                              colors: Color(0xff0F4C5C),
                             ),
                           ),
                         ),
@@ -72,10 +69,8 @@ class CreateJobScreen extends StatelessWidget {
                         Container(
                           width: 250,
                           child: TextFormField(
-
                             controller: title_conroller,
                             keyboardType: TextInputType.text,
-
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return 'title must not be empty';
@@ -84,14 +79,10 @@ class CreateJobScreen extends StatelessWidget {
                             },
                             decoration: InputDecoration(
                               hintText: 'title',
-                              //prefixIcon: Icon(Icons.title),
                               fillColor: Colors.white.withOpacity(0.6),
                               filled: true,
                               border: InputBorder.none,
-
-
                             ),
-
                           ),
                         ),
                         SizedBox(height: 7,),
@@ -325,7 +316,6 @@ class CreateJobScreen extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                                 fontSize: 18.0,
                               ),),
-
                             onPressed: () {
                               if(FormKey.currentState!.validate()){
                                  AppBloc.get(context).CreatJob(

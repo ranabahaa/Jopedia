@@ -22,3 +22,15 @@ class SuffixInitialState extends AppState {}
 class SuffixVisible extends AppState {}
 
 class SuffixVisibleOff extends AppState {}
+
+class SendRequestLoading extends AppState {}
+
+class SendRequestSuccess extends AppState {}
+
+class SendRequestError extends AppState {
+  final String message;
+
+  SendRequestError({
+    required this.message,
+  });
+}
