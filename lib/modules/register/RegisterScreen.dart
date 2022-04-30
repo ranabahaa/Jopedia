@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:jopedia/layout/home_layout.dart';
 import 'package:jopedia/modules/login/LoginScreen.dart';
 import 'package:jopedia/modules/register/register_cubit.dart';
+import 'package:jopedia/modules/register/register_state.dart';
 import 'package:jopedia/shared/components/component.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -21,8 +23,15 @@ class RegisterScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (BuildContext context) => register_cubit(),
-      child: BlocConsumer<register_cubit, AppState>(
-        listener: (BuildContext context, state) {},
+      child: BlocConsumer<register_cubit, RegisterStates>(
+        listener: (BuildContext context, state) {
+          if (state is CreateUserSuccessState) {
+            navigateAndFinish(
+              context,
+              Home_layout(),
+            );
+          }
+        },
         builder: (BuildContext context, state) {
           var cubit = register_cubit.get(context);
           return Scaffold(
@@ -125,27 +134,16 @@ class RegisterScreen extends StatelessWidget {
                           color: Colors.white,
                         ),
                       ),
-                      onPressed: () async {
-                        var email = emailController.text;
-                        var password = passwordController.text;
-                        try {
-                          await _auth.createUserWithEmailAndPassword(
-                            email: email,
-                            password: password,
-                          );
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => LoginScreen()),
-                          );
-                        } catch (error) {
-                          print(error);
-                        }
+                      onPressed: ()  {
+                        register_cubit.get(context).userRegister(
+                          name: NameController.text,
+                          email: emailController.text,
+                          password: passwordController.text,
+                          phone: PhoneNumberController.text,
+                        );
                       },
                     ),
-                    SizedBox(
-                      height: 10.0,
-                    ),
+                    SizedBox(height: 10.0,),
                   ],
                 ),
               ),

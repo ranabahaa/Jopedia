@@ -89,3 +89,16 @@ Widget MyText({
         color: colors,
       ),
     );
+void navigateAndFinish(
+    context,
+    widget,
+    ) =>
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+        builder: (context) => widget,
+      ),
+          (route) {
+        return false;
+      },
+    );
