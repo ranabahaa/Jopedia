@@ -33,8 +33,8 @@ class _JobProgressScreenState extends State<JobProgressScreen> {
         actions: [
           MaterialButton(
             child:MyText(
-              text:"Cancel".toUpperCase(),
-              fontSize: 15.0,
+              text:'Cancel',
+              fontSize: 16.0,
               fontWeight: FontWeight.bold,
               colors: color,
             ),
