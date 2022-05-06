@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:jopedia/layout/home_layout.dart';
+import 'package:jopedia/modules/contract/ContractScreen.dart';
 import 'package:jopedia/modules/create_job/CreateJobScreen.dart';
 import 'package:jopedia/modules/home/HomeScreen.dart';
 import 'package:jopedia/modules/job_progress/JobProgressScreen.dart';
@@ -53,7 +54,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           //theme: ThemeProvider.of(context),
           title: title,
-          home: StartApp(),
+          home: JobProgressScreen(),
         ),
       ),
     );
