@@ -10,6 +10,7 @@ import 'package:jopedia/shared/components/component.dart';
 
 import '../../bloc/states.dart';
 import 'login_cubit.dart';
+import 'login_state.dart';
 
 class LoginScreen extends StatelessWidget {
   var emailController = TextEditingController();
@@ -21,11 +22,19 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context) => login_cubit(),
-      child: BlocConsumer<login_cubit, AppState>(
-        listener: (BuildContext context, state) {},
+      create: (BuildContext context) => LoginCubit(),
+      child: BlocConsumer<LoginCubit, LoginStates>(
+        listener: (BuildContext context, state) {
+          if(state is LoginSuccessState)
+          {
+              navigateAndFinish(
+                context,
+                Home_layout(),
+              );
+          }
+        },
         builder: (BuildContext context, state) {
-          var cubit = login_cubit.get(context);
+          var cubit = LoginCubit.get(context);
           return Scaffold(
             backgroundColor: Color(0xffF6F9FA),
             appBar: AppBar(
@@ -61,12 +70,12 @@ class LoginScreen extends StatelessWidget {
                           controller: passwordController,
                           type: TextInputType.visiblePassword,
                           PrefixIcon:Icons.lock,
-                          SuffixIcon:cubit.ispassword ? Icons.visibility_off: Icons.visibility,
+                          SuffixIcon:cubit.isPassword ? Icons.visibility_off: Icons.visibility,
                           hint: 'Password',
-                          isPassword:cubit.ispassword,
+                          isPassword:cubit.isPassword,
                           validateTixt: "Password",
                           SuffixPress: (){
-                            cubit.changVisibility();
+                            cubit.changePasswordVisibility();
                           }
                       ),
                       SizedBox(height: 20.0,),
@@ -84,27 +93,12 @@ class LoginScreen extends StatelessWidget {
                           ),
                         ),
                         onPressed: ()
-                        async {
-                          if(FormKey.currentState!.validate()){
-                            var email= emailController.text;
-                            var password = passwordController.text;
-                            try{
-                              final user = await _auth.signInWithEmailAndPassword(
-                                email: email,
-                                password: password,
-                              );
-                              if (user != null)
-                              {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => Home_layout()),
-                                );
-                              }
-                            }
-                            catch(error){
-                              print(error);
-                            }
-                          }
+                        {
+                          cubit.userLogin(
+                            email: emailController.text,
+                            password: passwordController.text,
+                          );
+
                         },
                       ),
                       SizedBox(height: 10.0,),
