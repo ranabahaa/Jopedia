@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:jopedia/modules/my_profile/ProfilePage.dart';
 import 'package:jopedia/modules/deposit/DepositScreen.dart';
+import 'package:jopedia/modules/trytimer.dart';
 import 'package:jopedia/modules/wallet/WalletScreen.dart';
 import 'package:jopedia/modules/withdrawal/WithdrawalScreen.dart';
 import 'package:jopedia/modules/card/YourCard.dart';
@@ -54,7 +55,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           //theme: ThemeProvider.of(context),
           title: title,
-          home: JobProgressScreen(),
+          home: trytimer(),
         ),
       ),
     );

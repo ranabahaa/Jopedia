@@ -75,8 +75,9 @@ class _JobProgressScreenState extends State<JobProgressScreen> {
               ],
             ),
             Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
+             // crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                
                 Row(
                   children: [
                     MyText(
