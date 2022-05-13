@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jopedia/layout/home_layout.dart';
 import 'package:jopedia/layout/home_layout_state.dart';
+import 'package:jopedia/models/user/user_model.dart';
 import 'package:jopedia/modules/forget_pass/ForgetPasswordScreen.dart';
 import 'package:jopedia/modules/home/HomeScreen.dart';
 import 'package:jopedia/modules/register/RegisterScreen.dart';
@@ -85,6 +87,7 @@ class LoginScreen extends StatelessWidget {
                         ),
                         onPressed: ()
                         async {
+                          print(FirebaseAuth.instance.currentUser?.email);
                           if(FormKey.currentState!.validate()){
                             var email= emailController.text;
                             var password = passwordController.text;
@@ -95,9 +98,12 @@ class LoginScreen extends StatelessWidget {
                               );
                               if (user != null)
                               {
+                                var firebaseUser = FirebaseAuth.instance.currentUser;
+                                var userSnapshot = await FirebaseFirestore.instance.collection("users").doc(firebaseUser?.uid).get();
+                                var user = UserModel.fromJson(userSnapshot.data());
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => Home_layout()),
+                                  MaterialPageRoute(builder: (context) => Home_layout(user)),
                                 );
                               }
                             }

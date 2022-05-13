@@ -451,7 +451,7 @@ class HomeScreen extends StatelessWidget {
                           ),
                           SingleChildScrollView(
                             child: Column(
-                              children: [
+                              children: <Widget>[
                                 InkWell(
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
@@ -658,6 +658,8 @@ class HomeScreen extends StatelessWidget {
                                     );
                                   },
                                 ),
+
+
                               ],
                             ),
                           ),

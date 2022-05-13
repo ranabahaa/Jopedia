@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jopedia/layout/home_layout_cubit.dart';
 import 'package:jopedia/layout/home_layout_state.dart';
+import 'package:jopedia/models/user/user_model.dart';
 import 'package:jopedia/modules/create_job/CreateJobScreen.dart';
 import 'package:jopedia/modules/home/HomeScreen.dart';
 import 'package:jopedia/modules/login/LoginScreen.dart';
@@ -15,6 +16,10 @@ import 'package:jopedia/modules/wallet/WalletScreen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class Home_layout extends StatelessWidget {
+  UserModel user;
+
+  Home_layout(this.user);
+
   final _auth = FirebaseAuth.instance;
 
   @override
@@ -153,7 +158,7 @@ class Home_layout extends StatelessWidget {
                           onTap: (){
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => ProfilePage()),
+                              MaterialPageRoute(builder: (context) => ProfilePage(user)),
                             );
                           },
                         ),
@@ -164,7 +169,7 @@ class Home_layout extends StatelessWidget {
                           children:
                           [
                             Text(
-                              'Welcome Bakr',
+                              'Welcome ${user.name}',
                               style: TextStyle
                                 (
                                 color: Color(0xff0F4C5C),
@@ -174,7 +179,7 @@ class Home_layout extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              'aboubakrahmed@gmail.com',
+                              '${user.email}',
                               style: TextStyle
                                 (
                                 color: Color(0xffA2BBCD),

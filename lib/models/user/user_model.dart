@@ -7,18 +7,19 @@ class UserModel {
   late String phone;
   late String uId;
 
-  UserModel ({
-    required this.name,
-    required this.email,
-    required this.phone,
-    required this.uId,
+  UserModel (
+      {
+        required this.uId,
+        required this.name,
+        required this.email,
+        required this.phone,
 });
 
-  UserModel.fromJson(Map<String, dynamic> json){
-    email = json['email'];
-    name = json['name'];
-    phone = json['phone'];
-    uId = json['uId'];
+  UserModel.fromJson(Map<String, dynamic>? json){
+    email = json?['email'];
+    name = json?['name'];
+    phone = json?['phone'];
+    uId = json?['uId'];
   }
 
   Map<String, dynamic> toMap()

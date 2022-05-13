@@ -15,4 +15,10 @@ class DataController extends GetxController {
         .where('JOB_TITLE', isGreaterThanOrEqualTo: queryString)
         .get();
   }
+  Future profileData(String queryString) async {
+    return FirebaseFirestore.instance
+        .collection('user')
+        .get();
+  }
+
 }
