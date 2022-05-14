@@ -14,10 +14,10 @@ class UserModel {
     required this.uId,
 });
 
-  UserModel.fromJson(Map<String, dynamic>? json){
-    email = json!['email'];
-    name = json!['name'];
-    phone = json!['phone'];
+  UserModel.fromJson(Map<String, dynamic> json){
+    email = json['email'];
+    name = json['name'];
+    phone = json['phone'];
     uId = json['uId'];
   }
 

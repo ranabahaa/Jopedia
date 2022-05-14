@@ -48,9 +48,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = UserPreferences.myUser;
-    final user_data = FirebaseAuth.instance.currentUser;
-
-    String uId = user_data!.uid;
 
     return ThemeProvider(
       initTheme: user.isDarkMode ? MyThemes.darkTheme : MyThemes.lightTheme,
@@ -59,7 +56,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           //theme: ThemeProvider.of(context),
           title: title,
-          home: trytimer(),
+          home: LoginScreen(),
         ),
       ),
     );

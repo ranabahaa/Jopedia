@@ -27,8 +27,8 @@ class Home_layout extends StatelessWidget {
         listener: (BuildContext context,state){},
         builder: (BuildContext context,state){
           var cubit = HomeLayoutCubit.get(context);
-          UserModel? model ;
-          model = cubit.GetUserData();
+          /*late UserModel model ;
+          model = cubit.GetUserData();*/
           return Scaffold(
             body: cubit.screen[cubit.currentIndex],
             bottomNavigationBar: ClipRRect(
@@ -169,7 +169,7 @@ class Home_layout extends StatelessWidget {
                           children:
                           [
                             Text(
-                              'Welcome ${model!.name}',
+                              'Welcome Bakr',
                               style: TextStyle
                                 (
                                 color: Color(0xff0F4C5C),
@@ -179,7 +179,7 @@ class Home_layout extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              '${model.email}',
+                              'aboubakrahmed@gmail.com',
                               style: TextStyle
                                 (
                                 color: Color(0xffA2BBCD),
