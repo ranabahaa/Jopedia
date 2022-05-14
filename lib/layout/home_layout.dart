@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +16,10 @@ import 'package:jopedia/modules/wallet/WalletScreen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class Home_layout extends StatelessWidget {
+  UserModel user;
+
+  Home_layout(this.user);
+
   final _auth = FirebaseAuth.instance;
 
   @override
@@ -27,8 +30,6 @@ class Home_layout extends StatelessWidget {
         listener: (BuildContext context,state){},
         builder: (BuildContext context,state){
           var cubit = HomeLayoutCubit.get(context);
-          /*late UserModel model ;
-          model = cubit.GetUserData();*/
           return Scaffold(
             body: cubit.screen[cubit.currentIndex],
             bottomNavigationBar: ClipRRect(
@@ -115,7 +116,6 @@ class Home_layout extends StatelessWidget {
               width: 50.0,
               child: FloatingActionButton(
                 onPressed: () {
-                  cubit.GetUserData();
                   Navigator.push(context, MaterialPageRoute(
                     builder:(context)=>CreateJobScreen(),),);
                 },
@@ -158,7 +158,7 @@ class Home_layout extends StatelessWidget {
                           onTap: (){
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => ProfilePage()),
+                              MaterialPageRoute(builder: (context) => ProfilePage(user)),
                             );
                           },
                         ),
@@ -169,7 +169,7 @@ class Home_layout extends StatelessWidget {
                           children:
                           [
                             Text(
-                              'Welcome Bakr',
+                              'Welcome ${user.name}',
                               style: TextStyle
                                 (
                                 color: Color(0xff0F4C5C),
@@ -179,7 +179,7 @@ class Home_layout extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              'aboubakrahmed@gmail.com',
+                              '${user.email}',
                               style: TextStyle
                                 (
                                 color: Color(0xffA2BBCD),

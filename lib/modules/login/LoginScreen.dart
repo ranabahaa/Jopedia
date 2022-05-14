@@ -1,16 +1,18 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jopedia/layout/home_layout.dart';
 import 'package:jopedia/layout/home_layout_state.dart';
+import 'package:jopedia/models/user/user_model.dart';
 import 'package:jopedia/modules/forget_pass/ForgetPasswordScreen.dart';
 import 'package:jopedia/modules/home/HomeScreen.dart';
+import 'package:jopedia/modules/login/login_state.dart';
 import 'package:jopedia/modules/register/RegisterScreen.dart';
 import 'package:jopedia/shared/components/component.dart';
 
 import '../../bloc/states.dart';
 import 'login_cubit.dart';
-import 'login_state.dart';
 
 class LoginScreen extends StatelessWidget {
   var emailController = TextEditingController();
@@ -18,6 +20,7 @@ class LoginScreen extends StatelessWidget {
 
   var FormKey = GlobalKey<FormState>();
   final _auth = FirebaseAuth.instance;
+  late UserModel userModel;
 
   @override
   Widget build(BuildContext context) {
@@ -27,10 +30,10 @@ class LoginScreen extends StatelessWidget {
         listener: (BuildContext context, state) {
           if(state is LoginSuccessState)
           {
-              navigateAndFinish(
-                context,
-                Home_layout(),
-              );
+            navigateAndFinish(
+              context,
+              Home_layout(userModel),
+            );
           }
         },
         builder: (BuildContext context, state) {
@@ -66,6 +69,7 @@ class LoginScreen extends StatelessWidget {
                           validateTixt: "Email"
                       ),
                       SizedBox(height: 20.0,),
+
                       DefaultTextField(
                           controller: passwordController,
                           type: TextInputType.visiblePassword,
@@ -93,12 +97,29 @@ class LoginScreen extends StatelessWidget {
                           ),
                         ),
                         onPressed: ()
-                        {
-                          cubit.userLogin(
-                            email: emailController.text,
-                            password: passwordController.text,
-                          );
-
+                        async {
+                          if(FormKey.currentState!.validate()){
+                            var email= emailController.text;
+                            var password = passwordController.text;
+                            try{
+                              final user = await _auth.signInWithEmailAndPassword(
+                                email: email,
+                                password: password,
+                              );
+                              if (user != null)
+                              {
+                                var userJson = await FirebaseFirestore.instance.collection("users").doc(user.user?.uid).get();
+                                userModel = UserModel.fromJson(userJson.data());
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => Home_layout(userModel)),
+                                );
+                              }
+                            }
+                            catch(error){
+                              print(error);
+                            }
+                          }
                         },
                       ),
                       SizedBox(height: 10.0,),

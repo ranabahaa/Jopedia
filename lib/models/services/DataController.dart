@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:get/get.dart';
 
-class DataController extends GetxController {
+class DataController {
   Future getData(String collection) async {
     final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     QuerySnapshot snapshot =
@@ -13,6 +12,13 @@ class DataController extends GetxController {
     return FirebaseFirestore.instance
         .collection('post')
         .where('JOB_TITLE', isGreaterThanOrEqualTo: queryString)
+        .where('JOB_TITLE', isLessThan: queryString + '\uf8ff')
         .get();
   }
+  Future profileData(String queryString) async {
+    return FirebaseFirestore.instance
+        .collection('user')
+        .get();
+  }
+
 }

@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:jopedia/models/services/DataController.dart';
 import 'package:jopedia/modules/job_view/JobViewScreen.dart';
 import 'package:jopedia/shared/components/component.dart';
@@ -15,6 +14,7 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   final TextEditingController searchController = TextEditingController();
+  final DataController dataController = DataController();
   late QuerySnapshot snapshotData;
   bool isExecuted = false;
   @override
@@ -62,19 +62,15 @@ class _SearchScreenState extends State<SearchScreen> {
             onPressed: () => Navigator.of(context).pop(),
           ),
           actions: [
-            GetBuilder<DataController>(
-                init: DataController(),
-                builder: (val) {
-                  return IconButton(
-                      icon: Icon(Icons.search),
-                      onPressed: () {
-                        val.queryData(searchController.text).then((value) {
-                          snapshotData = value;
-                          setState(() {
-                            isExecuted = true;
-                          });
-                        });
-                      });
+            IconButton(
+                icon: Icon(Icons.search),
+                onPressed: () {
+                  dataController.queryData(searchController.text).then((value) {
+                    snapshotData = value;
+                    setState(() {
+                      isExecuted = true;
+                    });
+                  });
                 }),
             IconButton(
                 icon: Icon(Icons.clear),

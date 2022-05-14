@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,6 +12,7 @@ class register_cubit extends Cubit<RegisterStates> {
   register_cubit() : super(RegisterInitialState());
 
   static register_cubit get(context) => BlocProvider.of(context);
+  late UserModel user;
 
   void userRegister({
     required String name,
@@ -23,6 +23,7 @@ class register_cubit extends Cubit<RegisterStates> {
     print('hello');
 
     emit(RegisterLoadingState());
+
 
     FirebaseAuth.instance.createUserWithEmailAndPassword(
       email: email,
@@ -52,6 +53,7 @@ class register_cubit extends Cubit<RegisterStates> {
       phone: phone,
       uId: uId,
     );
+    user = model;
     FirebaseFirestore.instance
         .collection('users')
         .doc(uId)

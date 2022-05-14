@@ -28,7 +28,7 @@ class RegisterScreen extends StatelessWidget {
           if (state is CreateUserSuccessState) {
             navigateAndFinish(
               context,
-              Home_layout(),
+              Home_layout(register_cubit.get(context).user),
             );
           }
         },

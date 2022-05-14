@@ -45,3 +45,4 @@ class LoginCubit extends Cubit<LoginStates> {
     emit(ChangePasswordVisibilityState());
   }
 }
+
