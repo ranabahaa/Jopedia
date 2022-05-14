@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:jopedia/layout/home_layout.dart';
+import 'package:jopedia/modules/contract/ContractScreen.dart';
 import 'package:jopedia/modules/create_job/CreateJobScreen.dart';
 import 'package:jopedia/modules/home/HomeScreen.dart';
 import 'package:jopedia/modules/job_progress/JobProgressScreen.dart';
@@ -14,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:jopedia/modules/my_profile/ProfilePage.dart';
 import 'package:jopedia/modules/deposit/DepositScreen.dart';
+import 'package:jopedia/modules/trytimer.dart';
 import 'package:jopedia/modules/wallet/WalletScreen.dart';
 import 'package:jopedia/modules/withdrawal/WithdrawalScreen.dart';
 import 'package:jopedia/modules/card/YourCard.dart';
@@ -57,7 +59,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           //theme: ThemeProvider.of(context),
           title: title,
-          home: StartApp(),
+          home: trytimer(),
         ),
       ),
     );
