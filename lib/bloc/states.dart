@@ -34,3 +34,5 @@ class SendRequestError extends AppState {
     required this.message,
   });
 }
+
+

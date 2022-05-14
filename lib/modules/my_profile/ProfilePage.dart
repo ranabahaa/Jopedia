@@ -1,4 +1,5 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:jopedia/layout/home_layout.dart';
@@ -22,7 +23,6 @@ class _ProfilePageState extends State<ProfilePage>
   Widget build(BuildContext context) {
     TabController _tabController = TabController(length: 3, vsync: this);
     final user = UserPreferences.myUser;
-
     return ThemeSwitchingArea(
       child: Builder(
         builder: (context) => Scaffold(

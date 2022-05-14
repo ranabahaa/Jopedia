@@ -1,9 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jopedia/layout/home_layout_cubit.dart';
 import 'package:jopedia/layout/home_layout_state.dart';
+import 'package:jopedia/models/user/user_model.dart';
 import 'package:jopedia/modules/create_job/CreateJobScreen.dart';
 import 'package:jopedia/modules/home/HomeScreen.dart';
 import 'package:jopedia/modules/login/LoginScreen.dart';
@@ -25,6 +27,8 @@ class Home_layout extends StatelessWidget {
         listener: (BuildContext context,state){},
         builder: (BuildContext context,state){
           var cubit = HomeLayoutCubit.get(context);
+          UserModel? model ;
+          model = cubit.GetUserData();
           return Scaffold(
             body: cubit.screen[cubit.currentIndex],
             bottomNavigationBar: ClipRRect(
@@ -111,6 +115,7 @@ class Home_layout extends StatelessWidget {
               width: 50.0,
               child: FloatingActionButton(
                 onPressed: () {
+                  cubit.GetUserData();
                   Navigator.push(context, MaterialPageRoute(
                     builder:(context)=>CreateJobScreen(),),);
                 },
@@ -164,7 +169,7 @@ class Home_layout extends StatelessWidget {
                           children:
                           [
                             Text(
-                              'Welcome Bakr',
+                              'Welcome ${model!.name}',
                               style: TextStyle
                                 (
                                 color: Color(0xff0F4C5C),
@@ -174,7 +179,7 @@ class Home_layout extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              'aboubakrahmed@gmail.com',
+                              '${model.email}',
                               style: TextStyle
                                 (
                                 color: Color(0xffA2BBCD),

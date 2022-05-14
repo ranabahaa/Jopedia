@@ -27,7 +27,6 @@ class PostDataModel {
     //required this.USER_ID,
     //required this.WORKER_ID,
     //required this.COMPLETED_JOB,
-
   });
 
   PostDataModel.fromJson(Map<String, dynamic> json) {

@@ -1,7 +1,10 @@
 import 'package:bloc/bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jopedia/layout/home_layout_state.dart';
+import 'package:jopedia/models/user/user_model.dart';
 
 import '../modules/home/HomeScreen.dart';
 import '../modules/notification/NotificationScreen.dart';
@@ -13,7 +16,7 @@ class HomeLayoutCubit extends Cubit<HomeLayoutState> {
   static HomeLayoutCubit get (BuildContext context){
     return BlocProvider.of(context);
   }
-
+  UserModel ?model ;
   int currentIndex = 0;
   List<Widget> screen = [
     HomeScreen(),
@@ -26,4 +29,25 @@ class HomeLayoutCubit extends Cubit<HomeLayoutState> {
     currentIndex=index;
     emit(BottomNavigationTrue());
   }
+  UserModel? GetUserData (){
+    emit(GetUserDataLoading());
+    final user = FirebaseAuth.instance.currentUser;
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(user!.uid)
+        .get()
+        .then((value)
+    {
+      print (value.data());
+      /*model = UserModel.fromJson(value.data());*/
+      emit(GetUserDataSuccsess());
+    })
+        .catchError((error){
+          print(error.toString());
+          emit(GetUserDataError(error.toString()));
+    }
+        );
+    return model;
+  }
+
 }

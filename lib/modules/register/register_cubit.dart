@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jopedia/bloc/states.dart';
 import 'package:bloc/bloc.dart';
 import 'package:jopedia/modules/register/register_state.dart';
-
 import '../../models/user/user_model.dart';
 
 
