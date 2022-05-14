@@ -54,6 +54,7 @@ class register_cubit extends Cubit<RegisterStates> {
       phone: phone,
       uId: uId,
     );
+    user = model;
     FirebaseFirestore.instance
         .collection('users')
         .doc(uId)

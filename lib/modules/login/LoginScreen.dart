@@ -7,6 +7,7 @@ import 'package:jopedia/layout/home_layout_state.dart';
 import 'package:jopedia/models/user/user_model.dart';
 import 'package:jopedia/modules/forget_pass/ForgetPasswordScreen.dart';
 import 'package:jopedia/modules/home/HomeScreen.dart';
+import 'package:jopedia/modules/login/login_state.dart';
 import 'package:jopedia/modules/register/RegisterScreen.dart';
 import 'package:jopedia/shared/components/component.dart';
 
@@ -19,15 +20,24 @@ class LoginScreen extends StatelessWidget {
 
   var FormKey = GlobalKey<FormState>();
   final _auth = FirebaseAuth.instance;
+  late UserModel userModel;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context) => login_cubit(),
-      child: BlocConsumer<login_cubit, AppState>(
-        listener: (BuildContext context, state) {},
+      create: (BuildContext context) => LoginCubit(),
+      child: BlocConsumer<LoginCubit, LoginStates>(
+        listener: (BuildContext context, state) {
+          if(state is LoginSuccessState)
+          {
+            navigateAndFinish(
+              context,
+              Home_layout(userModel),
+            );
+          }
+        },
         builder: (BuildContext context, state) {
-          var cubit = login_cubit.get(context);
+          var cubit = LoginCubit.get(context);
           return Scaffold(
             backgroundColor: Color(0xffF6F9FA),
             appBar: AppBar(
@@ -59,16 +69,17 @@ class LoginScreen extends StatelessWidget {
                           validateTixt: "Email"
                       ),
                       SizedBox(height: 20.0,),
+
                       DefaultTextField(
                           controller: passwordController,
                           type: TextInputType.visiblePassword,
                           PrefixIcon:Icons.lock,
-                          SuffixIcon:cubit.ispassword ? Icons.visibility_off: Icons.visibility,
+                          SuffixIcon:cubit.isPassword ? Icons.visibility_off: Icons.visibility,
                           hint: 'Password',
-                          isPassword:cubit.ispassword,
+                          isPassword:cubit.isPassword,
                           validateTixt: "Password",
                           SuffixPress: (){
-                            cubit.changVisibility();
+                            cubit.changePasswordVisibility();
                           }
                       ),
                       SizedBox(height: 20.0,),
@@ -87,7 +98,6 @@ class LoginScreen extends StatelessWidget {
                         ),
                         onPressed: ()
                         async {
-                          print(FirebaseAuth.instance.currentUser?.email);
                           if(FormKey.currentState!.validate()){
                             var email= emailController.text;
                             var password = passwordController.text;
@@ -98,12 +108,11 @@ class LoginScreen extends StatelessWidget {
                               );
                               if (user != null)
                               {
-                                var firebaseUser = FirebaseAuth.instance.currentUser;
-                                var userSnapshot = await FirebaseFirestore.instance.collection("users").doc(firebaseUser?.uid).get();
-                                var user = UserModel.fromJson(userSnapshot.data());
+                                var userJson = await FirebaseFirestore.instance.collection("users").doc(user.user?.uid).get();
+                                userModel = UserModel.fromJson(userJson.data());
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => Home_layout(user)),
+                                  MaterialPageRoute(builder: (context) => Home_layout(userModel)),
                                 );
                               }
                             }

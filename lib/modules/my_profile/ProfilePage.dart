@@ -217,6 +217,7 @@ class _ProfilePageState extends State<ProfilePage>
               leading: IconButton(
                 onPressed: () {
                   Navigator.pop(context);
+                  Navigator.pop(context);
                 },
                 icon: SvgPicture.asset(
                   "assets/icons/home.svg",
@@ -227,6 +228,7 @@ class _ProfilePageState extends State<ProfilePage>
               ),
               title: GestureDetector(
                 onTap: () {
+                  Navigator.pop(context);
                   Navigator.pop(context);
                 },
                 child: Text(

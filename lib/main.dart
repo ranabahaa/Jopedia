@@ -24,7 +24,7 @@ import 'package:jopedia/modules/contract/ContractScreen.dart';
 
 
 Future main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding?.ensureInitialized();
   await Firebase.initializeApp(
       options: FirebaseOptions(
       apiKey: "AIzaSyAEs7gK2EC-rTaFUSTuAPI5Vp7nsb2HMTc",
