@@ -1,6 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
+import 'dart:async';
+import 'package:flutter/material.dart';
+import 'package:gradient_widgets/gradient_widgets.dart';
+import 'package:jopedia/modules/button_widget.dart';
 import '../../bloc/cubit.dart';
 import '../../shared/components/component.dart';
 
@@ -12,8 +15,36 @@ class JobProgressScreen extends StatefulWidget {
 }
 
 class _JobProgressScreenState extends State<JobProgressScreen> {
+  double progress2 = 120.0;
   double progress = 120.0;
+  static const maxSeconds = 50;
+  int seconds = maxSeconds;
+  Timer? timer;
   var color = Color(0xff50B3CF);
+
+  void resetTimer() => setState(()=>seconds = maxSeconds);
+  void startTimer({bool reset = true}) {
+    if (reset) {
+      resetTimer();
+    }
+    timer = Timer.periodic(Duration(milliseconds: 50), (_) {
+      // setState(() => seconds--);
+      if(seconds>0){
+        setState(() => seconds--);
+      }
+      else
+      {
+        stopTimer(reset: false);
+      }
+    });
+  }
+  void stopTimer({bool reset = true}){
+    if(reset){
+      resetTimer();
+    }
+    setState(() =>timer?.cancel());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,9 +105,23 @@ class _JobProgressScreenState extends State<JobProgressScreen> {
                 ),
               ],
             ),
+            SizedBox(height: 50.0,),
             Column(
-             // crossAxisAlignment: CrossAxisAlignment.center,
+             crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Container(
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        buildTimer(),
+                        const SizedBox(height: 50),
+                        BuildButtons(),
+                      ],
+                    ),
+                  ),
+                ),
                 
                 Row(
                   children: [
@@ -88,7 +133,7 @@ class _JobProgressScreenState extends State<JobProgressScreen> {
                     ),
                     Expanded(
                       child: Slider(
-                        value:progress,
+                        value:progress2,
                         max: 220.0,
                         min: 80.0,
                         onChanged:(value){
@@ -129,66 +174,138 @@ class _JobProgressScreenState extends State<JobProgressScreen> {
       ),
     );
   }
-}
-Widget _buildPopupDialog(BuildContext context) {
-  return AlertDialog(
-    backgroundColor: Color(0xff50B3CF),
-
-    content: Column(
-
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children:[
-        Text(
-          'Are you sure you want to cancel this job ?',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 20,
-          ),
-        ),
-        SizedBox(
-          height: 5,
-        ),
-
-        Text(
-          'WARNNING : ',
-          style: TextStyle(
-            color: Colors.white60,
-            fontSize: 13.5,
-          ),
-        ),
-
-      ],
-    ),
-    actions:[
-      Row(
-        mainAxisAlignment:MainAxisAlignment.center ,
+  Widget BuildButtons(){
+    final isRunning = timer == null ? false : timer!.isActive;
+    final isCompleted = seconds == maxSeconds || seconds == 0 ;
+    return isRunning  || !isCompleted ?
+    Center(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(3.0),
-            ),
-            child: TextButton(
-              child: Text("yes cancel".toUpperCase(),
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18.0,
-                ),),
-              onPressed: (){
-                FirebaseFirestore.instance.collection('post')
-                    .doc("ov7WJUtAdwxYG7rBv311").delete().then((value) {
-                  print("true");
-                  Navigator.pop(context);
-                }).catchError((onError) {
-                  print(onError.toString());
-                  print("false");
-                });
-              },
-            ),
-          )
+          button_widget(
+            text: isRunning ?  'Pause' : 'Resume',
+            onClicked: (){
+              if (isRunning) {
+                stopTimer(reset: false);
+              }
+              else{
+                startTimer(reset: false);
+              }
+            },
+          ),
+          SizedBox(width: 20.0,),
+          button_widget(
+            text:'Cancel' ,
+            onClicked: (){
+              stopTimer();
+            },
+          ),
         ],
       ),
-    ],
+    ): button_widget(
+      text:'start timer' ,
+      onClicked: (){
+        startTimer();
+      },);
+  }
+  Widget buildTimer() => SizedBox(
+    width: 200,
+    height: 200,
+    child: Stack(
+        fit: StackFit.expand,
+        children: [
+          CircularProgressIndicator(
+            value: seconds/maxSeconds,
+            valueColor: AlwaysStoppedAnimation(Colors.white),
+            backgroundColor: color,
+            strokeWidth: 12,
+          ),
+          Center(
+            child: BuildTime(),
+          ),
+        ]
+    ),
   );
+  Widget BuildTime(){
+    if(seconds==0){
+      return Icon(Icons.done,color: Colors.redAccent,size: 112,);
+    }
+    else
+    {
+      return MyText(
+          text:'$seconds',
+          fontSize: 35.0
+      );
+    }
+
+  }
+  Widget _buildPopupDialog(BuildContext context) {
+    return AlertDialog(
+      backgroundColor: color,
+
+      content: Column(
+
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children:[
+          Text(
+            'Are you sure you want to cancel this job ?',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+            ),
+          ),
+          SizedBox(
+            height: 5,
+          ),
+
+          Text(
+            'WARNNING : ',
+            style: TextStyle(
+              color: Colors.white60,
+              fontSize: 13.5,
+            ),
+          ),
+
+        ],
+      ),
+      actions:[
+        Row(
+          mainAxisAlignment:MainAxisAlignment.center ,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(3.0),
+              ),
+              child: TextButton(
+                child: Text("yes cancel".toUpperCase(),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18.0,
+                  ),),
+                onPressed: (){
+                  FirebaseFirestore.instance.collection('post')
+                      .doc("ov7WJUtAdwxYG7rBv311").delete().then((value) {
+                    print("true");
+                    Navigator.pop(context);
+                  }).catchError((onError) {
+                    print(onError.toString());
+                    print("false");
+                  });
+                },
+              ),
+            )
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+
+@override
+Widget build(BuildContext context) {
+  // TODO: implement build
+  throw UnimplementedError();
 }

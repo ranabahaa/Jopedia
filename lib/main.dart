@@ -58,7 +58,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           //theme: ThemeProvider.of(context),
           title: title,
-          home: LoginScreen(),
+          home: JobProgressScreen(),
         ),
       ),
     );
