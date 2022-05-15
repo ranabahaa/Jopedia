@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:jopedia/modules/my_profile/ProfilePage.dart';
 import 'package:jopedia/modules/deposit/DepositScreen.dart';
+import 'package:jopedia/modules/trytimer.dart';
 import 'package:jopedia/modules/wallet/WalletScreen.dart';
 import 'package:jopedia/modules/withdrawal/WithdrawalScreen.dart';
 import 'package:jopedia/modules/card/YourCard.dart';
@@ -48,7 +49,7 @@ class MyApp extends StatelessWidget {
     final user = UserPreferences.myUser;
     final user_data = FirebaseAuth.instance.currentUser;
 
-    String uId = user_data!.uid;
+    String? uId = user_data?.uid;
 
     return ThemeProvider(
       initTheme: user.isDarkMode ? MyThemes.darkTheme : MyThemes.lightTheme,
