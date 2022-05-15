@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -6,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jopedia/layout/home_layout_state.dart';
+import 'package:jopedia/models/job/job_model.dart';
 import 'package:jopedia/models/user/user_model.dart';
 import '../modules/home/HomeScreen.dart';
 import '../modules/notification/NotificationScreen.dart';
@@ -49,6 +49,28 @@ class HomeLayoutCubit extends Cubit<HomeLayoutState> {
           emit(GetUserDataError(error.toString()));
     }
         );
+  }
+
+  List<PostDataModel> posts = [];
+
+  void GetPostsData (){
+    emit(GetPostsDataLoading());
+    FirebaseFirestore.instance
+        .collection('posts')
+        .get()
+        .then((value)
+    {
+      value.docs.forEach((element) {
+
+        posts.add(PostDataModel.fromJson(element.data()));
+      });
+      emit(GetPostsDataSuccsess());
+    })
+        .catchError((error){
+      print(error.toString());
+      emit(GetPostsDataError(error.toString()));
+    }
+    );
   }
 
 }

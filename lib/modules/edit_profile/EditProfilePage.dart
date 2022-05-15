@@ -11,6 +11,7 @@ import 'package:jopedia/modules/forget_pass/ForgetPasswordScreen.dart';
 import 'package:jopedia/shared/components/component.dart';
 
 class EditProfilePage extends StatefulWidget {
+
   UserModel user;
   EditProfilePage(this.user);
 

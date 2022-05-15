@@ -16,8 +16,8 @@ import 'package:jopedia/modules/wallet/WalletScreen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class Home_layout extends StatelessWidget {
-  UserModel user;
 
+  UserModel user;
   Home_layout(this.user);
 
   final _auth = FirebaseAuth.instance;
@@ -30,6 +30,9 @@ class Home_layout extends StatelessWidget {
         listener: (BuildContext context,state){},
         builder: (BuildContext context,state){
           var cubit = HomeLayoutCubit.get(context);
+          /*cubit.GetUserData();
+          UserModel? model ;*/
+
           return Scaffold(
             body: cubit.screen[cubit.currentIndex],
             bottomNavigationBar: ClipRRect(

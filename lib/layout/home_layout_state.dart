@@ -13,3 +13,12 @@ class GetUserDataError extends HomeLayoutState {
 
   GetUserDataError(this.error);
 }
+class GetPostsDataLoading extends HomeLayoutState {}
+
+class GetPostsDataSuccsess extends HomeLayoutState {}
+
+class GetPostsDataError extends HomeLayoutState {
+  final String error;
+
+  GetPostsDataError(this.error);
+}

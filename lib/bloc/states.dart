@@ -34,5 +34,23 @@ class SendRequestError extends AppState {
     required this.message,
   });
 }
+class GetPostsDataLoading extends AppState {}
+
+class GetPostsDataSuccsess extends AppState {}
+
+class GetPostsDataError extends AppState {
+  final String error;
+
+  GetPostsDataError(this.error);
+}
+class HomeInitialState extends AppState {}
+
+class SavedJobs extends AppState {}
+
+class NearbyJobs extends AppState {}
+
+class DurationJobs extends AppState {}
+
+
 
 

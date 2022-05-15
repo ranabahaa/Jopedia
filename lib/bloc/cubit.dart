@@ -18,7 +18,40 @@ import '../models/request/request_model.dart';
 class AppBloc extends Cubit<AppState> {
   AppBloc() : super(InitialState());
 
-  static AppBloc get(context) => BlocProvider.of(context);
+  /*static AppBloc get(context) => BlocProvider.of(context);*/
+
+  static AppBloc get (BuildContext context){
+
+    return BlocProvider.of(context);
+
+  }
+
+  bool isAllTrue = true;
+  bool isSaveTrue = false;
+  bool isDuration = true;
+
+  void isAllTrueYes (){
+    isAllTrue=true;
+    emit(NearbyJobs());
+  }
+  void isAllTrueNo (){
+    isAllTrue=false;
+    emit(NearbyJobs());
+  }
+  void isSaveTrueYes (){
+    isSaveTrue=true;
+    emit(SavedJobs());
+  }
+  void isSaveTrueNo (){
+    isSaveTrue=false;
+    emit(SavedJobs());
+  }
+  void isDurationYes (){
+    isDuration=true;
+  }
+  void isDurationNo (){
+    isDuration=false;
+  }
 
   void CreatJob({
     //@required String JOB_ID,
@@ -135,5 +168,25 @@ class AppBloc extends Cubit<AppState> {
         .snapshots()
         .map((snapshot) => snapshot.docs.map((doc) => PostDataModel.fromJson(doc.data())).toList()) ;
 */
+  List<PostDataModel> posts =[];
 
+  void GetPostsData (){
+    emit(GetPostsDataLoading());
+    FirebaseFirestore.instance
+        .collection('post')
+        .get()
+        .then((value)
+    {
+      value.docs.forEach((element) {
+
+        posts.add(PostDataModel.fromJson(element.data()));
+      });
+      emit(GetPostsDataSuccsess());
+    })
+        .catchError((error){
+      print(error.toString());
+      emit(GetPostsDataError(error.toString()));
+    }
+    );
+  }
 }
