@@ -16,6 +16,8 @@ class JobProgressScreen extends StatefulWidget {
 
 class _JobProgressScreenState extends State<JobProgressScreen> {
   double progress2 = 120.0;
+  bool visible = false;
+  bool jobCompletedVisisbility = false;
   double progress = 120.0;
   static const maxSeconds = 50;
   int seconds = maxSeconds;
@@ -31,6 +33,7 @@ class _JobProgressScreenState extends State<JobProgressScreen> {
       // setState(() => seconds--);
       if(seconds>0){
         setState(() => seconds--);
+        visible=true;
       }
       else
       {
@@ -43,6 +46,7 @@ class _JobProgressScreenState extends State<JobProgressScreen> {
       resetTimer();
     }
     setState(() =>timer?.cancel());
+    setState(() => visible=false);
   }
 
   @override
@@ -115,7 +119,10 @@ class _JobProgressScreenState extends State<JobProgressScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        buildTimer(),
+                        Visibility(
+                          visible: visible,
+                            child: buildTimer()
+                        ),
                         const SizedBox(height: 50),
                         BuildButtons(),
                       ],
@@ -147,24 +154,28 @@ class _JobProgressScreenState extends State<JobProgressScreen> {
                 ),
               ],
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 0.0,top: 0.0,right: 0.0,bottom: 30.0),
-              child: FittedBox(
-                child: Container(
-                  width: 220.0,
-                  decoration: BoxDecoration(
-                    color: color,
-                    borderRadius: BorderRadius.circular(10.0),
-                  ) ,
-                  child: MaterialButton(
-                    child:MyText(
-                        text:"job Completed".toUpperCase(),
-                      fontSize: 19.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    onPressed:(){
-                    },
 
+            Visibility(
+              visible:jobCompletedVisisbility ,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 0.0,top: 0.0,right: 0.0,bottom: 30.0),
+                child: FittedBox(
+                  child: Container(
+                    width: 220.0,
+                    decoration: BoxDecoration(
+                      color: color,
+                      borderRadius: BorderRadius.circular(10.0),
+                    ) ,
+                    child: MaterialButton(
+                      child:MyText(
+                          text:"job Completed".toUpperCase(),
+                        fontSize: 19.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      onPressed:(){
+                      },
+
+                    ),
                   ),
                 ),
               ),
@@ -203,9 +214,10 @@ class _JobProgressScreenState extends State<JobProgressScreen> {
         ],
       ),
     ): button_widget(
-      text:'start timer' ,
+      text:'Start Job' ,
       onClicked: (){
         startTimer();
+        jobCompletedVisisbility=true;
       },);
   }
   Widget buildTimer() => SizedBox(
