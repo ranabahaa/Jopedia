@@ -7,6 +7,7 @@ import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:jopedia/modules/button_widget.dart';
 import '../../bloc/cubit.dart';
 import '../../shared/components/component.dart';
+import 'package:jopedia/models/job/job_model.dart';
 
 class JobProgressScreen extends StatefulWidget {
   const JobProgressScreen({Key? key}) : super(key: key);
@@ -28,6 +29,7 @@ class _JobProgressScreenState extends State<JobProgressScreen> {
 
   //void resetTimer() => setState(()=>seconds = maxSeconds);
   void startTimer({bool reset = true}) {
+    ReadTime();
     timer = Timer.periodic(Duration(milliseconds: 100), (_) {
       // setState(() => seconds--);
       if(seconds>0){
@@ -46,6 +48,19 @@ class _JobProgressScreenState extends State<JobProgressScreen> {
     setState(() =>timer?.cancel());
     startJobVisibility =false;
     //setState(() => visible=false);
+  }
+  Future<PostDataModel?> ReadTime() async {
+    final DocPost = FirebaseFirestore.instance.collection('post').doc('bARLIywCJSgrYXQnQil5');
+    final snapshot = await DocPost.get();
+    if(snapshot.exists){
+      //final post = snapshot.data!;
+      final data = PostDataModel.fromJson(snapshot.data()!);
+      final startTime = data.StartTime;
+      final endTime = data.EndTime;
+      print(startTime);
+      print(endTime);
+      //return PostDataModel.fromJson(snapshot.data()!);
+    }
   }
 
   @override
@@ -190,10 +205,18 @@ class _JobProgressScreenState extends State<JobProgressScreen> {
       child: Visibility(
         visible: startJobVisibility,
         child: button_widget(
-          text:'Start Job' ,
+          text:'Start Job',
           onClicked: (){
             startTimer();
             jobCompletedVisisbility=true;
+            FirebaseFirestore.instance.collection('post')
+                .doc("ov7WJUtAdwxYG7rBv311").get().then((value) {
+              print("true");
+            }).catchError((onError) {
+              print(onError.toString());
+              print("false");
+            });
+
           },),
       ),
     );

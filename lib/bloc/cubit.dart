@@ -161,7 +161,6 @@ class AppBloc extends Cubit<AppState> {
       return PostDataModel.fromJson(snapshot.data()!);
     }
   }
-
   //this returns a list not one record
 /*
     Stream<List<PostDataModel>> ShowContract() => FirebaseFirestore.instance.collection('post')
