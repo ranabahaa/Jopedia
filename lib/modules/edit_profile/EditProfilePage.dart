@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:jopedia/layout/home_layout.dart';
 import 'package:jopedia/models/user/user_model.dart';
 import 'package:jopedia/widget/profile_widget.dart';
 import 'package:jopedia/widget/textfield_widget.dart';
@@ -11,7 +12,6 @@ import 'package:jopedia/modules/forget_pass/ForgetPasswordScreen.dart';
 import 'package:jopedia/shared/components/component.dart';
 
 class EditProfilePage extends StatefulWidget {
-
   UserModel user;
   EditProfilePage(this.user);
 
@@ -141,6 +141,32 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 'email': _controllerEmail.text,
                 'phone': _controllerPhone.text,
               });
+
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  action: SnackBarAction(
+                    label: 'Home',
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Home_layout(widget.user),
+                        ),
+                      );
+                    },
+                  ),
+                  content: const Text('Change Successful !'),
+                  duration: const Duration(milliseconds: 1550),
+                  width: 280.0, // Width of the SnackBar.
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10.0, // Inner padding for SnackBar content.
+                  ),
+                  behavior: SnackBarBehavior.floating,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                ),
+              );
             },
           ),
           SizedBox(
