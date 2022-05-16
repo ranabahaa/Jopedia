@@ -26,15 +26,14 @@ class _JobProgressScreenState extends State<JobProgressScreen> {
   Timer? timer;
   var color = Color(0xff50B3CF);
 
-  void resetTimer() => setState(()=>seconds = maxSeconds);
+  //void resetTimer() => setState(()=>seconds = maxSeconds);
   void startTimer({bool reset = true}) {
-    if (reset) {
-      resetTimer();
-    }
     timer = Timer.periodic(Duration(milliseconds: 50), (_) {
       // setState(() => seconds--);
       if(seconds>0){
-        setState(() => seconds--);
+        if (mounted) {
+          setState(() => seconds--);
+        }
         visible=true;
       }
       else
@@ -44,12 +43,12 @@ class _JobProgressScreenState extends State<JobProgressScreen> {
     });
   }
   void stopTimer({bool reset = true}){
-    if(reset){
-      resetTimer();
-    }
     setState(() =>timer?.cancel());
     startJobVisibility =false;
     //setState(() => visible=false);
+  }
+  void dispose(){
+    super.dispose();
   }
 
   @override
@@ -212,7 +211,7 @@ class _JobProgressScreenState extends State<JobProgressScreen> {
         ],
       ),
     ): Visibility(
-      visible: true,
+      visible: startJobVisibility,
       child: button_widget(
         text:'Start Job' ,
         onClicked: (){
