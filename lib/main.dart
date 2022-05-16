@@ -26,6 +26,9 @@ import 'package:jopedia/utils/user_preferences.dart';
 import 'modules/job_view/JobViewScreen.dart';
 import 'modules/pop-up/Homepage.dart';
 import 'package:jopedia/modules/contract/ContractScreen.dart';
+import 'package:jopedia/modules/tryNotification.dart';
+
+import 'modules/trytimer.dart';
 
 Future main() async {
   WidgetsFlutterBinding?.ensureInitialized();
@@ -64,7 +67,7 @@ class MyApp extends StatelessWidget {
                 debugShowCheckedModeBanner: false,
                 //theme: ThemeProvider.of(context),
                 title: title,
-                home: RequestScreen(),
+                home: trytimer(),
               );
             }),
       ),

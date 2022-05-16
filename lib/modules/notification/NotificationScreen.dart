@@ -15,11 +15,27 @@ class _NotificationScreenState extends State<NotificationScreen> {
     super.initState();
   }
   int notificationNumber=4;
+  var color = Color(0xff50B3CF);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xffF6F9FA),
+      appBar: AppBar(
+        backgroundColor: Color(0xffF6F9FA),
+        elevation: 0.0,
+        titleSpacing: 20.0,
+        leading: IconButton(
+          onPressed: (){
+            Navigator.pop(context);
+          },
+          icon: Icon(
+            Icons.arrow_back_ios_outlined,
+            color: color,
+          ),
+        ),
+
+      ),
       body: Padding(
         padding: EdgeInsets.only(left: 18.0,top:25 ,right:18.0 ,bottom:0.0 ),
         child: SingleChildScrollView(

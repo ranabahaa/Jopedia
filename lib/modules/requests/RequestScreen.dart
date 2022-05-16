@@ -15,7 +15,7 @@ class _RequestScreenState extends State<RequestScreen> {
   void initState() {
     super.initState();
   }
-  int notificationNumber=4;
+  int requestsNumber=4;
   var color = Color(0xff50B3CF);
   @override
   Widget build(BuildContext context) {
@@ -53,7 +53,7 @@ class _RequestScreenState extends State<RequestScreen> {
                     ),
                   ),
                   Text(
-                    ' $notificationNumber',
+                    ' $requestsNumber',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 20.0,
@@ -86,7 +86,7 @@ class _RequestScreenState extends State<RequestScreen> {
                 separatorBuilder: (BuildContext context, int index)=>SizedBox(
                   height: 20.0,
                 ),
-                itemCount: 1,
+                itemCount: 8,
               ),
             ],
           ),
