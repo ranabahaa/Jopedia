@@ -108,50 +108,45 @@ class _JobProgressScreenState extends State<JobProgressScreen> {
                 ),
               ],
             ),
-            SizedBox(height: 50.0,),
-            Column(
-             crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Visibility(
-                          visible: visible,
-                            child: Column(
+            Padding(
+              padding: const EdgeInsets.only(left:0.0 ,top: 130.0,right: 0,bottom: 0),
+              child: Center(
+                child: Column(
+                //  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                  //  SizedBox(height: 30,),
+                    Visibility(
+                      visible: visible,
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment:MainAxisAlignment.center,
                               children: [
-                                Row(
-                                  mainAxisAlignment:MainAxisAlignment.center,
-                                  children: [
-                                    MyText(
-                                      text:"Job Has Started",
-                                      fontSize: 23.0,
-                                      //fontWeight: FontWeight.bold,
-                                      colors: color,
-                                    ),
-                                  ],
+                                MyText(
+                                  text:"Job Has Started",
+                                  fontSize: 23.0,
+                                  //fontWeight: FontWeight.bold,
+                                  colors: color,
                                 ),
-                                SizedBox(height: 20.0,),
-                                buildTimer(),
                               ],
-                            )
-                        ),
-                        const SizedBox(height: 50),
-                        BuildButtons(),
-                      ],
+                            ),
+                            SizedBox(height: 20.0,),
+                            buildTimer(),
+                          ],
+                        )
                     ),
-                  ),
+                    const SizedBox(height: 50),
+                    BuildButtons(),
+                  ],
                 ),
-
-              ],
+              ),
             ),
             Spacer(),
-            Visibility(
-              visible:jobCompletedVisisbility ,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 0.0,top: 0.0,right: 0.0,bottom: 30.0),
+            Padding(
+              padding: const EdgeInsets.only(left:0.0 ,top: 0.0,right: 0,bottom: 40),
+              child: Visibility(
+                visible:jobCompletedVisisbility ,
                 child: FittedBox(
                   child: Container(
                     width: 220.0,
@@ -189,14 +184,18 @@ class _JobProgressScreenState extends State<JobProgressScreen> {
           SizedBox(width: 0.0,),
         ],
       ),
-    ): Visibility(
-      visible: startJobVisibility,
-      child: button_widget(
-        text:'Start Job' ,
-        onClicked: (){
-          startTimer();
-          jobCompletedVisisbility=true;
-        },),
+    ): Container(
+      width: 180,
+      height: 43,
+      child: Visibility(
+        visible: startJobVisibility,
+        child: button_widget(
+          text:'Start Job' ,
+          onClicked: (){
+            startTimer();
+            jobCompletedVisisbility=true;
+          },),
+      ),
     );
   }
   Widget buildTimer() => SizedBox(
@@ -207,7 +206,7 @@ class _JobProgressScreenState extends State<JobProgressScreen> {
         children: [
           CircularProgressIndicator(
             value: seconds/maxSeconds,
-            valueColor: AlwaysStoppedAnimation(Colors.white),
+            valueColor: AlwaysStoppedAnimation(Color(0xffEAF2F5)),
             backgroundColor: color,
             strokeWidth: 12,
           ),
@@ -219,13 +218,14 @@ class _JobProgressScreenState extends State<JobProgressScreen> {
   );
   Widget BuildTime(){
     if(seconds==0){
-      return Icon(Icons.done,color: Colors.redAccent,size: 112,);
+      return Icon(Icons.done,color: Color(0xff2ABC6E),size: 112,);
     }
     else
     {
       return MyText(
           text:'$seconds',
-          fontSize: 35.0
+          fontSize: 35.0,
+          colors: Colors.black45,
       );
     }
 
