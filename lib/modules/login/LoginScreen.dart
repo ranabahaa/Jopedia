@@ -60,29 +60,37 @@ class LoginScreen extends StatelessWidget {
                           colors: Color(0xff0F4C5C),
                         ),
                       ),
-                      SizedBox(height: 40.0,),
-                      DefaultTextField(
-                          controller: emailController,
-                          type: TextInputType.emailAddress,
-                          PrefixIcon:Icons.email,
-                          hint: 'Email Address',
-                          validateTixt: "Email"
+                      SizedBox(
+                        height: 40.0,
                       ),
-                      SizedBox(height: 20.0,),
 
+                      DefaultTextField(
+                        controller: emailController,
+                        type: TextInputType.emailAddress,
+                        PrefixIcon: Icons.email,
+                        hint: 'Email Address',
+                        validateTixt: "Email",
+                      ),
+
+                      SizedBox(
+                        height: 20.0,
+                      ),
                       DefaultTextField(
                           controller: passwordController,
                           type: TextInputType.visiblePassword,
-                          PrefixIcon:Icons.lock,
-                          SuffixIcon:cubit.isPassword ? Icons.visibility_off: Icons.visibility,
+                          PrefixIcon: Icons.lock,
+                          SuffixIcon: cubit.isPassword
+                              ? Icons.visibility_off
+                              : Icons.visibility,
                           hint: 'Password',
-                          isPassword:cubit.isPassword,
+                          isPassword: cubit.isPassword,
                           validateTixt: "Password",
-                          SuffixPress: (){
+                          SuffixPress: () {
                             cubit.changePasswordVisibility();
-                          }
+                          }),
+                      SizedBox(
+                        height: 20.0,
                       ),
-                      SizedBox(height: 20.0,),
                       MaterialButton(
                         color: Color(0xff50B3CF),
                         minWidth: double.infinity,
@@ -96,45 +104,53 @@ class LoginScreen extends StatelessWidget {
                             color: Colors.white,
                           ),
                         ),
-                        onPressed: ()
-                        async {
-                          if(FormKey.currentState!.validate()){
-                            var email= emailController.text;
+                        onPressed: () async {
+                          if (FormKey.currentState!.validate()) {
+                            var email = emailController.text;
                             var password = passwordController.text;
-                            try{
-                              final user = await _auth.signInWithEmailAndPassword(
-                                email: email,
+                            try {
+                              final user =
+                                  await _auth.signInWithEmailAndPassword(
+                                email: email.toString().trim(),
                                 password: password,
                               );
-                              if (user != null)
-                              {
-                                var userJson = await FirebaseFirestore.instance.collection("users").doc(user.user?.uid).get();
+                              if (user != null) {
+                                var userJson = await FirebaseFirestore.instance
+                                    .collection("users")
+                                    .doc(user.user?.uid)
+                                    .get();
                                 userModel = UserModel.fromJson(userJson.data());
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => Home_layout(userModel)),
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          Home_layout(userModel)),
                                 );
                               }
-                            }
-                            catch(error){
+                            } catch (error) {
                               print(error);
                             }
                           }
                         },
                       ),
-                      SizedBox(height: 10.0,),
+                      SizedBox(
+                        height: 10.0,
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           MyText(
                             text: 'Don\'t have an account ?',
                             fontSize: 12.0,
-                            colors:Color(0xff0F4C5C).withOpacity(0.4),
+                            colors: Color(0xff0F4C5C).withOpacity(0.4),
                           ),
                           TextButton(
                             onPressed: () {
-                              Navigator.push(context, MaterialPageRoute(
-                                builder:(context)=>RegisterScreen(),),
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => RegisterScreen(),
+                                ),
                               );
                             },
                             child: MyText(
@@ -152,14 +168,16 @@ class LoginScreen extends StatelessWidget {
                           MyText(
                             text: 'Did you forget password ?',
                             fontSize: 12.0,
-                            colors:Color(0xff0F4C5C).withOpacity(0.4),
+                            colors: Color(0xff0F4C5C).withOpacity(0.4),
                           ),
                           TextButton(
                             onPressed: () {
-
-                              Navigator.push(context, MaterialPageRoute(
-                                builder:(context)=>ForgetPasswordScreen(),),);
-
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ForgetPasswordScreen(),
+                                ),
+                              );
                             },
                             child: MyText(
                               text: 'Change password',
@@ -179,6 +197,5 @@ class LoginScreen extends StatelessWidget {
         },
       ),
     );
-
   }
 }

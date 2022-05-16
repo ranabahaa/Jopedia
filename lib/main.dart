@@ -10,7 +10,9 @@ import 'package:jopedia/modules/home/HomeScreen.dart';
 import 'package:jopedia/modules/job_progress/JobProgressScreen.dart';
 import 'package:jopedia/modules/login/LoginScreen.dart';
 import 'package:jopedia/modules/notification/NotificationScreen.dart';
+import 'package:jopedia/modules/notificationTry.dart';
 import 'package:jopedia/modules/register/RegisterScreen.dart';
+import 'package:jopedia/modules/requests/RequestScreen.dart';
 import 'package:jopedia/modules/search/SearchScreen.dart';
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +27,8 @@ import 'package:jopedia/utils/user_preferences.dart';
 import 'modules/job_view/JobViewScreen.dart';
 import 'modules/pop-up/Homepage.dart';
 import 'package:jopedia/modules/contract/ContractScreen.dart';
+import 'package:jopedia/modules/notificationTry.dart';
+import 'modules/trytimer.dart';
 
 Future main() async {
   WidgetsFlutterBinding?.ensureInitialized();
@@ -63,7 +67,7 @@ class MyApp extends StatelessWidget {
                 debugShowCheckedModeBanner: false,
                 //theme: ThemeProvider.of(context),
                 title: title,
-                home: LoginScreen(),
+                home: NotificationScreen(),
               );
             }),
       ),

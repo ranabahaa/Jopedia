@@ -46,7 +46,7 @@ class _JobProgressScreenState extends State<JobProgressScreen> {
       resetTimer();
     }
     setState(() =>timer?.cancel());
-    setState(() => visible=false);
+    //setState(() => visible=false);
   }
 
   @override
