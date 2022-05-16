@@ -218,7 +218,16 @@ class _JobProgressScreenState extends State<JobProgressScreen> {
   );
   Widget BuildTime(){
     if(seconds==0){
-      return Icon(Icons.done,color: Color(0xff2ABC6E),size: 112,);
+      return Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left:0.0 ,top: 10.0,right: 0,bottom: 0),
+            child: Icon(Icons.done,color: Color(0xff2ABC6E),size: 112,),
+          ),
+          SizedBox(height: 10,),
+          MyText(text: 'Finished', colors: color),
+        ],
+      );
     }
     else
     {
