@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
@@ -121,7 +122,23 @@ class _JobProgressScreenState extends State<JobProgressScreen> {
                       children: [
                         Visibility(
                           visible: visible,
-                            child: buildTimer()
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment:MainAxisAlignment.center,
+                                  children: [
+                                    MyText(
+                                      text:"Job Has Started",
+                                      fontSize: 23.0,
+                                      //fontWeight: FontWeight.bold,
+                                      colors: color,
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 20.0,),
+                                buildTimer(),
+                              ],
+                            )
                         ),
                         const SizedBox(height: 50),
                         BuildButtons(),
@@ -129,29 +146,7 @@ class _JobProgressScreenState extends State<JobProgressScreen> {
                     ),
                   ),
                 ),
-                
-                Row(
-                  children: [
-                    MyText(
-                      text:"Timer".toUpperCase(),
-                      fontSize: 15.0,
-                      fontWeight: FontWeight.bold,
-                      colors: color,
-                    ),
-                    Expanded(
-                      child: Slider(
-                        value:progress2,
-                        max: 220.0,
-                        min: 80.0,
-                        onChanged:(value){
-                          setState(() {
-                            progress = value;
-                          });
-                        },
-                      ),
-                    ),
-                  ],
-                ),
+
               ],
             ),
 

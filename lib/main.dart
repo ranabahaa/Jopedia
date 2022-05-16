@@ -67,7 +67,7 @@ class MyApp extends StatelessWidget {
                 debugShowCheckedModeBanner: false,
                 //theme: ThemeProvider.of(context),
                 title: title,
-                home: NotificationScreen(),
+                home: JobProgressScreen(),
               );
             }),
       ),
