@@ -28,7 +28,7 @@ class _JobProgressScreenState extends State<JobProgressScreen> {
 
   //void resetTimer() => setState(()=>seconds = maxSeconds);
   void startTimer({bool reset = true}) {
-    timer = Timer.periodic(Duration(milliseconds: 50), (_) {
+    timer = Timer.periodic(Duration(milliseconds: 100), (_) {
       // setState(() => seconds--);
       if(seconds>0){
         if (mounted) {
@@ -46,9 +46,6 @@ class _JobProgressScreenState extends State<JobProgressScreen> {
     setState(() =>timer?.cancel());
     startJobVisibility =false;
     //setState(() => visible=false);
-  }
-  void dispose(){
-    super.dispose();
   }
 
   @override
@@ -189,25 +186,7 @@ class _JobProgressScreenState extends State<JobProgressScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          button_widget(
-            text: isRunning ?  'Pause' : 'Resume',
-            onClicked: (){
-              if (isRunning) {
-                stopTimer(reset: false);
-              }
-              else{
-                startTimer(reset: false);
-              }
-            },
-          ),
-          SizedBox(width: 20.0,),
-          button_widget(
-            text:'Cancel' ,
-            onClicked: (){
-              stopTimer();
-              //startJobVisibility=false;
-            },
-          ),
+          SizedBox(width: 0.0,),
         ],
       ),
     ): Visibility(
@@ -297,6 +276,7 @@ class _JobProgressScreenState extends State<JobProgressScreen> {
                     fontSize: 18.0,
                   ),),
                 onPressed: (){
+                  stopTimer();
                   FirebaseFirestore.instance.collection('post')
                       .doc("ov7WJUtAdwxYG7rBv311").delete().then((value) {
                     print("true");
