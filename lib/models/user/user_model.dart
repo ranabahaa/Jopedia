@@ -6,6 +6,10 @@ class UserModel {
   late String email;
   late String phone;
   late String uId;
+  late String image;
+  late String about;
+  late double balance;
+
 
   UserModel (
       {
@@ -13,6 +17,10 @@ class UserModel {
         required this.name,
         required this.email,
         required this.phone,
+        required this.image,
+        required this.about,
+        required this.balance,
+
 });
 
   UserModel.fromJson(Map<String, dynamic>? json){
@@ -20,6 +28,10 @@ class UserModel {
     name = json?['name'];
     phone = json?['phone'];
     uId = json?['uId'];
+    image = json?['image'];
+    about = json?['about'];
+    balance = json?['balance'];
+
   }
 
   Map<String, dynamic> toMap()
@@ -29,6 +41,9 @@ class UserModel {
       'email':email,
       'phone':phone,
       'uId':uId,
+      'image':image,
+      'about':about,
+      'balance':balance,
     };
   }
 }

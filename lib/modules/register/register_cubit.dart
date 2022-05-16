@@ -52,6 +52,9 @@ class register_cubit extends Cubit<RegisterStates> {
       email: email,
       phone: phone,
       uId: uId,
+      image: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png',
+      about: 'Write About Yourself',
+      balance: 0.0,
     );
     user = model;
     FirebaseFirestore.instance

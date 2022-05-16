@@ -166,32 +166,37 @@ class Home_layout extends StatelessWidget {
                           },
                         ),
                         SizedBox(width: 10.0,),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children:
-                          [
-                            Text(
-                              'Welcome ${user.name}',
-                              style: TextStyle
-                                (
-                                color: Color(0xff0F4C5C),
-                                fontSize: 15.0,
-                                fontFamily: 'Poppins',
-                                fontWeight: FontWeight.w600,
+                        Container(
+                          width: 150.0,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children:
+                            [
+                              Text(
+                                'Welcome ${user.name}',
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle
+                                  (
+                                  color: Color(0xff0F4C5C),
+                                  fontSize: 15.0,
+                                  fontFamily: 'Poppins',
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
-                            ),
-                            Text(
-                              '${user.email}',
-                              style: TextStyle
-                                (
-                                color: Color(0xffA2BBCD),
-                                fontSize: 10.0,
-                                fontFamily: 'Poppins',
-                                fontWeight: FontWeight.w300,
+                              Text(
+                                '${user.email}',
+                                style: TextStyle
+                                  (
+                                  color: Color(0xffA2BBCD),
+                                  fontSize: 10.0,
+                                  fontFamily: 'Poppins',
+                                  fontWeight: FontWeight.w300,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ],
                     ),
