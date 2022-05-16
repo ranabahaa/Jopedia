@@ -11,7 +11,6 @@ import '../../bloc/cubit.dart';
 import '../../bloc/states.dart';
 
 class ContractScreen extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider(

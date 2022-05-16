@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../shared/components/component.dart';
+
 
 class RequestScreen extends StatefulWidget {
   const RequestScreen({Key? key}) : super(key: key);
@@ -14,7 +16,7 @@ class _RequestScreenState extends State<RequestScreen> {
     super.initState();
   }
   int notificationNumber=4;
-
+  var color = Color(0xff50B3CF);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +31,7 @@ class _RequestScreenState extends State<RequestScreen> {
           },
           icon: Icon(
             Icons.arrow_back_ios_outlined,
-            color: Colors.teal,
+            color: color,
           ),
         ),
 
@@ -43,11 +45,11 @@ class _RequestScreenState extends State<RequestScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'you have ',
+                    'You Have',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 20.0,
-                      color: Color(0xff31836D),
+                      color: color,
                     ),
                   ),
                   Text(
@@ -59,43 +61,22 @@ class _RequestScreenState extends State<RequestScreen> {
                     ),
                   ),
                   Text(
-                    ' new notifications',
+                    ' Requests',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 20.0,
-                      color: Color(0xff31836D),
+                      color: color,
                     ),
+                  ),
+                  SizedBox(width: 5.0,),
+                  Icon(
+                    Icons.mail_rounded,
+                    color:  color,
                   ),
                 ],
               ),
               SizedBox(
-                height: 40.0,
-              ),
-              Row(
-                // mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Today',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18.0,
-                      color: Color(0xff0CA6B7),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 4.0,
-                  ),
-                  Padding(
-                    padding: const EdgeInsetsDirectional.only(end: 0.0, top: 5.0),
-                    child: CircleAvatar(
-                      radius: 4.0,
-                      backgroundColor: Colors.red,
-                    ),
-                  ),
-                ],
-              ), //today text
-              SizedBox(
-                height: 20.0,
+                height: 70.0,
               ),
               ListView.separated(
                 shrinkWrap: true,
@@ -144,84 +125,117 @@ class _RequestScreenState extends State<RequestScreen> {
             ),
             Expanded(
               child: Column(
-                //crossAxisAlignment: CrossAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
+                  Container(
+                    margin: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
+                    child: Text(
+                      'Rana Bahaa',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        color: color,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16.0,
+                      ),
+                    ),
+                  ),
+                  SizedBox(height:12),
                   Row(
                     children: [
-                      Container(
-                        margin: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
-                        child: Text(
-                          'Rana Bahaa',
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            color: Color(0xff0CA6B7),
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16.0,
-                          ),
-                        ),
-                      ),
-                      Container(
-                        width: 25.0,
-                        height: 25.0,
-                        margin: EdgeInsets.fromLTRB(125.0, 10.0, 0.0, 0.0),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(20.0),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey,
-                              offset: Offset(0.5, 1.0), //(x,y)
-                              blurRadius: 6.0,
-                            ),
-                          ],
-                        ),
-                        child: MaterialButton(
-                          padding: EdgeInsets.all(0),
-                          minWidth: 0,
-                          onPressed: (){
 
-                          },
-                          child: Icon(
-                            Icons.close_rounded,
-                            color: Color(0xffBB0B0B),
-                            size: 22.0,
+                      Container(
+                          margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
+                          width: 55,
+                          height: 30,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(5.0),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey,
+                                //offset: Offset(0.5, 0.5), //(x,y)
+                                blurRadius: 3.5,
+                              ),
+                            ],
                           ),
-                        ),
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 4,top: 2),
+                            child: MyText(text:'46 LE',colors: color),
+                          )
                       ),
+
                     ],
                   ),
-                  SizedBox(
-                    height: 5.0,
-                  ),
-                  Row(
-                    // mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: Text(
-                          'transfered 250 LE to you',
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            color: Color(0xff31836D),
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 5.0,
-                  ),
-
-                  Text('sbwkwdewo'),
-
-
-
                 ],
               ),
             ),
+            Column(
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      width: 25.0,
+                      height: 25.0,
+                      margin: EdgeInsets.fromLTRB(0.0, 10.0, 15.0, 0.0),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20.0),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey,
+                            //offset: Offset(0.5, 0.5), //(x,y)
+                            blurRadius: 4.0,
+                          ),
+                        ],
+                      ),
+                      child:MaterialButton(
+                        padding: EdgeInsets.all(0),
+                        minWidth: 0,
+                        onPressed: (){
 
+                        },
+                        child: Icon(
+                          Icons.close_rounded,
+                          color: Color(0xffBB0B0B),
+                          size: 22.0,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: 25.0,
+                      height: 25.0,
+                      margin: EdgeInsets.fromLTRB(0.0, 10.0, 15.0, 0.0),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20.0),
+                        boxShadow: [
+                           BoxShadow(
+                            color: Colors.grey,
+                          //  offset: Offset(0.5, 1.0), //(x,y)
+                             blurRadius: 4.0,
+                          ),
+
+                        ],
+                      ),
+                      child:MaterialButton(
+                        padding: EdgeInsets.all(0),
+                        minWidth: 0,
+                        onPressed: (){
+
+                        },
+                        child: Icon(
+                          Icons.check,
+                          color: Colors.green,
+                          size: 22.0,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ],
         ),
       );

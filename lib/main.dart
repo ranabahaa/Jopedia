@@ -11,6 +11,7 @@ import 'package:jopedia/modules/job_progress/JobProgressScreen.dart';
 import 'package:jopedia/modules/login/LoginScreen.dart';
 import 'package:jopedia/modules/notification/NotificationScreen.dart';
 import 'package:jopedia/modules/register/RegisterScreen.dart';
+import 'package:jopedia/modules/requests/RequestScreen.dart';
 import 'package:jopedia/modules/search/SearchScreen.dart';
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/material.dart';
@@ -63,7 +64,7 @@ class MyApp extends StatelessWidget {
                 debugShowCheckedModeBanner: false,
                 //theme: ThemeProvider.of(context),
                 title: title,
-                home: LoginScreen(),
+                home: RequestScreen(),
               );
             }),
       ),
