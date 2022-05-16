@@ -19,6 +19,7 @@ class _JobProgressScreenState extends State<JobProgressScreen> {
   double progress2 = 120.0;
   bool visible = false;
   bool jobCompletedVisisbility = false;
+  bool startJobVisibility = true;
   double progress = 120.0;
   static const maxSeconds = 50;
   int seconds = maxSeconds;
@@ -47,6 +48,7 @@ class _JobProgressScreenState extends State<JobProgressScreen> {
       resetTimer();
     }
     setState(() =>timer?.cancel());
+    startJobVisibility =false;
     //setState(() => visible=false);
   }
 
@@ -204,16 +206,20 @@ class _JobProgressScreenState extends State<JobProgressScreen> {
             text:'Cancel' ,
             onClicked: (){
               stopTimer();
+              //startJobVisibility=false;
             },
           ),
         ],
       ),
-    ): button_widget(
-      text:'Start Job' ,
-      onClicked: (){
-        startTimer();
-        jobCompletedVisisbility=true;
-      },);
+    ): Visibility(
+      visible: true,
+      child: button_widget(
+        text:'Start Job' ,
+        onClicked: (){
+          startTimer();
+          jobCompletedVisisbility=true;
+        },),
+    );
   }
   Widget buildTimer() => SizedBox(
     width: 200,
