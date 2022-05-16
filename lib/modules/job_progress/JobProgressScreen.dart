@@ -151,7 +151,7 @@ class _JobProgressScreenState extends State<JobProgressScreen> {
 
               ],
             ),
-
+            Spacer(),
             Visibility(
               visible:jobCompletedVisisbility ,
               child: Padding(
