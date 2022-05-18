@@ -8,6 +8,9 @@ import 'package:jopedia/widget/profile_widget.dart';
 import 'package:jopedia/widget/textfield_widget.dart';
 import 'package:jopedia/modules/my_profile/ProfilePage.dart';
 import 'package:jopedia/modules/forget_pass/ForgetPasswordScreen.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
 import 'package:jopedia/shared/components/component.dart';
 
@@ -20,14 +23,44 @@ class EditProfilePage extends StatefulWidget {
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
-  var imagePath =
-      'https://images.unsplash.com/photo-1554151228-14d9def656e4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=333&q=80';
   final _auth = FirebaseAuth.instance;
+
+  late File image;
+  late String imageUrl;
+
 
   @override
   void initState() {
     super.initState();
   }
+
+
+
+  sendData() async{
+    var imageRef = FirebaseStorage.instance.ref().child("profiles/"+widget.user.uId);
+    await imageRef.putFile(image);
+    imageUrl = await imageRef.getDownloadURL();
+    widget.user.image = imageUrl;
+    await FirebaseFirestore.instance.collection('users').doc(widget.user.uId).update(
+      { 'image' : imageUrl.toString()  });
+    setState(() {});
+  }
+
+
+  Future getImage() async {
+
+    final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+
+    final imageTemp = File(image!.path);
+    setState(() => this.image = imageTemp);
+    if (image != null){
+      sendData();
+    }
+
+  }
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +70,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         TextEditingController(text: widget.user.email);
     final TextEditingController _controllerPhone =
         TextEditingController(text: widget.user.phone);
+
 
     return Scaffold(
       appBar: AppBar(
@@ -53,9 +87,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
         physics: BouncingScrollPhysics(),
         children: [
           ProfileWidget(
-            imagePath: imagePath,
+            imagePath: widget.user.image,
             isEdit: true,
-            onClicked: () async {},
+            onClicked: () => getImage(),
           ),
           const SizedBox(height: 24),
           Column(
@@ -208,5 +242,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         ],
       ),
     );
+
+
   }
 }

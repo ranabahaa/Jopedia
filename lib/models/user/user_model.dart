@@ -30,7 +30,7 @@ class UserModel {
     uId = json?['uId'];
     image = json?['image'];
     about = json?['about'];
-    balance = json?['balance'];
+    balance = json?['balance'] as double;
 
   }
 

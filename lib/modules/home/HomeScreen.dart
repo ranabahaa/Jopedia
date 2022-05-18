@@ -480,6 +480,9 @@ class HomeScreen extends StatelessWidget {
 Widget buildPostItem (PostDataModel post) =>  Column(
   children: <Widget>[
     InkWell(
+      onTapDown: (_){
+        print(post.JOBID);
+      },
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Stack(

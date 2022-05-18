@@ -12,6 +12,7 @@ import 'package:jopedia/widget/profile_widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:rate_in_stars/rate_in_stars.dart';
 
 
 class ProfilePage extends StatefulWidget {
@@ -36,7 +37,6 @@ class _ProfilePageState extends State<ProfilePage>
   Widget build(BuildContext context) {
     TabController _tabController = TabController(length: 3, vsync: this);
 
-    var imagePath = 'https://images.unsplash.com/photo-1554151228-14d9def656e4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=333&q=80';
 
     return Scaffold(
 
@@ -65,13 +65,14 @@ class _ProfilePageState extends State<ProfilePage>
                       height: 100.0,
                     ),
                     ProfileWidget(
-                      imagePath: imagePath,
-                      onClicked: () {
-                        Navigator.push(
+                      imagePath: widget.user.image,
+                      onClicked: () async {
+                        await Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => EditProfilePage(widget.user)),
                         );
+                        setState(() {});
                       },
                     ),
                     SizedBox(
@@ -96,6 +97,11 @@ class _ProfilePageState extends State<ProfilePage>
                         color: Colors.white,
                         fontSize: 15.0,
                       ),
+                    ),
+                    RatingStars(
+                      rating: 3.5,
+                      editable: false,
+                      color: Colors.amber,
                     )
                   ]),
                 ),

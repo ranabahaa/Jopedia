@@ -62,7 +62,7 @@ class HomeLayoutCubit extends Cubit<HomeLayoutState> {
     {
       value.docs.forEach((element) {
 
-        posts.add(PostDataModel.fromJson(element.data()));
+        posts.add(PostDataModel.fromJson(element.data(), element.id));
       });
       emit(GetPostsDataSuccsess());
     })

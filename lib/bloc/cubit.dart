@@ -54,7 +54,7 @@ class AppBloc extends Cubit<AppState> {
   }
 
   void CreatJob({
-    //@required String JOB_ID,
+    required String JOBID,
     required String DISCREPTION,
     required String JOB_LOCATION,
     required String JOB_TITLE,
@@ -69,6 +69,7 @@ class AppBloc extends Cubit<AppState> {
     //@required String COMPLETED_JOB,
   }) {
     PostDataModel model = PostDataModel(
+      JOBID: JOBID,
       DISCREPTION: DISCREPTION,
       JOB_LOCATION: JOB_LOCATION,
       JOB_TITLE: JOB_TITLE,
@@ -86,6 +87,7 @@ class AppBloc extends Cubit<AppState> {
     FirebaseFirestore.instance.collection('post')
         .add(model.toJson())
         .then((value) {
+          model.JOBID = value.id;
       print("ppp");
       emit(CreatJobSuccess());
     }).catchError((error) {
@@ -158,7 +160,7 @@ class AppBloc extends Cubit<AppState> {
     final DocPost = FirebaseFirestore.instance.collection('post').doc('bARLIywCJSgrYXQnQil5');
     final snapshot = await DocPost.get();
     if(snapshot.exists){
-      return PostDataModel.fromJson(snapshot.data()!);
+      return PostDataModel.fromJson(snapshot.data()!, snapshot.id);
     }
   }
   //this returns a list not one record
@@ -177,8 +179,7 @@ class AppBloc extends Cubit<AppState> {
         .then((value)
     {
       value.docs.forEach((element) {
-
-        posts.add(PostDataModel.fromJson(element.data()));
+        posts.add(PostDataModel.fromJson(element.data(), element.id));
       });
       emit(GetPostsDataSuccsess());
     })

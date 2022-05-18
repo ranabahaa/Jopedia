@@ -159,6 +159,7 @@ class Home_layout extends StatelessWidget {
                             radius: 36.0,
                           ),
                           onTap: (){
+                            Navigator.pop(context);
                             Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) => ProfilePage(user)),

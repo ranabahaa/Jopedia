@@ -36,13 +36,13 @@ class ProfileWidget extends StatelessWidget {
   }
 
   Widget buildImage() {
-    final image = AssetImage(imagePath);
+    final image = NetworkImage(imagePath);
 
     return ClipOval(
       child: Material(
         color: Colors.transparent,
         child: Ink.image(
-          image: AssetImage('assets/images/drawer.jpeg',),
+          image: image,
           fit: BoxFit.cover,
           width: 128,
           height: 128,

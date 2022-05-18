@@ -38,7 +38,7 @@ class _trytimerState extends State<trytimer> {
     final snapshot = await DocPost.get();
     if(snapshot.exists){
       //final post = snapshot.data!;
-      final data = PostDataModel.fromJson(snapshot.data()!);
+      final data = PostDataModel.fromJson(snapshot.data()!, snapshot.id);
       final startTime = data.StartTime;
       final endTime = data.EndTime;
       print(startTime);

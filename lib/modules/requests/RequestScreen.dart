@@ -12,13 +12,20 @@ class RequestScreen extends StatefulWidget {
 }
 
 class _RequestScreenState extends State<RequestScreen> {
+  List<Widget> chatItems = [];
+
+  @override
   void initState() {
+    for (int i = 0; i < 8; i++){
+      chatItems.insert(i, BuildChatItem(i));
+    }
     super.initState();
   }
   int requestsNumber=4;
   var color = Color(0xff50B3CF);
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: Color(0xffF6F9FA),
       appBar: AppBar(
@@ -82,11 +89,11 @@ class _RequestScreenState extends State<RequestScreen> {
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
                 scrollDirection: Axis.vertical,
-                itemBuilder: (BuildContext context, int index)=>BuildChatItem(),
+                itemBuilder: (BuildContext context, int index)=>chatItems[index],
                 separatorBuilder: (BuildContext context, int index)=>SizedBox(
                   height: 20.0,
                 ),
-                itemCount: 8,
+                itemCount: chatItems.length,
               ),
             ],
           ),
@@ -96,7 +103,7 @@ class _RequestScreenState extends State<RequestScreen> {
   }
 
 
-  Widget BuildChatItem()=>
+  Widget BuildChatItem(int index)=>
       Container(
         height: 80.0,
         margin: EdgeInsets.symmetric(vertical: 0.0, horizontal: 5.0),
@@ -194,6 +201,9 @@ class _RequestScreenState extends State<RequestScreen> {
                         padding: EdgeInsets.all(0),
                         minWidth: 0,
                         onPressed: (){
+                          setState(() {
+                            chatItems.removeAt(index);
+                          });
 
                         },
                         child: Icon(
@@ -223,6 +233,12 @@ class _RequestScreenState extends State<RequestScreen> {
                         padding: EdgeInsets.all(0),
                         minWidth: 0,
                         onPressed: (){
+
+                          setState(() {
+                            chatItems.removeAt(index);
+                          });
+
+
 
                         },
                         child: Icon(

@@ -9,12 +9,13 @@ class PostDataModel {
   late String StartTime;
   late String EndTime;
   late String PostTime;
+  late String JOBID;
   //late final String USER_ID;
   //late final String WORKER_ID;
   //late final String COMPLETED_JOB;
 
   PostDataModel({
-    //required this.JOB_ID,
+    required this.JOBID,
     required this.DISCREPTION,
     required this.JOB_LOCATION,
     required this.JOB_TITLE,
@@ -29,8 +30,8 @@ class PostDataModel {
     //required this.COMPLETED_JOB,
   });
 
-  PostDataModel.fromJson(Map<String, dynamic> json) {
-    //JOB_ID = json['JOB_ID'] ?? '';
+  PostDataModel.fromJson(Map<String, dynamic> json, String? id) {
+    JOBID = id ?? '';
     DISCREPTION = json['DISCREPTION'] ?? '';
     JOB_LOCATION = json['JOB_LOCATION'] ?? '';
     JOB_TITLE = json['JOB_TITLE'] ?? '';

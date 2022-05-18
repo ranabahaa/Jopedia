@@ -319,6 +319,7 @@ class CreateJobScreen extends StatelessWidget {
                             onPressed: () {
                               if(FormKey.currentState!.validate()){
                                  AppBloc.get(context).CreatJob(
+                                   JOBID: "",
                                     DISCREPTION: description_conroller.text,
                                     JOB_LOCATION: location_conroller.text,
                                     JOB_TITLE: title_conroller.text,
