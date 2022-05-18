@@ -10,7 +10,7 @@ class PostDataModel {
   late String EndTime;
   late String PostTime;
   late String JOBID;
-  //late final String USER_ID;
+  late final String USER_ID;
   //late final String WORKER_ID;
   //late final String COMPLETED_JOB;
 
@@ -25,23 +25,23 @@ class PostDataModel {
     required this.StartTime,
     required this.EndTime,
     required this.PostTime,
-    //required this.USER_ID,
+    required this.USER_ID,
     //required this.WORKER_ID,
     //required this.COMPLETED_JOB,
   });
 
-  PostDataModel.fromJson(Map<String, dynamic> json, String? id) {
+  PostDataModel.fromJson(Map<String, dynamic>? json, String? id) {
     JOBID = id ?? '';
-    DISCREPTION = json['DISCREPTION'] ?? '';
-    JOB_LOCATION = json['JOB_LOCATION'] ?? '';
-    JOB_TITLE = json['JOB_TITLE'] ?? '';
-    JOB_SALARY = json['JOB_SALARY'] ?? '';
-    StartDate = json['StartDate'] ?? '';
-    EndDate = json['EndDate'] ?? '';
-    StartTime = json['StartTime'] ?? '';
-    EndTime = json['EndTime'] ?? '';
-    PostTime = json['PostTime'] ?? '';
-    //USER_ID = json['USER_ID'] ?? '';
+    DISCREPTION = json?['DISCREPTION'] ?? '';
+    JOB_LOCATION = json?['JOB_LOCATION'] ?? '';
+    JOB_TITLE = json?['JOB_TITLE'] ?? '';
+    JOB_SALARY = json?['JOB_SALARY'] ?? '';
+    StartDate = json?['StartDate'] ?? '';
+    EndDate = json?['EndDate'] ?? '';
+    StartTime = json?['StartTime'] ?? '';
+    EndTime = json?['EndTime'] ?? '';
+    PostTime = json?['PostTime'] ?? '';
+    USER_ID = json?['USER_ID'] ?? '';
     //WORKER_ID = json['WORKER_ID'] ?? '';
     //COMPLETED_JOB = json['COMPLETED_JOB'] ?? '';
 
@@ -59,7 +59,7 @@ class PostDataModel {
       'StartTime': StartTime,
       'EndTime': EndTime,
       'PostTime' : PostTime ,
-      //'USER_ID': USER_ID,
+      'USER_ID': USER_ID,
       //'WORKER_ID': WORKER_ID,
       //'COMPLETED_JOB': COMPLETED_JOB,
     };

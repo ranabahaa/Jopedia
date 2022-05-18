@@ -29,11 +29,11 @@ class _SearchScreenState extends State<SearchScreen> {
             //   NetworkImage(snapshotData.docs[index].get('image')),
             // ),
             onTap: (){
-              Navigator.push(
+             /* Navigator.push(
                 context,
                 MaterialPageRoute(
                     builder: (context) => JobViewScreen())
-              );
+              );*/
 
             },
             title: Text(

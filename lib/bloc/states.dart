@@ -51,6 +51,24 @@ class NearbyJobs extends AppState {}
 
 class DurationJobs extends AppState {}
 
+class GetUserDataLoading extends AppState {}
+
+class GetUserDataSuccsess extends AppState {}
+
+class GetUserDataError extends AppState {
+  final String error;
+
+  GetUserDataError(this.error);
+}
+
+class SavedSuccessState extends AppState {}
+
+class SavedErrorState extends AppState {
+  final String error;
+
+  SavedErrorState(this.error);
+}
+
 
 
 

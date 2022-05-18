@@ -68,6 +68,7 @@ class AppBloc extends Cubit<AppState> {
     //@required String WORKER_ID,
     //@required String COMPLETED_JOB,
   }) {
+    final user = FirebaseAuth.instance.currentUser;
     PostDataModel model = PostDataModel(
       JOBID: JOBID,
       DISCREPTION: DISCREPTION,
@@ -79,7 +80,7 @@ class AppBloc extends Cubit<AppState> {
       StartTime : StartTime,
       EndTime : EndTime,
       PostTime : PostTime ,
-      //USER_ID : USER_ID;
+      USER_ID : user!.uid,
       //WORKER_ID : WORKER_ID;
       //COMPLETED_JOB : COMPLETED_JOB;
     );
@@ -124,13 +125,13 @@ class AppBloc extends Cubit<AppState> {
     required String JOB_ID,
     required String JOB_SALARY,
     required String USER_ID,
-    required String WORKER_ID,
   }) {
+    final user = FirebaseAuth.instance.currentUser;
     RequestDataModel model = RequestDataModel(
       JOB_ID: JOB_ID,
       JOB_SALARY: JOB_SALARY,
       USER_ID: USER_ID,
-      WORKER_ID : WORKER_ID,
+      WORKER_ID : user!.uid,
     );
 
     FirebaseFirestore.instance.collection('request')
@@ -189,4 +190,41 @@ class AppBloc extends Cubit<AppState> {
     }
     );
   }
+  void SaveJob (String jopId){
+    final user = FirebaseAuth.instance.currentUser;
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(user?.uid)
+        .collection('savedPosts')
+        .doc(jopId)
+        .set({
+      'Save': true,
+    }).then((value) {
+      print('SavedSuccess');
+      emit(SavedSuccessState());
+    }).catchError((error) {
+      print('SavedError');
+      emit(SavedErrorState(error.toString()));
+    });
+
+  }
+  PostDataModel? model;
+  PostDataModel? GetCurrentPost (String jobId){
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(jobId)
+        .get()
+        .then((value)
+    {
+      model = PostDataModel.fromJson((value.data()!),value.id);
+      print (value.data());
+    })
+        .catchError((error){
+      print(error.toString());
+
+    }
+    );
+    return model;
+  }
+
 }

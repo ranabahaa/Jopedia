@@ -24,6 +24,7 @@ class HomeScreen extends StatelessWidget {
         listener: (BuildContext context, state) {},
         builder: (BuildContext context, state) {
           var cubit = AppBloc.get(context);
+          int sama =3;
 
           /*PostDataModel posts = cubit.posts[2];
           print(posts.DISCREPTION);*/
@@ -461,7 +462,7 @@ class HomeScreen extends StatelessWidget {
                                   shrinkWrap: true,
                                   physics: NeverScrollableScrollPhysics(),
                                   separatorBuilder:(context, index) => myDivider(),
-                                  itemBuilder: (context, index) => buildPostItem (cubit.posts[index])
+                                  itemBuilder: (context, index) => buildPostItem (cubit.posts[index],context)
 
                             ),
                             SizedBox(height: 20.0,),
@@ -477,11 +478,18 @@ class HomeScreen extends StatelessWidget {
         },
     );
   }
-Widget buildPostItem (PostDataModel post) =>  Column(
+Widget buildPostItem (PostDataModel post,context) =>  Column(
   children: <Widget>[
     InkWell(
       onTapDown: (_){
-        print(post.JOBID);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => JobViewScreen(post.JOBID),
+          ),
+        );
+        /*print(post.JOBID);*/
+        /*print(post.USER_ID);*/
       },
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -545,7 +553,8 @@ Widget buildPostItem (PostDataModel post) =>  Column(
                 ),
                 child: GestureDetector(
                   onTap: () {
-                    /*print(HomeCubit.get(context).posts.length);*/
+                    AppBloc.get(context).SaveJob(post.JOBID);
+                    /*AppBloc.get(context).SavePost(AppBloc.get(context).postsId![index],index);*/
                     /*if (cubit.isSaveTrue ==
                         false) {
                       cubit.isSaveTrueYes();

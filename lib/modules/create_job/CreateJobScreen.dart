@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:jopedia/models/user/user_model.dart';
 import 'package:jopedia/shared/components/component.dart';
 
 import '../../bloc/cubit.dart';
@@ -31,6 +32,8 @@ class CreateJobScreen extends StatelessWidget {
         child:BlocConsumer<AppBloc, AppState>(
         listener: (BuildContext context, state) {},
         builder: (BuildContext context, state) {
+          var cubit = AppBloc.get(context);
+          UserModel model;
           return Scaffold(
             appBar: AppBar(
               title: Text(''),

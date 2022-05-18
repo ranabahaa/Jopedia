@@ -11,11 +11,11 @@ class RequestDataModel {
     required this.WORKER_ID,
   });
 
-  RequestDataModel.fromJson(Map<String, dynamic> json) {
-    JOB_ID = json['JOB_ID'] ?? '';
-    JOB_SALARY = json['JOB_SALARY'] ?? '';
-    USER_ID = json['USER_ID'] ?? '';
-    WORKER_ID = json['WORKER_ID'] ?? '';
+  RequestDataModel.fromJson(Map<String, dynamic>? json) {
+    JOB_ID = json?['JOB_ID'] ?? '';
+    JOB_SALARY = json?['JOB_SALARY'] ?? '';
+    USER_ID = json?['USER_ID'] ?? '';
+    WORKER_ID = json?['WORKER_ID'] ?? '';
   }
 
   Map<String, dynamic> toJson() {
