@@ -102,6 +102,7 @@ class HomeScreen extends StatelessWidget {
                                 GestureDetector(
                                   onTap: () {
                                     cubit.isAllTrueYes();
+                                    cubit.GetSavedPostsData();
                                   },
                                   child: Column(
                                     children: [

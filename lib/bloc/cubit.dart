@@ -14,6 +14,7 @@ import 'package:jopedia/modules/home/home_states.dart';
 
 import '../models/job/job_model.dart';
 import '../models/request/request_model.dart';
+import '../models/user/user_model.dart';
 
 class AppBloc extends Cubit<AppState> {
   AppBloc() : super(InitialState());
@@ -226,5 +227,49 @@ class AppBloc extends Cubit<AppState> {
     );
     return model;
   }
+  List<String>? savedId=[];
+
+  void GetSavedPostsData (){
+    emit(GetSavedPostsDataLoading());
+    final user = FirebaseAuth.instance.currentUser;
+    FirebaseFirestore.instance.collection('users').doc(user!.uid).collection('savedPosts').get().then((value)
+    {
+      value.docs.forEach((element) {
+        savedId!.add(element.id);
+      });
+      print(savedId);
+
+      emit(GetSavedPostsDataSuccsess());
+    }).catchError((error){
+      print(error.toString());
+      emit(GetSavedPostsDataError(error.toString()));
+    }
+    );
+  }
+  /*void GetSavedPosts (){
+    emit(GetSavedPostsDataLoading());
+    final user = FirebaseAuth.instance.currentUser;
+    FirebaseFirestore.instance.collection('post').get().then((value)
+    {
+      for( ){
+        value.docs.forEach((element) {
+          if (element.id==savedId?[])
+          {
+
+          }
+
+        });
+      }
+
+
+
+      emit(GetSavedPostsDataSuccsess());
+    }).catchError((error){
+      print(error.toString());
+      emit(GetSavedPostsDataError(error.toString()));
+    }
+    );
+  }*/
+
 
 }
