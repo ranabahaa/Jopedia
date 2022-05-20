@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:jopedia/modules/contract/ContractScreen.dart';
 import '../../shared/components/component.dart';
 
 
@@ -34,7 +34,7 @@ class _RequestScreenState extends State<RequestScreen> {
         titleSpacing: 20.0,
         leading: IconButton(
           onPressed: (){
-            Navigator.pop(context);
+           Navigator.pop(context);
           },
           icon: Icon(
             Icons.arrow_back_ios_outlined,
@@ -79,6 +79,7 @@ class _RequestScreenState extends State<RequestScreen> {
                   Icon(
                     Icons.mail_rounded,
                     color:  color,
+                    size: 22.7,
                   ),
                 ],
               ),
@@ -233,11 +234,9 @@ class _RequestScreenState extends State<RequestScreen> {
                         padding: EdgeInsets.all(0),
                         minWidth: 0,
                         onPressed: (){
-
                           setState(() {
                             chatItems.removeAt(index);
                           });
-
 
 
                         },

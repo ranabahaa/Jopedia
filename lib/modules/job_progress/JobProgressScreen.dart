@@ -3,7 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
+import 'package:intl/intl.dart';
 import 'package:jopedia/modules/button_widget.dart';
 import '../../bloc/cubit.dart';
 import '../../shared/components/component.dart';
@@ -17,37 +19,69 @@ class JobProgressScreen extends StatefulWidget {
 }
 
 class _JobProgressScreenState extends State<JobProgressScreen> {
-  double progress2 = 120.0;
   bool visible = false;
   bool jobCompletedVisisbility = false;
   bool startJobVisibility = true;
-  double progress = 120.0;
-  static const maxSeconds = 50;
-  int seconds = maxSeconds;
+  Duration duration = Duration();
+  /*var initialIndicatorValue=0.0;
+  var incIndecatorBy=0.001;*/
+  //var sum ;
+  //var lastIndicatorValue=initialIndicatorValue +incIndecatorBy;
+  int totalSeconds = 60;
+  int totalMinutes=30;
+  int totalHours=60;
+  double progressFraction = 0.0;
+  int percentage = 0;
+  var sec;
+  var mins;
+  var hrs;
+  var totalTime;
   Timer? timer;
   var color = Color(0xff50B3CF);
 
+/*void initState(){
+
+}*/
   //void resetTimer() => setState(()=>seconds = maxSeconds);
-  void startTimer({bool reset = true}) {
+  void startTimer() {
     ReadTime();
-    timer = Timer.periodic(Duration(milliseconds: 100), (_) {
-      // setState(() => seconds--);
-      if(seconds>0){
+
+    timer = Timer.periodic(Duration(seconds: 1 ), (_) {
+
+      visible=true;
+      if(sec>0){
         if (mounted) {
-          setState(() => seconds--);
+          setState(() => sec--);
         }
-        visible=true;
       }
-      else
-      {
-        stopTimer(reset: false);
+      if (sec==0){
+        if (mounted) {
+          setState(
+                  () => mins--);
+          setState(()=> sec=60);
+          setState(()=> sec--);
+        }
       }
+      if ((sec==0 && mins==0 ) || mins<0){
+        if (mounted) {
+          setState(() => hrs--);
+          setState(()=> mins=60);
+          setState(()=> sec=0);
+        }
+      }
+      setState(() {
+        totalTime=totalMinutes+totalHours+totalSeconds;
+        // progressFraction = (totalSeconds - sec) / totalSeconds;
+        progressFraction = ((totalMinutes+hrs) - mins) / totalMinutes;
+        percentage = (progressFraction*100).floor();
+
+      });
+
     });
   }
-  void stopTimer({bool reset = true}){
+  void stopTimer(){
     setState(() =>timer?.cancel());
     startJobVisibility =false;
-    //setState(() => visible=false);
   }
   Future<PostDataModel?> ReadTime() async {
     final DocPost = FirebaseFirestore.instance.collection('post').doc('bARLIywCJSgrYXQnQil5');
@@ -57,9 +91,24 @@ class _JobProgressScreenState extends State<JobProgressScreen> {
       final data = PostDataModel.fromJson(snapshot.data()!, snapshot.id);
       final startTime = data.StartTime;
       final endTime = data.EndTime;
+      var format = DateFormat("hh:mm a");
+      var one = format.parse(startTime);
+      var two = format.parse(endTime);
+      var jobDuration = two.difference(one);
+      hrs = jobDuration.inHours;
+      var minscalc = jobDuration.inMinutes;
+      mins = minscalc%60;
+      var seccalc = jobDuration.inSeconds;
+      sec = seccalc%mins;
+
       print(startTime);
       print(endTime);
-      //return PostDataModel.fromJson(snapshot.data()!);
+      print(jobDuration);
+      print(hrs);
+      print(mins);
+      print(seccalc);
+      print(minscalc);
+      print(sec);
     }
   }
 
@@ -84,7 +133,7 @@ class _JobProgressScreenState extends State<JobProgressScreen> {
             child:MyText(
               text:'Cancel',
               fontSize: 16.0,
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w600,
               colors: color,
             ),
             onPressed:(){
@@ -99,7 +148,7 @@ class _JobProgressScreenState extends State<JobProgressScreen> {
 
       ),
       body: Padding(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(15.0),
         child: Column(
           children: [
             Row(
@@ -107,10 +156,10 @@ class _JobProgressScreenState extends State<JobProgressScreen> {
               children: [
                 FittedBox(
                   child: MyText(
-                      text: 'Current Progress',
-                      colors:  color,
-                    fontSize: 24.0,
-                    fontWeight: FontWeight.bold,
+                    text: 'Current Progress',
+                    colors:  color,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 24,
                   ),
                 ),
                 SizedBox(
@@ -127,12 +176,12 @@ class _JobProgressScreenState extends State<JobProgressScreen> {
               padding: const EdgeInsets.only(left:0.0 ,top: 130.0,right: 0,bottom: 0),
               child: Center(
                 child: Column(
-                //  mainAxisAlignment: MainAxisAlignment.center,
+                  //  mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                  //  SizedBox(height: 30,),
+                    //  SizedBox(height: 30,),
                     Visibility(
-                      visible: visible,
+                        visible: visible,
                         child: Column(
                           children: [
                             Row(
@@ -171,11 +220,12 @@ class _JobProgressScreenState extends State<JobProgressScreen> {
                     ) ,
                     child: MaterialButton(
                       child:MyText(
-                          text:"job Completed".toUpperCase(),
+                        text:"job Completed".toUpperCase(),
                         fontSize: 19.0,
                         fontWeight: FontWeight.bold,
                       ),
                       onPressed:(){
+                        //stopTimer();
                       },
 
                     ),
@@ -188,9 +238,23 @@ class _JobProgressScreenState extends State<JobProgressScreen> {
       ),
     );
   }
+  Widget buildTime2(){
+    // 9 transforms to 09
+    // 11 stays 11
+    String twoDigits (int n) => n.toString().padLeft(2,'0');
+    /*final minutes = twoDigits(duration.inMinutes.remainder(60));
+    final seconds = twoDigits(duration.inSeconds.remainder(60));
+    final hours = twoDigits(duration.inHours.remainder(60));*/
+    return MyText(
+      text: '$hrs:$mins:$sec',
+      colors: color,
+      fontSize: 27,
+    );
+  }
   Widget BuildButtons(){
     final isRunning = timer == null ? false : timer!.isActive;
-    final isCompleted = seconds == maxSeconds || seconds == 0 ;
+    final isCompleted = (sec == hrs && hrs==mins) || (sec == 0 && mins==0 && hrs==0);
+    //(sec == 0 && mins==0 && hrs==0);
     return isRunning  || !isCompleted ?
     Center(
       child: Row(
@@ -228,19 +292,27 @@ class _JobProgressScreenState extends State<JobProgressScreen> {
         fit: StackFit.expand,
         children: [
           CircularProgressIndicator(
-            value: seconds/maxSeconds,
+            value: 0.0,
+            //value: progressFraction,
             valueColor: AlwaysStoppedAnimation(Color(0xffEAF2F5)),
             backgroundColor: color,
-            strokeWidth: 12,
+            strokeWidth: 13,
           ),
           Center(
-            child: BuildTime(),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                BuildTime(),
+                //buildTime2(),
+              ],
+            ),
           ),
         ]
     ),
   );
   Widget BuildTime(){
-    if(seconds==0){
+    //if(sec==0 && mins==0 && hrs==0)
+    if(sec==0 && mins==0 && hrs==0){
       return Column(
         children: [
           Padding(
@@ -254,10 +326,11 @@ class _JobProgressScreenState extends State<JobProgressScreen> {
     }
     else
     {
+      //return buildTime2();
       return MyText(
-          text:'$seconds',
-          fontSize: 35.0,
-          colors: Colors.black45,
+        text: '$hrs:$mins:$sec',
+        colors: color,
+        fontSize: 26,
       );
     }
 
