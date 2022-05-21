@@ -24,8 +24,6 @@ class HomeScreen extends StatelessWidget {
         listener: (BuildContext context, state) {},
         builder: (BuildContext context, state) {
           var cubit = AppBloc.get(context);
-          int sama =3;
-
           /*PostDataModel posts = cubit.posts[2];
           print(posts.DISCREPTION);*/
 
@@ -102,7 +100,9 @@ class HomeScreen extends StatelessWidget {
                                 GestureDetector(
                                   onTap: () {
                                     cubit.isAllTrueYes();
-                                    cubit.GetSavedPostsData();
+                                    /*cubit.GetSavedPostsData();
+                                    print('l ${cubit.savedId?.length}');*/
+                                    /*print(cubit.savedPosts?[1]);*/
                                   },
                                   child: Column(
                                     children: [
@@ -486,7 +486,7 @@ Widget buildPostItem (PostDataModel post,context) =>  Column(
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => JobViewScreen(post.JOBID),
+            builder: (context) => JobViewScreen(jobID: post.JOBID),
           ),
         );
         /*print(post.JOBID);*/

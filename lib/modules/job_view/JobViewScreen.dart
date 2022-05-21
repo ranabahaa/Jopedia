@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,8 +14,9 @@ import '../../bloc/cubit.dart';
 import '../../bloc/states.dart';
 
 class JobViewScreen extends StatelessWidget {
+
   String? jobID;
-  JobViewScreen(String jobID);
+  JobViewScreen({this.jobID});
 
 
   @override
@@ -247,10 +250,12 @@ class JobViewScreen extends StatelessWidget {
                       height: 50.0,
                       child: MyText(text: "apply"),
                       onPressed: () {
-                        showDialog(
+                        AppBloc.get(context).GetCurrentPost(jobID!);
+                        /*print(AppBloc.get(context).model);*/
+                        showDialog  (
                           context: context,
-                          builder: (BuildContext context) =>
-                              _buildPopupDialog(context, AppBloc.get(context).GetCurrentPost(jobID!)),
+                          builder: (BuildContext context)  =>
+                              _buildPopupDialog(context,AppBloc.get(context).model,)
                         );
                       },
                     ),
