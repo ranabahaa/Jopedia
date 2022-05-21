@@ -25,10 +25,13 @@ class ContractScreen extends StatelessWidget {
                // title: Text(''),
                 // You can add title here
                 leading: new IconButton(
-                  icon: new Icon(Icons.arrow_back_ios, color: Colors.white70),
+                  icon: new Icon(
+                    Icons.arrow_back_ios_outlined,
+                    color:  color,
+                  ),
                   onPressed: () => Navigator.of(context).pop(),
                 ),
-                backgroundColor: color,
+                backgroundColor: Colors.white12,
                 //You can make this transparent
                 elevation: 0.0, //No shadow
               ),
