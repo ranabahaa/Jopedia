@@ -77,6 +77,15 @@ class GetSavedPostsDataError extends AppState {
 
   GetSavedPostsDataError(this.error);
 }
+class GetSavedPostsLoading extends AppState {}
+
+class GetSavedPostsSuccsess extends AppState {}
+
+class GetSavedPostsError extends AppState {
+  final String error;
+
+  GetSavedPostsError(this.error);
+}
 
 
 

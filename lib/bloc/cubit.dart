@@ -11,7 +11,6 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jopedia/modules/home/home_states.dart';
-
 import '../models/job/job_model.dart';
 import '../models/request/request_model.dart';
 import '../models/user/user_model.dart';
@@ -210,14 +209,14 @@ class AppBloc extends Cubit<AppState> {
 
   }
   PostDataModel? model;
-  PostDataModel? GetCurrentPost (String jobId){
-    FirebaseFirestore.instance
-        .collection('users')
+  Future<void> GetCurrentPost (String jobId) async {
+    await FirebaseFirestore.instance
+        .collection('post')
         .doc(jobId)
         .get()
         .then((value)
     {
-      model = PostDataModel.fromJson((value.data()!),value.id);
+       model = PostDataModel.fromJson((value.data()),value.id);
       print (value.data());
     })
         .catchError((error){
@@ -225,9 +224,9 @@ class AppBloc extends Cubit<AppState> {
 
     }
     );
-    return model;
   }
   List<String>? savedId=[];
+  List<PostDataModel>? savedPosts = [];
 
   void GetSavedPostsData (){
     emit(GetSavedPostsDataLoading());
@@ -237,8 +236,29 @@ class AppBloc extends Cubit<AppState> {
       value.docs.forEach((element) {
         savedId!.add(element.id);
       });
-      print(savedId);
+      emit(GetSavedPostsLoading());
+      FirebaseFirestore.instance.collection('post').get().then((value)
+      {
+        /*print(savedId!.length);*/
+        for(int i=1 ;i >= savedId!.length; i++ ){
+          value.docs.forEach((element) {
+            print(element.id);
+            /*if (element.id==savedId?[i])
+            {*/
+            print(i);
+              print('done');
+              /*savedPosts?.add(PostDataModel.fromJson(element.data(), element.id));*/
+            /*}*/
+            print(savedPosts);
 
+          });
+        }
+        emit(GetSavedPostsSuccsess());
+      }).catchError((error){
+        print(error.toString());
+        emit(GetSavedPostsError(error.toString()));
+      }
+      );
       emit(GetSavedPostsDataSuccsess());
     }).catchError((error){
       print(error.toString());
@@ -246,27 +266,28 @@ class AppBloc extends Cubit<AppState> {
     }
     );
   }
+
+
   /*void GetSavedPosts (){
-    emit(GetSavedPostsDataLoading());
-    final user = FirebaseAuth.instance.currentUser;
+    emit(GetSavedPostsLoading());
     FirebaseFirestore.instance.collection('post').get().then((value)
     {
-      for( ){
+      print(savedId!.length);
+      for(int i=1 ;i >= savedId!.length; i++ ){
         value.docs.forEach((element) {
-          if (element.id==savedId?[])
+          if (element.id==savedId?[i])
           {
-
+            savedPosts?.add(PostDataModel.fromJson(element.data(), element.id));
           }
+          print(savedPosts);
 
         });
       }
 
-
-
-      emit(GetSavedPostsDataSuccsess());
+      emit(GetSavedPostsSuccsess());
     }).catchError((error){
       print(error.toString());
-      emit(GetSavedPostsDataError(error.toString()));
+      emit(GetSavedPostsError(error.toString()));
     }
     );
   }*/
