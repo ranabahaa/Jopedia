@@ -64,7 +64,7 @@ class CreateJobScreen extends StatelessWidget {
                           padding: const EdgeInsets.all(5.0),
                           child: Center(
                             child: MyText(
-                              text: 'Creat Job',
+                              text: 'Create Job',
                               fontSize: 30.0,
                               fontWeight: FontWeight.w900,
                               colors: Color(0xff0F4C5C),

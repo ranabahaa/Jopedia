@@ -71,8 +71,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
         TextEditingController(text: widget.user.email);
     final TextEditingController _controllerPhone =
         TextEditingController(text: widget.user.phone);
-    final TextEditingController _controllerNatonalId =
-        TextEditingController(text: widget.user.NatonalId);
+   /* final TextEditingController _controllerNatonalId =
+        TextEditingController(text: widget.user.NatonalId);*/
 
 
     return Scaffold(
@@ -155,7 +155,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
             ],
           ),
           const SizedBox(height: 24),
-          Column(
+         /* Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
@@ -164,7 +164,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               ),
               const SizedBox(height: 8),
               TextField(
-                controller: _controllerNatonalId,
+               controller: _controllerNatonalId,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
@@ -173,7 +173,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 //maxLines: widget.maxLines,
               ),
             ],
-          ),
+          ),*/
           const SizedBox(height: 24),
           MaterialButton(
             color: Color(0xff50B3CF),
@@ -197,7 +197,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 'name': _controllerName.text,
                 'email': _controllerEmail.text,
                 'phone': _controllerPhone.text,
-                'NatonalId': _controllerNatonalId.text,
+                //'NatonalId': _controllerNatonalId.text,
               });
 
               ScaffoldMessenger.of(context).showSnackBar(
