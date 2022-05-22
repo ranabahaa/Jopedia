@@ -1,4 +1,3 @@
-
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -17,7 +16,7 @@ class HomeLayoutCubit extends Cubit<HomeLayoutState> {
   static HomeLayoutCubit get (BuildContext context){
     return BlocProvider.of(context);
   }
-  late UserModel model ;
+
 
   int currentIndex = 0;
   List<Widget> screen = [
@@ -31,10 +30,12 @@ class HomeLayoutCubit extends Cubit<HomeLayoutState> {
     currentIndex=index;
     emit(BottomNavigationTrue());
   }
-  void GetUserData (){
+/*  late UserModel model ;
+
+  Future<void>  GetUserData() async{
     emit(GetUserDataLoading());
     final user = FirebaseAuth.instance.currentUser;
-    FirebaseFirestore.instance
+    await FirebaseFirestore.instance
         .collection('users')
         .doc(user!.uid)
         .get()
@@ -49,7 +50,7 @@ class HomeLayoutCubit extends Cubit<HomeLayoutState> {
           emit(GetUserDataError(error.toString()));
     }
         );
-  }
+  }*/
 
   List<PostDataModel> posts = [];
 

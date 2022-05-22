@@ -15,6 +15,7 @@ import 'dart:io';
 import 'package:jopedia/shared/components/component.dart';
 
 class EditProfilePage extends StatefulWidget {
+
   UserModel user;
   EditProfilePage(this.user);
 

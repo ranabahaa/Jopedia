@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 
 class UserModel {
@@ -9,7 +8,8 @@ class UserModel {
   late String image;
   late String about;
   late double balance;
-
+  late String NatonalId;
+  late String credit;
 
   UserModel (
       {
@@ -20,6 +20,8 @@ class UserModel {
         required this.image,
         required this.about,
         required this.balance,
+        this.NatonalId="",
+        this.credit = "",
 
 });
 
@@ -31,7 +33,8 @@ class UserModel {
     image = json?['image'];
     about = json?['about'];
     balance = json?['balance'] as double;
-
+    NatonalId = json?['NatonalId'];
+    credit = json?['credit'];
   }
 
   Map<String, dynamic> toMap()
@@ -44,6 +47,9 @@ class UserModel {
       'image':image,
       'about':about,
       'balance':balance,
+      'NatonalId':NatonalId,
+      'credit':credit,
     };
   }
+
 }
