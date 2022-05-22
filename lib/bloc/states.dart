@@ -90,4 +90,12 @@ class LoginSuccsess extends AppState {}
 
 class LoginFailed extends AppState {}
 
+class GetPostUserDataSuccsess extends AppState {}
+
+class GetPostUserDataError extends AppState {
+  final String error;
+
+  GetPostUserDataError(this.error);
+}
+class GetPostUserDataLoading extends AppState {}
 

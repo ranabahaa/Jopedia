@@ -355,7 +355,7 @@ class CreateJobScreen extends StatelessWidget {
                                   ),
                                 );
                               }
-                              if(user.credit == ""){
+                              else if(user.credit == ""){
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     action: SnackBarAction(
@@ -382,7 +382,7 @@ class CreateJobScreen extends StatelessWidget {
                                   ),
                                 );
                               }
-                              if(FormKey.currentState!.validate()){
+                              else if(FormKey.currentState!.validate()){
                                 AppBloc.get(context).CreatJob(
                                   JOBID: "",
                                   DISCREPTION: description_conroller.text,

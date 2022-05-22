@@ -57,6 +57,27 @@ class AppBloc extends Cubit<AppState> {
   }
 
 
+  late UserModel post_user_model ;
+
+  Future<String>  GetPostUserData(String id) async{
+    emit(GetPostUserDataLoading());
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(id)
+        .get()
+        .then((value)
+    {
+      post_user_model = UserModel.fromJson((value.data()!));
+      emit(GetPostUserDataSuccsess());
+    })
+        .catchError((error){
+      print(error.toString());
+      emit(GetPostUserDataError(error.toString()));
+    }
+    );
+    return post_user_model.name;
+  }
+
   late UserModel user_model ;
 
   Future<void>  GetUserData() async{

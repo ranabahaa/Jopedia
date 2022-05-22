@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_conditional_rendering/conditional.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:jopedia/bloc/cubit.dart';
 import 'package:jopedia/bloc/states.dart';
 import 'package:jopedia/modules/home/home_cubit.dart';
@@ -12,6 +13,7 @@ import 'package:jopedia/modules/search/SearchScreen.dart';
 import 'package:jopedia/shared/components/component.dart';
 
 import '../../models/job/job_model.dart';
+import '../../models/user/user_model.dart';
 import '../login/login_state.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -302,10 +304,13 @@ class HomeScreen extends StatelessWidget {
         children: <Widget>[
           InkWell(
             onTapDown: (_) {
+              AppBloc.get(context).GetUserData();
+              UserModel user = AppBloc.get(context).user_model;
+
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => JobViewScreen(jobID: post.JOBID),
+                  builder: (context) => JobViewScreen(job: post,user: user,),
                 ),
               );
               /*print(post.JOBID);*/
