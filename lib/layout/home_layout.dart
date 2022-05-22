@@ -120,7 +120,7 @@ class Home_layout extends StatelessWidget {
               child: FloatingActionButton(
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(
-                    builder:(context)=>CreateJobScreen(),),);
+                    builder:(context)=>CreateJobScreen(user),),);
                 },
                 child: Icon(
                   Icons.add,

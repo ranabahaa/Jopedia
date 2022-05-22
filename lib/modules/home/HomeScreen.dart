@@ -10,10 +10,11 @@ import 'package:jopedia/modules/home/home_states.dart';
 import 'package:jopedia/modules/job_view/JobViewScreen.dart';
 import 'package:jopedia/modules/search/SearchScreen.dart';
 import 'package:jopedia/shared/components/component.dart';
-
 import '../../models/job/job_model.dart';
+import '../../models/user/user_model.dart';
 
 class HomeScreen extends StatelessWidget {
+
   RangeValues _currentRangeValues = const RangeValues(100, 500);
   String dropdownvalue = 'Cairo';
 
@@ -483,14 +484,17 @@ Widget buildPostItem (PostDataModel post,context) =>  Column(
   children: <Widget>[
     InkWell(
       onTapDown: (_){
+        UserModel? user;
+        AppBloc.get(context).GetUserData();
+        user = AppBloc.get(context).user_model;
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => JobViewScreen(jobID: post.JOBID),
+            builder: (context) => JobViewScreen(jobID: post.JOBID,user: user),
           ),
         );
-        /*print(post.JOBID);*/
-        /*print(post.USER_ID);*/
+        /*print(post.JOBID);
+        print(post.USER_ID);*/
       },
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -689,14 +693,14 @@ Widget buildPostItem (PostDataModel post,context) =>  Column(
           ],
         ),
       ),
-      onTap: () {
-        /*Navigator.push(
+      /*onTap: () {
+        *//*Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => JobViewScreen(),
           ),
-        );*/
-      },
+        );*//*
+      },*/
     ),
   ],
 );
