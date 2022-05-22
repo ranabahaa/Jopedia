@@ -10,6 +10,9 @@ import '../../bloc/states.dart';
 
 class CreateJobScreen extends StatelessWidget {
 
+ /* UserModel? user;
+  CreateJobScreen(this.user);*/
+
   var title_conroller = TextEditingController();
   var description_conroller = TextEditingController();
   var location_conroller = TextEditingController();
@@ -33,7 +36,7 @@ class CreateJobScreen extends StatelessWidget {
         listener: (BuildContext context, state) {},
         builder: (BuildContext context, state) {
           var cubit = AppBloc.get(context);
-          UserModel model;
+         /* UserModel model;*/
           return Scaffold(
             appBar: AppBar(
               title: Text(''),

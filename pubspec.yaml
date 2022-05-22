@@ -38,8 +38,8 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.4
   flutter_svg: ^1.0.3
-  bloc: ^8.0.3
-  flutter_bloc: ^8.0.1
+  bloc: ^7.0.0
+  flutter_bloc: ^7.0.0
   animated_theme_switcher: ^2.0.6
 
   cloud_firestore: ^3.1.13

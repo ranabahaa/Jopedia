@@ -86,6 +86,8 @@ class GetSavedPostsError extends AppState {
 
   GetSavedPostsError(this.error);
 }
+class LoginSuccsess extends AppState {}
 
+class LoginFailed extends AppState {}
 
 
