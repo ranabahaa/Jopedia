@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final user_data = FirebaseAuth.instance.currentUser;
-
+    // print(user_data);
     String? uId = user_data?.uid;
 
     return BlocProvider(

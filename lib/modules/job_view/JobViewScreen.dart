@@ -12,12 +12,15 @@ import 'dart:ui';
 
 import '../../bloc/cubit.dart';
 import '../../bloc/states.dart';
+import '../../models/user/user_model.dart';
+import '../Card/YourCard.dart';
+import '../edit_profile/EditProfilePage.dart';
 
 class JobViewScreen extends StatelessWidget {
-
+  UserModel? user;
   String? jobID;
-  JobViewScreen({this.jobID});
 
+  JobViewScreen({this.jobID,this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -255,7 +258,7 @@ class JobViewScreen extends StatelessWidget {
                         showDialog  (
                           context: context,
                           builder: (BuildContext context)  =>
-                              _buildPopupDialog(context,AppBloc.get(context).model,)
+                              _buildPopupDialog(context,AppBloc.get(context).model,user!)
                         );
                       },
                     ),
@@ -271,7 +274,7 @@ class JobViewScreen extends StatelessWidget {
   }
 }
 
-Widget _buildPopupDialog(BuildContext context, PostDataModel? post) {
+Widget _buildPopupDialog(BuildContext context, PostDataModel? post,UserModel user) {
   var price_conroller = TextEditingController();
   return BlocProvider(
     create: (BuildContext context) => AppBloc(),
@@ -344,13 +347,70 @@ Widget _buildPopupDialog(BuildContext context, PostDataModel? post) {
                         fontWeight: FontWeight.w900,
                       ),
                       onPressed: () {
+                        if(user.NatonalId == ""){
+                          Navigator.of(context).pop();
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              action: SnackBarAction(
+                                label: 'Edit Profil',
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => EditProfilePage(user),
+                                    ),
+                                  );
+                                },
+                              ),
+                              content: const Text('Please complete your information'),
+                              duration: const Duration(milliseconds: 1550),
+                              width: 300.0, // Width of the SnackBar.
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 10.0, // Inner padding for SnackBar content.
+                              ),
+                              behavior: SnackBarBehavior.floating,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                            ),
+                          );
+                        }
+                        if(user.credit == ""){
+                          Navigator.of(context).pop();
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              action: SnackBarAction(
+                                label: 'Edit Credit',
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => YourCard() ,
+                                    ),
+                                  );
+                                },
+                              ),
+                              content: const Text('Please complete your information'),
+                              duration: const Duration(milliseconds: 1550),
+                              width: 280.0, // Width of the SnackBar.
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 10.0, // Inner padding for SnackBar content.
+                              ),
+                              behavior: SnackBarBehavior.floating,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                            ),
+                          );
+                        }
                         if (price_conroller.text != '') {
                           AppBloc.get(context).SendRequest(
                             JOB_ID: post!.JOBID,
                             JOB_SALARY: price_conroller.text,
                             USER_ID: post.USER_ID,
                           );
-                        } else {
+                        }
+                        else {
                           AppBloc.get(context).SendRequest(
                             JOB_ID: "1111",
                             JOB_SALARY: "original salary",

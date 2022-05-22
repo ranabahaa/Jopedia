@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,8 +8,12 @@ import 'package:jopedia/shared/components/component.dart';
 
 import '../../bloc/cubit.dart';
 import '../../bloc/states.dart';
+import '../Card/YourCard.dart';
+import '../edit_profile/EditProfilePage.dart';
 
 class CreateJobScreen extends StatelessWidget {
+  UserModel user;
+  CreateJobScreen(this.user);
 
  /* UserModel? user;
   CreateJobScreen(this.user);*/
@@ -62,7 +67,7 @@ class CreateJobScreen extends StatelessWidget {
                           padding: const EdgeInsets.all(5.0),
                           child: Center(
                             child: MyText(
-                              text: 'Creat Job',
+                              text: 'Create Job',
                               fontSize: 30.0,
                               fontWeight: FontWeight.w900,
                               colors: Color(0xff0F4C5C),
@@ -323,21 +328,74 @@ class CreateJobScreen extends StatelessWidget {
                                 fontSize: 18.0,
                               ),),
                             onPressed: () {
+                              if(user.NatonalId == ""){
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    action: SnackBarAction(
+                                      label: 'Edit Profil',
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => EditProfilePage(user),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                    content: const Text('Please complete your information'),
+                                    duration: const Duration(milliseconds: 1550),
+                                    width: 280.0, // Width of the SnackBar.
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 10.0, // Inner padding for SnackBar content.
+                                    ),
+                                    behavior: SnackBarBehavior.floating,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                  ),
+                                );
+                              }
+                              if(user.credit == ""){
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    action: SnackBarAction(
+                                      label: 'Edit Credit',
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => YourCard() ,
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                    content: const Text('Please complete your information'),
+                                    duration: const Duration(milliseconds: 1550),
+                                    width: 280.0, // Width of the SnackBar.
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 10.0, // Inner padding for SnackBar content.
+                                    ),
+                                    behavior: SnackBarBehavior.floating,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                  ),
+                                );
+                              }
                               if(FormKey.currentState!.validate()){
-                                 AppBloc.get(context).CreatJob(
-                                   JOBID: "",
-                                    DISCREPTION: description_conroller.text,
-                                    JOB_LOCATION: location_conroller.text,
-                                    JOB_TITLE: title_conroller.text,
-                                    JOB_SALARY: salary_conroller.text,
-                                    StartDate: StartDate_conroller.text,
-                                    EndDate: EndDate_conroller.text,
-                                   StartTime: StartTime_conroller.text,
-                                   EndTime: EndTime_conroller.text,
-                                   PostTime: DateTime.now().toString(),
+                                AppBloc.get(context).CreatJob(
+                                  JOBID: "",
+                                  DISCREPTION: description_conroller.text,
+                                  JOB_LOCATION: location_conroller.text,
+                                  JOB_TITLE: title_conroller.text,
+                                  JOB_SALARY: salary_conroller.text,
+                                  StartDate: StartDate_conroller.text,
+                                  EndDate: EndDate_conroller.text,
+                                  StartTime: StartTime_conroller.text,
+                                  EndTime: EndTime_conroller.text,
+                                  PostTime: DateTime.now().toString(),
                                 );}
-
-                            },
+                              },
                           ),
                         ),
 

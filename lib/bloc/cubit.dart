@@ -56,6 +56,29 @@ class AppBloc extends Cubit<AppState> {
     isDuration=false;
   }
 
+
+  late UserModel user_model ;
+
+  Future<void>  GetUserData() async{
+    emit(GetUserDataLoading());
+    final user = FirebaseAuth.instance.currentUser;
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user!.uid)
+        .get()
+        .then((value)
+    {
+      print (value.data());
+      user_model = UserModel.fromJson((value.data()!));
+      emit(GetUserDataSuccsess());
+    })
+        .catchError((error){
+      print(error.toString());
+      emit(GetUserDataError(error.toString()));
+    }
+    );
+  }
+
   void CreatJob({
     required String JOBID,
     required String DISCREPTION,
@@ -67,9 +90,7 @@ class AppBloc extends Cubit<AppState> {
     required String StartTime,
     required String EndTime,
     required String PostTime,
-    //@required String USER_ID,
-    //@required String WORKER_ID,
-    //@required String COMPLETED_JOB,
+
   }) {
     final user = FirebaseAuth.instance.currentUser;
     PostDataModel model = PostDataModel(
@@ -84,8 +105,7 @@ class AppBloc extends Cubit<AppState> {
       EndTime : EndTime,
       PostTime : PostTime ,
       USER_ID : user!.uid,
-      //WORKER_ID : WORKER_ID;
-      //COMPLETED_JOB : COMPLETED_JOB;
+
     );
 
     FirebaseFirestore.instance.collection('post')
