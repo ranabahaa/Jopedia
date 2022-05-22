@@ -8,6 +8,7 @@ import 'package:jopedia/layout/home_layout.dart';
 import 'package:jopedia/modules/create_job/CreateJobScreen.dart';
 import 'package:jopedia/modules/home/HomeScreen.dart';
 import 'package:jopedia/modules/job_progress/JobProgressScreen.dart';
+import 'package:jopedia/modules/job_progress/ViewJobProgressScreen.dart';
 import 'package:jopedia/modules/login/LoginScreen.dart';
 import 'package:jopedia/modules/notification/NotificationScreen.dart';
 import 'package:jopedia/modules/notificationTry.dart';
@@ -68,7 +69,7 @@ class MyApp extends StatelessWidget {
                 debugShowCheckedModeBanner: false,
                 //theme: ThemeProvider.of(context),
                 title: title,
-                home: LoginScreen(),
+                home: ViewJobProgressScreen(),
               );
             }),
 
