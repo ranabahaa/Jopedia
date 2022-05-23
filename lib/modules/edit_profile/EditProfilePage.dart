@@ -67,10 +67,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
   Widget build(BuildContext context) {
     final TextEditingController _controllerName =
         TextEditingController(text: widget.user.name);
-    final TextEditingController _controllerEmail =
-        TextEditingController(text: widget.user.email);
+    final TextEditingController _controllerID =
+        TextEditingController(text: widget.user.uId);
     final TextEditingController _controllerPhone =
         TextEditingController(text: widget.user.phone);
+    final TextEditingController _controllerAbout =
+    TextEditingController(text: widget.user.about);
    /* final TextEditingController _controllerNatonalId =
         TextEditingController(text: widget.user.NatonalId);*/
 
@@ -94,7 +96,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
             isEdit: true,
             onClicked: () => getImage(),
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: 20),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -114,17 +116,17 @@ class _EditProfilePageState extends State<EditProfilePage> {
               ),
             ],
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: 20),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Email',
+                'National ID',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
               ),
               const SizedBox(height: 8),
               TextField(
-                controller: _controllerEmail,
+                controller: _controllerID,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
@@ -134,7 +136,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               ),
             ],
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: 20),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -154,17 +156,17 @@ class _EditProfilePageState extends State<EditProfilePage> {
               ),
             ],
           ),
-          const SizedBox(height: 24),
-         /* Column(
+          const SizedBox(height: 20),
+          Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'NationalId',
+                'Bio',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
               ),
               const SizedBox(height: 8),
               TextField(
-               controller: _controllerNatonalId,
+                controller: _controllerAbout,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
@@ -173,8 +175,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 //maxLines: widget.maxLines,
               ),
             ],
-          ),*/
-          const SizedBox(height: 24),
+          ),
+          const SizedBox(height: 20),
           MaterialButton(
             color: Color(0xff50B3CF),
             minWidth: double.infinity,
@@ -195,8 +197,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
               print('Change Completed !');
               UserModel.update({
                 'name': _controllerName.text,
-                'email': _controllerEmail.text,
+                'NatonalId': _controllerID.text,
                 'phone': _controllerPhone.text,
+                'about': _controllerAbout.text,
                 //'NatonalId': _controllerNatonalId.text,
               });
 
@@ -228,7 +231,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
             },
           ),
           SizedBox(
-            height: 30.0,
+            height: 20.0,
           ),
           MaterialButton(
               color: Color(0xff50B3CF),

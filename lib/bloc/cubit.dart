@@ -21,80 +21,79 @@ class AppBloc extends Cubit<AppState> {
 
   /*static AppBloc get(context) => BlocProvider.of(context);*/
 
-  static AppBloc get (BuildContext context){
-
+  static AppBloc get(BuildContext context) {
     return BlocProvider.of(context);
-
   }
 
   bool isAllTrue = true;
   bool isSaveTrue = false;
   bool isDuration = true;
 
-  void isAllTrueYes (){
-    isAllTrue=true;
+  void isAllTrueYes() {
+    isAllTrue = true;
     emit(NearbyJobs());
   }
-  void isAllTrueNo (){
-    isAllTrue=false;
-    emit(NearbyJobs());
-  }
-  void isSaveTrueYes (){
-    isSaveTrue=true;
-    emit(SavedJobs());
-  }
-  void isSaveTrueNo (){
-    isSaveTrue=false;
-    emit(SavedJobs());
-  }
-  void isDurationYes (){
-    isDuration=true;
-  }
-  void isDurationNo (){
-    isDuration=false;
-  }
-  late UserModel post_user_model ;
 
-  Future<String>  GetPostUserData(String id) async{
+  void isAllTrueNo() {
+    isAllTrue = false;
+    emit(NearbyJobs());
+  }
+
+  void isSaveTrueYes() {
+    isSaveTrue = true;
+    emit(SavedJobs());
+  }
+
+  void isSaveTrueNo() {
+    isSaveTrue = false;
+    emit(SavedJobs());
+  }
+
+  void isDurationYes() {
+    isDuration = true;
+  }
+
+  void isDurationNo() {
+    isDuration = false;
+  }
+
+  late UserModel post_user_model;
+
+  Future<String> GetPostUserData(String id) async {
     emit(GetPostUserDataLoading());
     await FirebaseFirestore.instance
         .collection('users')
         .doc(id)
         .get()
-        .then((value)
-    {
+        .then((value) {
       post_user_model = UserModel.fromJson((value.data()!));
       emit(GetPostUserDataSuccsess());
-    })
-        .catchError((error){
+    }).catchError((error) {
       print(error.toString());
       emit(GetPostUserDataError(error.toString()));
-    }
-    );
+    });
     return post_user_model.name;
   }
 
-  late UserModel user_model ;
+  late UserModel user_model;
 
-  Future<void>  GetUserData() async{
+  Future<void> GetUserData() async {
     emit(GetUserDataLoading());
     final user = FirebaseAuth.instance.currentUser;
     await FirebaseFirestore.instance
         .collection('users')
         .doc(user!.uid)
         .get()
-        .then((value)
-    {
-      print (value.data());
+        .then((value) {
+      print(value.data());
       user_model = UserModel.fromJson((value.data()!));
       emit(GetUserDataSuccsess());
-    })
-        .catchError((error){
+    }).catchError((error) {
       print(error.toString());
       emit(GetUserDataError(error.toString()));
-    }
-    );
+    });
   }
+
   void CreatJob({
     required String JOBID,
     required String DISCREPTION,
@@ -107,7 +106,6 @@ class AppBloc extends Cubit<AppState> {
     required String EndTime,
     required String PostTime,
     required bool MORE_THAN_DAY,
-
   }) {
     final user = FirebaseAuth.instance.currentUser;
     PostDataModel model = PostDataModel(
@@ -116,28 +114,29 @@ class AppBloc extends Cubit<AppState> {
       JOB_LOCATION: JOB_LOCATION,
       JOB_TITLE: JOB_TITLE,
       JOB_SALARY: JOB_SALARY,
-      StartDate : StartDate,
-      EndDate : EndDate,
-      StartTime : StartTime,
-      EndTime : EndTime,
-      PostTime : PostTime ,
+      StartDate: StartDate,
+      EndDate: EndDate,
+      StartTime: StartTime,
+      EndTime: EndTime,
+      PostTime: PostTime,
       MORE_THAN_DAY: MORE_THAN_DAY,
-      USER_ID : user!.uid,
-
+      USER_ID: user!.uid,
     );
 
-    FirebaseFirestore.instance.collection('post')
+    FirebaseFirestore.instance
+        .collection('post')
         .add(model.toJson())
         .then((value) {
-          model.JOBID = value.id;
+      model.JOBID = value.id;
       print("ppp");
       emit(CreatJobSuccess());
     }).catchError((error) {
       print("false");
       debugPrint(error.toString());
-      emit(CreatJobError(message: error.toString(),));
+      emit(CreatJobError(
+        message: error.toString(),
+      ));
     });
-
 
     /*jopRef.doc("3211").set({
       "DISCREPTION" : DISCREPTION,
@@ -146,20 +145,19 @@ class AppBloc extends Cubit<AppState> {
       "JOB_SALARY" : JOB_SALARY,}).then((value) {
       print("true");
     }).catchError((onError){print(onError.toString()); print("false");});*/
-
-
   }
 
-
   void DeleteJob({required String id}) {
-    FirebaseFirestore.instance.collection('post')
-        .doc(id).delete().then((value) {
+    FirebaseFirestore.instance
+        .collection('post')
+        .doc(id)
+        .delete()
+        .then((value) {
       print("true");
     }).catchError((onError) {
       print(onError.toString());
       print("false");
-    }
-    );
+    });
   }
 
   void SendRequest({
@@ -172,10 +170,11 @@ class AppBloc extends Cubit<AppState> {
       JOB_ID: JOB_ID,
       JOB_SALARY: JOB_SALARY,
       USER_ID: USER_ID,
-      WORKER_ID : user!.uid,
+      WORKER_ID: user!.uid,
     );
 
-    FirebaseFirestore.instance.collection('request')
+    FirebaseFirestore.instance
+        .collection('request')
         .add(model.toJson())
         .then((value) {
       print("ppp");
@@ -183,69 +182,64 @@ class AppBloc extends Cubit<AppState> {
     }).catchError((error) {
       print("false");
       debugPrint(error.toString());
-      emit(SendRequestError(message: error.toString(),));
+      emit(SendRequestError(
+        message: error.toString(),
+      ));
     });
-
   }
 
   void RejectRequest({required String id}) {
-    FirebaseFirestore.instance.collection('request')
-        .doc(id).delete().then((value) {
-    }).catchError((onError) {
-      print(onError.toString());
-    }
-    );
-  }
-
-  List<RequestDataModel> requests =[];
-  void GetRequestsData (){
     FirebaseFirestore.instance
         .collection('request')
-        .get()
-        .then((value)
-    {
-      value.docs.forEach((element) {
-        requests.add(RequestDataModel.fromJson(element.data(), element.id));
-      });
-
+        .doc(id)
+        .delete()
+        .then((value) {})
+        .catchError((onError) {
+      print(onError.toString());
     });
   }
 
-  Future<PostDataModel?> ShowContract() async{
+  List<RequestDataModel> requests = [];
+  void GetRequestsData() {
+    FirebaseFirestore.instance.collection('request').get().then((value) {
+      value.docs.forEach((element) {
+        requests.add(RequestDataModel.fromJson(element.data(), element.id));
+      });
+    });
+  }
 
-    final DocPost = FirebaseFirestore.instance.collection('post').doc('bARLIywCJSgrYXQnQil5');
+  Future<PostDataModel?> ShowContract() async {
+    final DocPost = FirebaseFirestore.instance
+        .collection('post')
+        .doc('bARLIywCJSgrYXQnQil5');
     final snapshot = await DocPost.get();
-    if(snapshot.exists){
+    if (snapshot.exists) {
       return PostDataModel.fromJson(snapshot.data()!, snapshot.id);
     }
   }
+
   //this returns a list not one record
 /*
     Stream<List<PostDataModel>> ShowContract() => FirebaseFirestore.instance.collection('post')
         .snapshots()
         .map((snapshot) => snapshot.docs.map((doc) => PostDataModel.fromJson(doc.data())).toList()) ;
 */
-  List<PostDataModel> posts =[];
+  List<PostDataModel> posts = [];
 
-  void GetPostsData (){
+  void GetPostsData() {
     emit(GetPostsDataLoading());
-    FirebaseFirestore.instance
-        .collection('post')
-        .get()
-        .then((value)
-    {
+    FirebaseFirestore.instance.collection('post').get().then((value) {
       value.docs.forEach((element) {
         posts.add(PostDataModel.fromJson(element.data(), element.id));
       });
       emit(GetPostsDataSuccsess());
-    })
-        .catchError((error){
+    }).catchError((error) {
       print(error.toString());
       emit(GetPostsDataError(error.toString()));
-    }
-    );
+    });
   }
-  void SaveJob (String jopId){
+
+  void SaveJob(String jopId) {
     final user = FirebaseAuth.instance.currentUser;
     FirebaseFirestore.instance
         .collection('users')
@@ -261,69 +255,65 @@ class AppBloc extends Cubit<AppState> {
       print('SavedError');
       emit(SavedErrorState(error.toString()));
     });
-
   }
+
   PostDataModel? model;
-  Future<void> GetCurrentPost (String jobId) async {
+  Future<void> GetCurrentPost(String jobId) async {
     await FirebaseFirestore.instance
         .collection('post')
         .doc(jobId)
         .get()
-        .then((value)
-    {
-      model = PostDataModel.fromJson((value.data()),value.id);
-      print (value.data());
-    })
-        .catchError((error){
+        .then((value) {
+      model = PostDataModel.fromJson((value.data()), value.id);
+      print(value.data());
+    }).catchError((error) {
       print(error.toString());
-
-    }
-    );
+    });
   }
-  List<String>? savedId=[];
+
+  List<String>? savedId = [];
   List<PostDataModel>? savedPosts = [];
 
-  Future<void> GetSavedPostsData () async {
+  Future<void> GetSavedPostsData() async {
     emit(GetSavedPostsDataLoading());
     final user = FirebaseAuth.instance.currentUser;
-    await FirebaseFirestore.instance.collection('users').doc(user!.uid).collection('savedPosts').get().then((value)
-    async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user!.uid)
+        .collection('savedPosts')
+        .get()
+        .then((value) async {
       value.docs.forEach((element) {
         savedId!.add(element.id);
       });
 
       emit(GetSavedPostsLoading());
-      await FirebaseFirestore.instance.collection('post').get().then((value)
-      {
+      await FirebaseFirestore.instance.collection('post').get().then((value) {
         /* print(savedId?[1]);
         int i;*/
         value.docs.forEach((element) {
           /*print(savedId?.length);*/
-          for(int i =0;i <= 1; i++ )
-          {
-            if (element.id==savedId?[i])
-            {
+          for (int i = 0; i <= 1; i++) {
+            if (element.id == savedId?[i]) {
               /*print(savedId?[i]);*/
-              savedPosts?.add(PostDataModel.fromJson(element.data(), element.id));
+              savedPosts
+                  ?.add(PostDataModel.fromJson(element.data(), element.id));
               print('done');
             }
           }
           /*print(savedPosts);*/
         });
         emit(GetSavedPostsSuccsess());
-      }).catchError((error){
+      }).catchError((error) {
         print(error.toString());
         emit(GetSavedPostsError(error.toString()));
-      }
-      );
+      });
       emit(GetSavedPostsDataSuccsess());
-    }).catchError((error){
+    }).catchError((error) {
       print(error.toString());
       emit(GetSavedPostsDataError(error.toString()));
-    }
-    );
+    });
   }
-
 
   /*void GetSavedPosts (){
     emit(GetSavedPostsLoading());
@@ -348,18 +338,15 @@ class AppBloc extends Cubit<AppState> {
     }
     );
   }*/
-  void CheckUid (){
+  void CheckUid() {
     final user = FirebaseAuth.instance.currentUser;
     var uid = user?.uid;
-    if (uid!= null){
+    if (uid != null) {
       emit(LoginSuccsess());
       print('Success');
-    }
-    else{
+    } else {
       emit(LoginFailed());
       print('Failed');
     }
   }
-
-
 }

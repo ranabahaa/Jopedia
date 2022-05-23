@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final user_data = FirebaseAuth.instance.currentUser;
-    // print(user_data);
+    print(user_data);
     String? uId = user_data?.uid;
 
     return BlocProvider(
@@ -48,7 +48,6 @@ class MyApp extends StatelessWidget {
             builder: (context, state) {
               return MaterialApp(
                 debugShowCheckedModeBanner: false,
-                //theme: ThemeProvider.of(context),
                 title: title,
                 home: LoginScreen(),
               );

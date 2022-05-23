@@ -7,6 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:jopedia/bloc/cubit.dart';
 import 'package:jopedia/bloc/states.dart';
 import 'package:jopedia/models/services/DataController.dart';
+import 'package:jopedia/models/user/user_model.dart';
 import 'package:jopedia/modules/home/home_cubit.dart';
 import 'package:jopedia/modules/home/home_states.dart';
 import 'package:jopedia/modules/job_view/JobViewScreen.dart';
@@ -325,7 +326,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   itemBuilder: (context, index) => buildPostItem (posts[index],context)
 
                             ),
-                            SizedBox(height: 20.0,),
+                            SizedBox(height: 18.0,),
                           ],
                         ),
                       ),
@@ -343,10 +344,13 @@ Widget buildPostItem (PostDataModel post,context) =>  Column(
   children: <Widget>[
     InkWell(
       onTapDown: (_){
+        AppBloc.get(context).GetUserData();
+        UserModel user = AppBloc.get(context).user_model;
+
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => JobViewScreen(post.JOBID),
+            builder: (context) => JobViewScreen(job: post,user: user),
           ),
         );
         /*print(post.JOBID);*/

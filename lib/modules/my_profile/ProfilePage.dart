@@ -352,19 +352,19 @@ class _ProfilePageState extends State<ProfilePage>
     );
   }
 
-  Widget buildName() => Column(
-        children: [
-          Text(
-            'name',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            'email',
-            style: TextStyle(color: Colors.grey),
-          )
-        ],
-      );
+  // Widget buildName() => Column(
+  //       children: [
+  //         Text(
+  //           'name',
+  //           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+  //         ),
+  //         const SizedBox(height: 4),
+  //         Text(
+  //           'email',
+  //           style: TextStyle(color: Colors.grey),
+  //         )
+  //       ],
+  //     );
 
   Widget buildAbout() => Container(
         padding: EdgeInsets.symmetric(horizontal: 28, vertical: 18),
@@ -372,7 +372,7 @@ class _ProfilePageState extends State<ProfilePage>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'about',
+              widget.user.about,
               style: TextStyle(fontSize: 16, height: 1.4),
             ),
           ],
