@@ -77,6 +77,25 @@ class GetSavedPostsDataError extends AppState {
 
   GetSavedPostsDataError(this.error);
 }
+class GetSavedPostsLoading extends AppState {}
 
+class GetSavedPostsSuccsess extends AppState {}
 
+class GetSavedPostsError extends AppState {
+  final String error;
+
+  GetSavedPostsError(this.error);
+}
+class LoginSuccsess extends AppState {}
+
+class LoginFailed extends AppState {}
+
+class GetPostUserDataSuccsess extends AppState {}
+
+class GetPostUserDataError extends AppState {
+  final String error;
+
+  GetPostUserDataError(this.error);
+}
+class GetPostUserDataLoading extends AppState {}
 

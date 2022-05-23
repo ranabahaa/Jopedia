@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:jopedia/bloc/cubit.dart';
 import 'package:jopedia/layout/home_layout.dart';
 import 'package:jopedia/layout/home_layout_state.dart';
 import 'package:jopedia/models/user/user_model.dart';
@@ -30,6 +31,8 @@ class LoginScreen extends StatelessWidget {
         listener: (BuildContext context, state) {
           if(state is LoginSuccessState)
           {
+            AppBloc.get(context).GetSavedPostsData();
+            print(AppBloc.get(context).savedPosts?.length);
             navigateAndFinish(
               context,
               Home_layout(userModel),
@@ -120,16 +123,16 @@ class LoginScreen extends StatelessWidget {
                                     .doc(user.user?.uid)
                                     .get();
                                 userModel = UserModel.fromJson(userJson.data());
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          Home_layout(userModel)),
-                                );
                               }
                             } catch (error) {
                               print(error);
                             }
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      Home_layout(userModel)),
+                            );
                           }
                         },
                       ),

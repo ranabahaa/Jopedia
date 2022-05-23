@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,10 +12,15 @@ import 'dart:ui';
 
 import '../../bloc/cubit.dart';
 import '../../bloc/states.dart';
+import '../../models/user/user_model.dart';
+import '../Card/YourCard.dart';
+import '../edit_profile/EditProfilePage.dart';
 
 class JobViewScreen extends StatelessWidget {
-  String? jobID;
-  JobViewScreen(String jobID);
+  UserModel? user;
+  PostDataModel? job;
+
+  JobViewScreen({this.job,this.user});
 
 
   @override
@@ -85,7 +92,7 @@ class JobViewScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Amira zakaria',
+                                '${AppBloc.get(context).GetPostUserData(job!.USER_ID).toString()}',
                                 style: TextStyle(
                                   color: Color(0xff0F4C5C),
                                   fontSize: 15.0,
@@ -94,7 +101,7 @@ class JobViewScreen extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                '5:35 pm',
+                                '${job!.PostTime.toString()}',
                                 style: TextStyle(
                                   color: Color(0xffA2BBCD),
                                   fontSize: 10.0,
@@ -118,7 +125,7 @@ class JobViewScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'wall painter',
+                            '${job!.JOB_TITLE}',
                             style: TextStyle(
                               color: Color(0xff818181),
                               fontFamily: 'Poppins',
@@ -130,12 +137,7 @@ class JobViewScreen extends StatelessWidget {
                             height: 20.0,
                           ),
                           Text(
-                            ' a wall painter refers to a qualified individual who is professionally '
-                            'responsible for painting the interiors and exteriors of a building and some other surfaces'
-                            ' kkkkkkkkkkthat require paint in consultation with the building owners. His/her job description entails selecting the '
-                            'right paints, ensuring that surfaces are well-prepared by cleaning them, repairing and applying touch-ups to '
-                            'lemished areas, and executing other necessary tasks to ensure that the client or customer is satisfied with the '
-                            'final result.',
+                            '${job!.DISCREPTION}',
                             style: TextStyle(
                               color: Color(0xffA2BBCD),
                               fontFamily: 'Poppins',
@@ -192,7 +194,7 @@ class JobViewScreen extends StatelessWidget {
                                 width: 8.0,
                               ),
                               Text(
-                                'Cairo, Hellwan',
+                                '${job!.JOB_LOCATION}',
                                 style: TextStyle(
                                   color: Color(0xff818181),
                                   fontFamily: 'Poppins',
@@ -218,7 +220,7 @@ class JobViewScreen extends StatelessWidget {
                                 width: 8.0,
                               ),
                               Text(
-                                '250 LE',
+                                '${job!.JOB_SALARY} LE',
                                 style: TextStyle(
                                   color: Color(0xff818181),
                                   fontFamily: 'Poppins',
@@ -247,11 +249,69 @@ class JobViewScreen extends StatelessWidget {
                       height: 50.0,
                       child: MyText(text: "apply"),
                       onPressed: () {
-                        showDialog(
+                        /*print(AppBloc.get(context).model);*/
+                        if(user!.NatonalId == ""){
+
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              action: SnackBarAction(
+                                label: 'Edit Profil',
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => EditProfilePage(user!),
+                                    ),
+                                  );
+                                },
+                              ),
+                              content: const Text('Please complete your information'),
+                              duration: const Duration(milliseconds: 1550),
+                              width: 350.0, // Width of the SnackBar.
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 10.0, // Inner padding for SnackBar content.
+                              ),
+                              behavior: SnackBarBehavior.floating,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                            ),
+                          );
+                        }
+                        else if(user!.credit == ""){
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              action: SnackBarAction(
+                                label: 'Edit Credit',
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => YourCard() ,
+                                    ),
+                                  );
+                                },
+                              ),
+                              content: const Text('Please complete your information'),
+                              duration: const Duration(milliseconds: 2000),
+                              width: 350.0, // Width of the SnackBar.
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 10.0, // Inner padding for SnackBar content.
+                              ),
+                              behavior: SnackBarBehavior.floating,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                            ),
+                          );
+                        }
+                        else{
+                        showDialog  (
                           context: context,
-                          builder: (BuildContext context) =>
-                              _buildPopupDialog(context, AppBloc.get(context).GetCurrentPost(jobID!)),
+                          builder: (BuildContext context)  =>
+                              _buildPopupDialog(context,job)
                         );
+                        }
                       },
                     ),
                   ), //---->>DefaultButton
@@ -266,7 +326,7 @@ class JobViewScreen extends StatelessWidget {
   }
 }
 
-Widget _buildPopupDialog(BuildContext context, PostDataModel? post) {
+Widget _buildPopupDialog(BuildContext context, PostDataModel? post ) {
   var price_conroller = TextEditingController();
   return BlocProvider(
     create: (BuildContext context) => AppBloc(),
@@ -339,13 +399,15 @@ Widget _buildPopupDialog(BuildContext context, PostDataModel? post) {
                         fontWeight: FontWeight.w900,
                       ),
                       onPressed: () {
+
                         if (price_conroller.text != '') {
                           AppBloc.get(context).SendRequest(
                             JOB_ID: post!.JOBID,
                             JOB_SALARY: price_conroller.text,
                             USER_ID: post.USER_ID,
                           );
-                        } else {
+                        }
+                        else {
                           AppBloc.get(context).SendRequest(
                             JOB_ID: "1111",
                             JOB_SALARY: "original salary",

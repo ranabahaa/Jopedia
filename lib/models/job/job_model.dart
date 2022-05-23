@@ -11,9 +11,10 @@ class PostDataModel {
   late String PostTime;
   late String JOBID;
   late bool MORE_THAN_DAY;
-  late final String USER_ID;
-  //late final String WORKER_ID;
-  //late final String COMPLETED_JOB;
+  late String USER_ID;
+  late String WORKER_ID ="";
+  late String COMPLETED_JOB = "1";
+  late String IMAGE;
 
   PostDataModel({
     required this.JOBID,
@@ -28,8 +29,7 @@ class PostDataModel {
     required this.PostTime,
     required this.MORE_THAN_DAY,
     required this.USER_ID,
-    //required this.WORKER_ID,
-    //required this.COMPLETED_JOB,
+    this.IMAGE = "",
   });
 
   PostDataModel.fromJson(Map<String, dynamic>? json, String? id) {
@@ -45,8 +45,9 @@ class PostDataModel {
     PostTime = json?['PostTime'] ?? '';
     USER_ID = json?['USER_ID'] ?? '';
     MORE_THAN_DAY = json?['MORE_THAN_DAY'] ?? true;
-    //WORKER_ID = json['WORKER_ID'] ?? '';
-    //COMPLETED_JOB = json['COMPLETED_JOB'] ?? '';
+    WORKER_ID = json?['WORKER_ID'] ?? '';
+    COMPLETED_JOB = json?['COMPLETED_JOB'] ?? '';
+    IMAGE = json?['IMAGE'] ?? '';
 
   }
 
@@ -64,8 +65,9 @@ class PostDataModel {
       'PostTime' : PostTime ,
       'MORE_THAN_DAY' : MORE_THAN_DAY ,
       'USER_ID': USER_ID,
-      //'WORKER_ID': WORKER_ID,
-      //'COMPLETED_JOB': COMPLETED_JOB,
+      'WORKER_ID': WORKER_ID,
+      'COMPLETED_JOB': COMPLETED_JOB,
+      'IMAGE': IMAGE,
     };
   }
 }

@@ -69,13 +69,16 @@ class _JobProgressScreenState extends State<JobProgressScreen> {
           setState(()=> sec=0);
         }
       }
-      setState(() {
-        totalTime=totalMinutes+totalHours+totalSeconds;
-        // progressFraction = (totalSeconds - sec) / totalSeconds;
-        progressFraction = ((totalMinutes+hrs) - mins) / totalMinutes;
-        percentage = (progressFraction*100).floor();
+      if (mounted) {
+        setState(() {
+          totalTime=totalMinutes+totalHours+totalSeconds;
+          // progressFraction = (totalSeconds - sec) / totalSeconds;
+          progressFraction = ((totalMinutes+hrs) - mins) / totalMinutes;
+          percentage = (progressFraction*100).floor();
 
-      });
+        });
+      }
+
 
     });
   }
@@ -116,7 +119,7 @@ class _JobProgressScreenState extends State<JobProgressScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xffF6F9FA),
+        backgroundColor: Colors.white12,
         elevation: 0.0,
         titleSpacing: 20.0,
         leading: IconButton(
