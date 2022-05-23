@@ -52,26 +52,4 @@ class HomeLayoutCubit extends Cubit<HomeLayoutState> {
         );
   }*/
 
-  List<PostDataModel> posts = [];
-
-  void GetPostsData (){
-    emit(GetPostsDataLoading());
-    FirebaseFirestore.instance
-        .collection('posts')
-        .get()
-        .then((value)
-    {
-      value.docs.forEach((element) {
-
-        posts.add(PostDataModel.fromJson(element.data(), element.id));
-      });
-      emit(GetPostsDataSuccsess());
-    })
-        .catchError((error){
-      print(error.toString());
-      emit(GetPostsDataError(error.toString()));
-    }
-    );
-  }
-
 }

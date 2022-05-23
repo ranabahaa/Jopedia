@@ -26,6 +26,9 @@ class AppBloc extends Cubit<AppState> {
 
   }
 
+  RangeValues currentRangeValues = const RangeValues(100, 500);
+  String dropdownvalue = 'Cairo';
+
   bool isAllTrue = true;
   bool isSaveTrue = false;
   bool isDuration = true;
@@ -53,6 +56,27 @@ class AppBloc extends Cubit<AppState> {
     isDuration=false;
   }
 
+
+  late UserModel post_user_model ;
+
+  Future<String>  GetPostUserData(String id) async{
+    emit(GetPostUserDataLoading());
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(id)
+        .get()
+        .then((value)
+    {
+      post_user_model = UserModel.fromJson((value.data()!));
+      emit(GetPostUserDataSuccsess());
+    })
+        .catchError((error){
+      print(error.toString());
+      emit(GetPostUserDataError(error.toString()));
+    }
+    );
+    return post_user_model.name;
+  }
 
   late UserModel user_model ;
 
@@ -248,31 +272,33 @@ class AppBloc extends Cubit<AppState> {
   List<String>? savedId=[];
   List<PostDataModel>? savedPosts = [];
 
-  void GetSavedPostsData (){
+    Future<void> GetSavedPostsData () async {
     emit(GetSavedPostsDataLoading());
     final user = FirebaseAuth.instance.currentUser;
-    FirebaseFirestore.instance.collection('users').doc(user!.uid).collection('savedPosts').get().then((value)
-    {
+     await FirebaseFirestore.instance.collection('users').doc(user!.uid).collection('savedPosts').get().then((value)
+     async {
       value.docs.forEach((element) {
         savedId!.add(element.id);
       });
-      emit(GetSavedPostsLoading());
-      FirebaseFirestore.instance.collection('post').get().then((value)
-      {
-        /*print(savedId!.length);*/
-        for(int i=1 ;i >= savedId!.length; i++ ){
-          value.docs.forEach((element) {
-            print(element.id);
-            /*if (element.id==savedId?[i])
-            {*/
-            print(i);
-              print('done');
-              /*savedPosts?.add(PostDataModel.fromJson(element.data(), element.id));*/
-            /*}*/
-            print(savedPosts);
 
+      emit(GetSavedPostsLoading());
+      await FirebaseFirestore.instance.collection('post').get().then((value)
+      {
+       /* print(savedId?[1]);
+        int i;*/
+          value.docs.forEach((element) {
+            /*print(savedId?.length);*/
+            for(int i =0;i <= 1; i++ )
+            {
+              if (element.id==savedId?[i])
+              {
+                /*print(savedId?[i]);*/
+                savedPosts?.add(PostDataModel.fromJson(element.data(), element.id));
+                print('done');
+              }
+            }
+            /*print(savedPosts);*/
           });
-        }
         emit(GetSavedPostsSuccsess());
       }).catchError((error){
         print(error.toString());
@@ -311,6 +337,18 @@ class AppBloc extends Cubit<AppState> {
     }
     );
   }*/
+void CheckUid (){
+  final user = FirebaseAuth.instance.currentUser;
+  var uid = user?.uid;
+  if (uid!= null){
+    emit(LoginSuccsess());
+    print('Success');
+  }
+  else{
+    emit(LoginFailed());
+    print('Failed');
+  }
+}
 
 
 }

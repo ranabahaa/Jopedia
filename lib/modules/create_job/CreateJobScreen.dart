@@ -15,6 +15,9 @@ class CreateJobScreen extends StatelessWidget {
   UserModel user;
   CreateJobScreen(this.user);
 
+ /* UserModel? user;
+  CreateJobScreen(this.user);*/
+
   var title_conroller = TextEditingController();
   var description_conroller = TextEditingController();
   var location_conroller = TextEditingController();
@@ -38,7 +41,7 @@ class CreateJobScreen extends StatelessWidget {
         listener: (BuildContext context, state) {},
         builder: (BuildContext context, state) {
           var cubit = AppBloc.get(context);
-          UserModel model;
+         /* UserModel model;*/
           return Scaffold(
             appBar: AppBar(
               title: Text(''),
@@ -352,7 +355,7 @@ class CreateJobScreen extends StatelessWidget {
                                   ),
                                 );
                               }
-                              if(user.credit == ""){
+                              else if(user.credit == ""){
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     action: SnackBarAction(
@@ -379,7 +382,7 @@ class CreateJobScreen extends StatelessWidget {
                                   ),
                                 );
                               }
-                              if(FormKey.currentState!.validate()){
+                              else if(FormKey.currentState!.validate()){
                                 AppBloc.get(context).CreatJob(
                                   JOBID: "",
                                   DISCREPTION: description_conroller.text,
