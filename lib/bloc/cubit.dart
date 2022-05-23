@@ -65,6 +65,7 @@ class AppBloc extends Cubit<AppState> {
     required String StartTime,
     required String EndTime,
     required String PostTime,
+    required bool MORE_THAN_DAY,
     //@required String USER_ID,
     //@required String WORKER_ID,
     //@required String COMPLETED_JOB,
@@ -81,6 +82,7 @@ class AppBloc extends Cubit<AppState> {
       StartTime : StartTime,
       EndTime : EndTime,
       PostTime : PostTime ,
+      MORE_THAN_DAY: MORE_THAN_DAY,
       USER_ID : user!.uid,
       //WORKER_ID : WORKER_ID;
       //COMPLETED_JOB : COMPLETED_JOB;
@@ -89,7 +91,7 @@ class AppBloc extends Cubit<AppState> {
     FirebaseFirestore.instance.collection('post')
         .add(model.toJson())
         .then((value) {
-          model.JOBID = value.id;
+      model.JOBID = value.id;
       print("ppp");
       emit(CreatJobSuccess());
     }).catchError((error) {
@@ -155,6 +157,20 @@ class AppBloc extends Cubit<AppState> {
       print(onError.toString());
     }
     );
+  }
+
+  List<RequestDataModel> requests =[];
+  void GetRequestsData (){
+    FirebaseFirestore.instance
+        .collection('request')
+        .get()
+        .then((value)
+    {
+      value.docs.forEach((element) {
+        requests.add(RequestDataModel.fromJson(element.data(), element.id));
+      });
+
+    });
   }
 
   Future<PostDataModel?> ShowContract() async{
@@ -246,7 +262,7 @@ class AppBloc extends Cubit<AppState> {
     }
     );
   }
-  /*void GetSavedPosts (){
+/*void GetSavedPosts (){
     emit(GetSavedPostsDataLoading());
     final user = FirebaseAuth.instance.currentUser;
     FirebaseFirestore.instance.collection('post').get().then((value)

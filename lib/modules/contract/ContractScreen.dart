@@ -97,10 +97,10 @@ class ContractScreen extends StatelessWidget {
                                 maximumSize: Size(100, 66),
                               ),
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => RequestScreen()),
-                                );
+                                // Navigator.push(
+                                //   context,
+                                //   MaterialPageRoute(builder: (context) => RequestScreen()),
+                                // );
                               },
                               child: MyText(
                                 text: 'Disagree',

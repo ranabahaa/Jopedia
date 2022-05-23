@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -5,6 +6,7 @@ import 'package:flutter_conditional_rendering/conditional.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:jopedia/bloc/cubit.dart';
 import 'package:jopedia/bloc/states.dart';
+import 'package:jopedia/models/services/DataController.dart';
 import 'package:jopedia/modules/home/home_cubit.dart';
 import 'package:jopedia/modules/home/home_states.dart';
 import 'package:jopedia/modules/job_view/JobViewScreen.dart';
@@ -13,16 +15,46 @@ import 'package:jopedia/shared/components/component.dart';
 
 import '../../models/job/job_model.dart';
 
-class HomeScreen extends StatelessWidget {
-  RangeValues _currentRangeValues = const RangeValues(100, 500);
-  String dropdownvalue = 'Cairo';
+class HomeScreen extends StatefulWidget {
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
 
+class _HomeScreenState extends State<HomeScreen> {
+  RangeValues _currentRangeValues = const RangeValues(100, 500);
+
+  String dropdownvalue = 'Cairo';
+  final DataController dataController = DataController();
+  QuerySnapshot? snapshotData;
+  List<PostDataModel> posts = [];
+
+  void loadData() async{
+    print(posts.length);
+    posts = [];
+    posts.clear();
+    setState(() {
+      posts.addAll(AppBloc.get(context).posts.where((element) => element.JOB_LOCATION == dropdownvalue
+          && double.parse(element.JOB_SALARY) >= _currentRangeValues.start
+          && double.parse(element.JOB_SALARY) <= _currentRangeValues.end
+          && element.MORE_THAN_DAY == AppBloc.get(context).isDuration
+      ));
+    });
+    print(posts.length);
+  }
+
+  @override
+  void initState() {
+    posts.addAll(AppBloc.get(context).posts);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    print("Rebuild started!");
     return BlocConsumer<AppBloc, AppState>(
         listener: (BuildContext context, state) {},
         builder: (BuildContext context, state) {
+          print("Rebuild started and got here!");
           var cubit = AppBloc.get(context);
           int sama =3;
 
@@ -180,7 +212,7 @@ class HomeScreen extends StatelessWidget {
                               ],
                             ),
                             SizedBox(
-                              height: 20.0,
+                              height: 15.0,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -224,7 +256,7 @@ class HomeScreen extends StatelessWidget {
                                                 size: 21.0,
                                               ),
                                               SizedBox(
-                                                width: 18.0,
+                                                width: 15.0,
                                               ),
                                               Text(
                                                 'Search Jobs',
@@ -262,188 +294,15 @@ class HomeScreen extends StatelessWidget {
                                         showModalBottomSheet(
                                         context: context,
                                         enableDrag: false,
-                                        builder: (context)=> Container(
-                                          height: 500.0,
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius: BorderRadius.only(
-                                              topRight: Radius.circular(50.0),
-                                              topLeft: Radius.circular(50.0),
-                                            ),
-                                          ),
-
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(20.0),
-                                            child: Column(
-                                              children:
-                                              [
-                                                Container(
-                                                  width: double.infinity,
-                                                  decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(5.0),
-                                                    color: Color(0xffA2BBCD),
-                                                  ),
-                                                  child: Padding(
-
-                                                    padding: const EdgeInsets.all(5.0),
-                                                    child: Center(
-                                                      child: Text(
-                                                        'Filter',
-                                                        style: TextStyle(
-                                                          fontFamily: 'Poppins',
-                                                          fontWeight: FontWeight.w500,
-                                                          fontSize: 20.0,
-                                                          color: Colors.white,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                SizedBox(height: 20.0,),
-                                                Text(
-                                                  'Salary',
-                                                  style: TextStyle(
-                                                    fontFamily: 'Poppins',
-                                                    fontWeight: FontWeight.w500,
-                                                    fontSize: 18.0,
-                                                    color: Color(0xff0F4C5C),
-                                                  ),
-                                                ),
-                                                SizedBox(height: 20.0,),
-                                                RangeSlider(
-                                                  activeColor: Color(0xff50B3CF),
-                                                  values: _currentRangeValues,
-                                                  max: 1000,
-                                                  divisions: 20,
-                                                  labels: RangeLabels(
-                                                    _currentRangeValues.start.round().toString(),
-                                                    _currentRangeValues.end.round().toString(),
-                                                  ),
-                                                  onChanged: (RangeValues values) {
-                                                      _currentRangeValues = values;
-                                                  },
-                                                ),
-                                                SizedBox(height: 15.0,),
-                                                Text(
-                                                  'Duration',
-                                                  style: TextStyle(
-                                                    fontFamily: 'Poppins',
-                                                    fontWeight: FontWeight.w500,
-                                                    fontSize: 18.0,
-                                                    color: Color(0xff0F4C5C),
-                                                  ),
-                                                ),
-                                                SizedBox(height: 15.0,),
-                                                Row(
-                                                  mainAxisAlignment: MainAxisAlignment.center,
-                                                  children:
-                                                  [
-                                                    Expanded(
-                                                      child: GestureDetector(
-                                                        onTap: ()
-                                                        {
-
-                                                            cubit.isDurationYes();
-
-                                                        },
-                                                        child: Container(
-                                                          height: 40.0,
-                                                          color:cubit.isDuration ? Color(0xff50B3CF):Colors.white,
-                                                          child: Center(
-                                                            child: Text(
-                                                              'one day',
-                                                              style: TextStyle(
-                                                                fontFamily: 'Poppins',
-                                                                fontWeight: FontWeight.w500,
-                                                                fontSize: 18.0,
-                                                                color: cubit.isDuration ? Colors.white:Color(0xff50B3CF),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    Expanded(
-                                                      child: GestureDetector(
-                                                        onTap: ()
-                                                        {
-
-                                                            cubit.isDurationNo();
-
-                                                        },
-                                                        child: Container(
-                                                          height: 40.0,
-                                                          color: cubit.isDuration ? Colors.white:Color(0xff50B3CF),
-                                                          child: Center(
-                                                            child: Text(
-                                                              'more than a day',
-                                                              style: TextStyle(
-                                                                fontFamily: 'Poppins',
-                                                                fontWeight: FontWeight.w500,
-                                                                fontSize: 18.0,
-                                                                color:cubit.isDuration ? Color(0xff50B3CF):Colors.white,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                                SizedBox(height: 20.0,),
-                                                Text(
-                                                  'Location',
-                                                  style: TextStyle(
-                                                    fontFamily: 'Poppins',
-                                                    fontWeight: FontWeight.w500,
-                                                    fontSize: 18.0,
-                                                    color: Color(0xff0F4C5C),
-                                                  ),
-                                                ),
-                                                SizedBox(height: 15.0,),
-                                                Container(
-                                                  width: double.infinity,
-                                                  child: Padding(
-                                                    padding: const EdgeInsets.only(left: 20.0,right: 20.0,),
-                                                    child: DropdownButton<String>(
-                                                      hint:Text(dropdownvalue),
-                                                      value: dropdownvalue,
-                                                      items: <String>['Cairo', 'Alexandria', 'Marsa Matruh', 'Hurghada','Giza','South Sinai','North Sinai','Suez','Beheira','Sharqia','Dakahlia','Kafr el-Sheikh','Monufia','Minya','Gharbia','Faiyum','Qena','Asyut','Sohag','Ismailia','Beni Suef','Qalyubia','Aswan','Damietta','Port Said','Luxor'].map((String value) {
-                                                        return DropdownMenuItem<String>(
-                                                          value: value,
-                                                          child: Text(value),
-                                                        );
-                                                      }).toList(),
-                                                      onChanged: (String? newValue)
-                                                      {
-                                                          dropdownvalue=newValue!;
-                                                      },
-                                                    ),
-                                                  ),
-                                                ),
-                                                SizedBox(height: 20.0,),
-                                                MaterialButton(
-
-                                                  color: Color(0xff50B3CF),
-                                                  minWidth: double.infinity,
-                                                  height: 40.0,
-                                                  child: Text(
-                                                    'Apply',
-                                                    style: TextStyle(
-                                                      fontFamily: 'Poppins',
-                                                      fontWeight: FontWeight.w500,
-                                                      fontSize: 18.0,
-                                                      color: Colors.white,
-                                                    ),
-                                                  ),
-                                                  onPressed: ()
-                                                  {
-
-                                                  },
-                                                ),
-                                              ],
-                                            ),
-                                          ),
+                                        builder: (context) => FilterWidget(
+                                            cubit: cubit,
+                                          onComplete: (range, country){
+                                              setState(() {
+                                                _currentRangeValues = range;
+                                                dropdownvalue = country;
+                                                loadData();
+                                              });
+                                          },
                                         ),
                                       );
                                       },
@@ -459,11 +318,11 @@ class HomeScreen extends StatelessWidget {
                               ],
                             ),
                             ListView.separated(
-                                  itemCount: cubit.posts.length,
+                                  itemCount: posts.length,
                                   shrinkWrap: true,
                                   physics: NeverScrollableScrollPhysics(),
                                   separatorBuilder:(context, index) => myDivider(),
-                                  itemBuilder: (context, index) => buildPostItem (cubit.posts[index],context)
+                                  itemBuilder: (context, index) => buildPostItem (posts[index],context)
 
                             ),
                             SizedBox(height: 20.0,),
@@ -479,6 +338,7 @@ class HomeScreen extends StatelessWidget {
         },
     );
   }
+
 Widget buildPostItem (PostDataModel post,context) =>  Column(
   children: <Widget>[
     InkWell(
@@ -701,3 +561,216 @@ Widget buildPostItem (PostDataModel post,context) =>  Column(
   ],
 );
 }
+
+class FilterWidget extends StatefulWidget {
+  final AppBloc cubit;
+  final Function(RangeValues, String) onComplete;
+  const FilterWidget({Key? key, required this.cubit, required this.onComplete}) : super(key: key);
+
+  @override
+  _FilterWidgetState createState() => _FilterWidgetState();
+}
+
+class _FilterWidgetState extends State<FilterWidget> {
+  RangeValues _currentRangeValues = const RangeValues(100, 9900);
+
+  String dropdownvalue = 'Cairo';
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 500.0,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.only(
+          topRight: Radius.circular(50.0),
+          topLeft: Radius.circular(50.0),
+        ),
+      ),
+
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          children:
+          [
+            Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5.0),
+                color: Color(0xffA2BBCD),
+              ),
+              child: Padding(
+
+                padding: const EdgeInsets.all(5.0),
+                child: Center(
+                  child: Text(
+                    'Filter',
+                    style: TextStyle(
+                      fontFamily: 'Poppins',
+                      fontWeight: FontWeight.w500,
+                      fontSize: 20.0,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: 10.0,),
+            Text(
+              'Salary',
+              style: TextStyle(
+                fontFamily: 'Poppins',
+                fontWeight: FontWeight.w500,
+                fontSize: 18.0,
+                color: Color(0xff0F4C5C),
+              ),
+            ),
+            SizedBox(height: 10.0,),
+            RangeSlider(
+              activeColor: Color(0xff50B3CF),
+              values: _currentRangeValues,
+              max: 10000,
+              divisions: 20,
+              labels: RangeLabels(
+                _currentRangeValues.start.round().toString(),
+                _currentRangeValues.end.round().toString(),
+              ),
+              onChanged: (RangeValues values) {
+                setState(() {
+                  print(values.end);
+                  _currentRangeValues = values;
+                });
+              },
+            ),
+            SizedBox(height: 10.0,),
+            Text(
+              'Duration',
+              style: TextStyle(
+                fontFamily: 'Poppins',
+                fontWeight: FontWeight.w500,
+                fontSize: 18.0,
+                color: Color(0xff0F4C5C),
+              ),
+            ),
+            SizedBox(height: 15.0,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children:
+              [
+                Expanded(
+                  child: GestureDetector(
+                    onTap: ()
+                    {
+                      setState(() {
+                        widget.cubit.isDurationYes();
+                      });
+                    },
+                    child: Container(
+                      height: 40.0,
+                      color:widget.cubit.isDuration ? Color(0xff50B3CF):Colors.white,
+                      child: Center(
+                        child: Text(
+                          'One day',
+                          style: TextStyle(
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.w500,
+                            fontSize: 18.0,
+                            color:  widget.cubit.isDuration ? Colors.white:Color(0xff50B3CF),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: GestureDetector(
+                    onTap: ()
+                    {
+                      setState(() {
+                        widget.cubit.isDurationNo();
+                      });
+                    },
+                    child: Container(
+                      height: 40.0,
+                      color:  widget.cubit.isDuration ? Colors.white:Color(0xff50B3CF),
+                      child: Center(
+                        child: Text(
+                          'More than a day',
+                          style: TextStyle(
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.w500,
+                            fontSize: 18.0,
+                            color: widget.cubit.isDuration ? Color(0xff50B3CF):Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 10.0,),
+            Text(
+              'Location',
+              style: TextStyle(
+                fontFamily: 'Poppins',
+                fontWeight: FontWeight.w500,
+                fontSize: 18.0,
+                color: Color(0xff0F4C5C),
+              ),
+            ),
+            SizedBox(height: 10.0,),
+            Container(
+              width: double.infinity,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 20.0,right: 20.0,),
+                child: DropdownButton<String>(
+                  hint:Text(dropdownvalue),
+                  value: dropdownvalue,
+                  items: <String>['Cairo', 'Alexandria', 'Marsa Matruh', 'Hurghada','Giza','South Sinai','North Sinai','Suez','Beheira','Sharqia','Dakahlia','Kafr el-Sheikh','Monufia','Minya','Gharbia','Faiyum','Qena','Asyut','Sohag','Ismailia','Beni Suef','Qalyubia','Aswan','Damietta','Port Said','Luxor'].map((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                  onChanged: (String? newValue)
+                  {
+                    setState(() {
+                      dropdownvalue=newValue!;
+                    });
+                  },
+                ),
+              ),
+            ),
+            SizedBox(height: 13.0,),
+            MaterialButton(
+
+              color: Color(0xff50B3CF),
+              minWidth: double.infinity,
+              height: 40.0,
+              child: Text(
+                'Apply',
+                style: TextStyle(
+                  fontFamily: 'Poppins',
+                  fontWeight: FontWeight.w500,
+                  fontSize: 18.0,
+                  color: Colors.white,
+                ),
+              ),
+              onPressed: ()
+              {
+                print(
+                    _currentRangeValues);
+                print(dropdownvalue);
+                print( widget.cubit.isDuration);
+                widget.onComplete(_currentRangeValues, dropdownvalue);
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+

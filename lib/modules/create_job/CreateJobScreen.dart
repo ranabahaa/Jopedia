@@ -230,7 +230,7 @@ class CreateJobScreen extends StatelessWidget {
                                   ).then((value) {
                                     print(DateFormat.yMMMd().format(value!));
                                     StartDate_conroller.text =
-                                        DateFormat.yMMMd().format(value);
+                                        DateFormat("dd/MM/yyyy").format(value);
                                   });
                                 },
                                 validator: (value) {
@@ -262,9 +262,9 @@ class CreateJobScreen extends StatelessWidget {
                                   firstDate: DateTime.now(),
                                   lastDate: DateTime.parse('2022-07-07'),
                                 ).then((value) {
-                                  print(DateFormat.yMMMd().format(value!));
+                                  print(DateFormat("dd/MM/yyyy").format(value!));
                                   EndDate_conroller.text =
-                                      DateFormat.yMMMd().format(value);
+                                      DateFormat("dd/MM/yyyy").format(value);
                                 });
                               },
                               validator: (value) {
@@ -321,6 +321,9 @@ class CreateJobScreen extends StatelessWidget {
                               ),),
                             onPressed: () {
                               if(FormKey.currentState!.validate()){
+                                DateTime start = DateFormat("dd/MM/yyyy").parse(StartDate_conroller.text);
+                                DateTime end = DateFormat("dd/MM/yyyy").parse(EndDate_conroller.text);
+                                bool moreThanDay = end.difference(start).abs().inMinutes < 1440;
                                  AppBloc.get(context).CreatJob(
                                    JOBID: "",
                                     DISCREPTION: description_conroller.text,
@@ -332,8 +335,23 @@ class CreateJobScreen extends StatelessWidget {
                                    StartTime: StartTime_conroller.text,
                                    EndTime: EndTime_conroller.text,
                                    PostTime: DateTime.now().toString(),
+                                   MORE_THAN_DAY: moreThanDay,
                                 );}
-
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: const Text('Job Created !'),
+                                  duration: const Duration(milliseconds: 1550),
+                                  width: 280.0, // Width of the SnackBar.
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 10.0, // Inner padding for SnackBar content.
+                                  ),
+                                  behavior: SnackBarBehavior.floating,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                ),
+                              );
+                              Navigator.pop(context);
                             },
                           ),
                         ),
