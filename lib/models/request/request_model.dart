@@ -11,7 +11,7 @@ class RequestDataModel {
     required this.WORKER_ID,
   });
 
-  RequestDataModel.fromJson(Map<String, dynamic>? json) {
+  RequestDataModel.fromJson(Map<String, dynamic>? json, String? id) {
     JOB_ID = json?['JOB_ID'] ?? '';
     JOB_SALARY = json?['JOB_SALARY'] ?? '';
     USER_ID = json?['USER_ID'] ?? '';

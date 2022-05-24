@@ -40,6 +40,7 @@ class ProfileWidget extends StatelessWidget {
 
     return ClipOval(
       child: Material(
+        elevation: 5,
         color: Colors.transparent,
         child: Ink.image(
           image: image,

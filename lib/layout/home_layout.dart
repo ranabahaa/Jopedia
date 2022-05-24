@@ -156,10 +156,11 @@ class Home_layout extends StatelessWidget {
                         SizedBox(width: 10.0,),
                         GestureDetector(
                           child: CircleAvatar(
-                            backgroundImage: AssetImage('assets/images/drawer.jpeg',),
+                            backgroundImage: AssetImage(user.image),
                             radius: 36.0,
                           ),
                           onTap: (){
+
                             Navigator.pop(context);
                             Navigator.push(
                               context,
@@ -288,9 +289,15 @@ class Home_layout extends StatelessWidget {
                     ),
                     onTap: ()
                     {
+
+                      Navigator.pop(context);
                       Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => RequestScreen()),
+                          context,
+                          MaterialPageRoute(builder: (context) => RequestScreen(user)),
+
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(builder: (context) => RequestScreen(user)),
                       );
                     },
                   ),

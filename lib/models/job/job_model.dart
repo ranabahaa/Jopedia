@@ -10,6 +10,7 @@ class PostDataModel {
   late String EndTime;
   late String PostTime;
   late String JOBID;
+  late bool MORE_THAN_DAY;
   late String USER_ID;
   late String WORKER_ID ="";
   late String COMPLETED_JOB = "1";
@@ -26,6 +27,7 @@ class PostDataModel {
     required this.StartTime,
     required this.EndTime,
     required this.PostTime,
+    required this.MORE_THAN_DAY,
     required this.USER_ID,
     this.IMAGE = "",
   });
@@ -42,9 +44,11 @@ class PostDataModel {
     EndTime = json?['EndTime'] ?? '';
     PostTime = json?['PostTime'] ?? '';
     USER_ID = json?['USER_ID'] ?? '';
+    MORE_THAN_DAY = json?['MORE_THAN_DAY'] ?? true;
     WORKER_ID = json?['WORKER_ID'] ?? '';
     COMPLETED_JOB = json?['COMPLETED_JOB'] ?? '';
     IMAGE = json?['IMAGE'] ?? '';
+
   }
 
   Map<String, dynamic> toJson() {
@@ -59,6 +63,7 @@ class PostDataModel {
       'StartTime': StartTime,
       'EndTime': EndTime,
       'PostTime' : PostTime ,
+      'MORE_THAN_DAY' : MORE_THAN_DAY ,
       'USER_ID': USER_ID,
       'WORKER_ID': WORKER_ID,
       'COMPLETED_JOB': COMPLETED_JOB,

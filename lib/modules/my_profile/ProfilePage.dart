@@ -98,7 +98,11 @@ class _ProfilePageState extends State<ProfilePage>
                         fontSize: 15.0,
                       ),
                     ),
+                    SizedBox(
+                      height: 8.0,
+                    ),
                     RatingStars(
+                      iconSize: 25,
                       rating: 3.5,
                       editable: false,
                       color: Colors.amber,
@@ -112,10 +116,9 @@ class _ProfilePageState extends State<ProfilePage>
                   color: Colors.grey[200],
                   child: Center(
                       child: Card(
-                          margin: EdgeInsets.fromLTRB(0.0, 45.0, 0.0, 0.0),
                           child: Container(
                               width: 450.0,
-                              height: 290.0,
+                              height: 335.0,
                               child: Padding(
                                 padding: EdgeInsets.all(10.0),
                                 child: Column(
@@ -125,6 +128,7 @@ class _ProfilePageState extends State<ProfilePage>
                                       child: TabBar(
                                           controller: _tabController,
                                           labelColor: Colors.black,
+                                          indicatorColor: Color(0xff50B3CF),
                                           unselectedLabelColor: Colors.grey,
                                           tabs: [
                                             Tab(text: "About Me"),
@@ -348,19 +352,19 @@ class _ProfilePageState extends State<ProfilePage>
     );
   }
 
-  Widget buildName() => Column(
-        children: [
-          Text(
-            'name',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            'email',
-            style: TextStyle(color: Colors.grey),
-          )
-        ],
-      );
+  // Widget buildName() => Column(
+  //       children: [
+  //         Text(
+  //           'name',
+  //           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+  //         ),
+  //         const SizedBox(height: 4),
+  //         Text(
+  //           'email',
+  //           style: TextStyle(color: Colors.grey),
+  //         )
+  //       ],
+  //     );
 
   Widget buildAbout() => Container(
         padding: EdgeInsets.symmetric(horizontal: 28, vertical: 18),
@@ -368,7 +372,7 @@ class _ProfilePageState extends State<ProfilePage>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'about',
+              widget.user.about,
               style: TextStyle(fontSize: 16, height: 1.4),
             ),
           ],

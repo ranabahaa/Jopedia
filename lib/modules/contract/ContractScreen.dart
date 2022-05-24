@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:jopedia/models/user/user_model.dart';
 import 'package:jopedia/shared/components/component.dart';
 import 'package:jopedia/modules/job_progress/JobProgressScreen.dart';
 import 'package:jopedia/modules/requests/RequestScreen.dart';
@@ -12,6 +13,8 @@ import '../../bloc/cubit.dart';
 import '../../bloc/states.dart';
 
 class ContractScreen extends StatelessWidget {
+  UserModel user;
+  ContractScreen(this.user);
   var color = Color(0xff50B3CF);
   @override
   Widget build(BuildContext context) {
@@ -107,7 +110,7 @@ class ContractScreen extends StatelessWidget {
                                             onPressed: () {
                                               Navigator.push(
                                                 context,
-                                                MaterialPageRoute(builder: (context) => RequestScreen()),
+                                                MaterialPageRoute(builder: (context) => RequestScreen(user)),
                                               );
                                             },
                                             child: MyText(
