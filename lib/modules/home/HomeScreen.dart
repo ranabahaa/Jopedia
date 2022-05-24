@@ -17,6 +17,9 @@ import 'package:jopedia/shared/components/component.dart';
 import '../../models/job/job_model.dart';
 
 class HomeScreen extends StatefulWidget {
+
+  const HomeScreen({Key? key}) : super(key: key);
+
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -57,7 +60,6 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (BuildContext context, state) {
           print("Rebuild started and got here!");
           var cubit = AppBloc.get(context);
-          int sama =3;
 
           /*PostDataModel posts = cubit.posts[2];
           print(posts.DISCREPTION);*/
@@ -241,12 +243,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                         width: 270.0,
                                         height: 30,
                                         child: GestureDetector(
-                                          onTap: () {
+                                          onTap: () async {
+                                            await AppBloc.get(context).GetUserData();
                                             Navigator.push(
                                               context,
                                               MaterialPageRoute(
                                                   builder: (context) =>
-                                                      SearchScreen()),
+                                                      SearchScreen(user: cubit.user_model,)),
                                             );
                                           },
                                           child: Row(
@@ -302,6 +305,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 _currentRangeValues = range;
                                                 dropdownvalue = country;
                                                 loadData();
+
+                                              });
+                                          },
+                                          onClear: (){
+                                              setState(() {
+                                                posts.clear();
+                                                posts.addAll(cubit.posts);
                                               });
                                           },
                                         ),
@@ -568,8 +578,10 @@ Widget buildPostItem (PostDataModel post,context) =>  Column(
 
 class FilterWidget extends StatefulWidget {
   final AppBloc cubit;
+  final VoidCallback onClear;
   final Function(RangeValues, String) onComplete;
-  const FilterWidget({Key? key, required this.cubit, required this.onComplete}) : super(key: key);
+  const FilterWidget({Key? key, required this.cubit, required this.onComplete, required this.onClear}) : super(key: key);
+
 
   @override
   _FilterWidgetState createState() => _FilterWidgetState();
@@ -747,29 +759,54 @@ class _FilterWidgetState extends State<FilterWidget> {
               ),
             ),
             SizedBox(height: 13.0,),
-            MaterialButton(
-
-              color: Color(0xff50B3CF),
-              minWidth: double.infinity,
-              height: 40.0,
-              child: Text(
-                'Apply',
-                style: TextStyle(
-                  fontFamily: 'Poppins',
-                  fontWeight: FontWeight.w500,
-                  fontSize: 18.0,
-                  color: Colors.white,
+            Row(
+              children: <Widget>[
+                Expanded(
+                  child: MaterialButton(
+                    color: Color(0xff50B3CF),
+                    height: 40.0,
+                    child: Text(
+                      'Apply',
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.w500,
+                        fontSize: 18.0,
+                        color: Colors.white,
+                      ),
+                    ),
+                    onPressed: ()
+                    {
+                      print(
+                          _currentRangeValues);
+                      print(dropdownvalue);
+                      print( widget.cubit.isDuration);
+                      widget.onComplete(_currentRangeValues, dropdownvalue);
+                      Navigator.pop(context);
+                    },
+                  ),
                 ),
-              ),
-              onPressed: ()
-              {
-                print(
-                    _currentRangeValues);
-                print(dropdownvalue);
-                print( widget.cubit.isDuration);
-                widget.onComplete(_currentRangeValues, dropdownvalue);
-                Navigator.pop(context);
-              },
+                SizedBox(width: 10.0),
+                Expanded(
+                  child: MaterialButton(
+                    color: Color(0x97cf5050),
+                    height: 40.0,
+                    child: Text(
+                      'Clear',
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.w500,
+                        fontSize: 18.0,
+                        color: Colors.white,
+                      ),
+                    ),
+                    onPressed: ()
+                    {
+                      widget.onClear();
+                      Navigator.pop(context);
+                    },
+                  ),
+                ),
+              ],
             ),
           ],
         ),

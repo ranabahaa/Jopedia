@@ -155,7 +155,7 @@ class Home_layout extends StatelessWidget {
                         SizedBox(width: 10.0,),
                         GestureDetector(
                           child: CircleAvatar(
-                            backgroundImage: AssetImage('assets/images/drawer.jpeg',),
+                            backgroundImage: AssetImage(user.image),
                             radius: 36.0,
                           ),
                           onTap: (){

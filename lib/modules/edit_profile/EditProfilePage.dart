@@ -68,7 +68,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     final TextEditingController _controllerName =
         TextEditingController(text: widget.user.name);
     final TextEditingController _controllerID =
-        TextEditingController(text: widget.user.uId);
+        TextEditingController(text: widget.user.NatonalId);
     final TextEditingController _controllerPhone =
         TextEditingController(text: widget.user.phone);
     final TextEditingController _controllerAbout =
@@ -92,6 +92,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         physics: BouncingScrollPhysics(),
         children: [
           ProfileWidget(
+
             imagePath: widget.user.image,
             isEdit: true,
             onClicked: () => getImage(),
@@ -126,6 +127,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               ),
               const SizedBox(height: 8),
               TextField(
+                keyboardType: TextInputType.number,
                 controller: _controllerID,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
@@ -146,6 +148,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               ),
               const SizedBox(height: 8),
               TextField(
+                keyboardType: TextInputType.number,
                 controller: _controllerPhone,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
@@ -178,6 +181,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
           ),
           const SizedBox(height: 20),
           MaterialButton(
+            elevation: 5,
             color: Color(0xff50B3CF),
             minWidth: double.infinity,
             height: 50.0,
@@ -200,7 +204,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 'NatonalId': _controllerID.text,
                 'phone': _controllerPhone.text,
                 'about': _controllerAbout.text,
-                //'NatonalId': _controllerNatonalId.text,
               });
 
               ScaffoldMessenger.of(context).showSnackBar(
@@ -234,6 +237,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
             height: 20.0,
           ),
           MaterialButton(
+
               color: Color(0xff50B3CF),
               minWidth: double.infinity,
               height: 45.0,

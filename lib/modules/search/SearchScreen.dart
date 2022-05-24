@@ -1,13 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:jopedia/models/job/job_model.dart';
 import 'package:jopedia/models/services/DataController.dart';
+import 'package:jopedia/models/user/user_model.dart';
 import 'package:jopedia/modules/job_view/JobViewScreen.dart';
 import 'package:jopedia/shared/components/component.dart';
 import '../job_view/JobViewScreen.dart';
 
 class SearchScreen extends StatefulWidget {
-  //const SearchScreen({Key? key}) : super(key: key);
+  final UserModel? user;
+  const SearchScreen({Key? key, this.user}) : super(key: key);
 
   @override
   _SearchScreenState createState() => _SearchScreenState();
@@ -16,7 +19,7 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchScreen> {
   final TextEditingController searchController = TextEditingController();
   final DataController dataController = DataController();
-  late QuerySnapshot snapshotData;
+  late QuerySnapshot<Map<String, dynamic>> snapshotData;
   bool isExecuted = false;
   @override
   Widget build(BuildContext context) {
@@ -24,13 +27,21 @@ class _SearchScreenState extends State<SearchScreen> {
       return ListView.builder(
         itemCount: snapshotData.docs.length,
         itemBuilder: (BuildContext context, int index) {
-          return InkWell(
-            onTapDown: (_) {
-              // print(post.JOBID);
-              // print(post.JOB_TITLE);
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: InkWell(
+              onTap: () {
+                print("KK");
+                PostDataModel post = PostDataModel.fromJson(snapshotData.docs[index].data(), snapshotData.docs[index].id);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => JobViewScreen(job: post, user: widget.user),
+                  ),
+                );
+
+
+              },
               child: Stack(
                 alignment: AlignmentDirectional.topCenter,
                 children: [
@@ -81,32 +92,21 @@ class _SearchScreenState extends State<SearchScreen> {
                           ),
                         ],
                       ),
-                      child: GestureDetector(
-                        onTap: () {
-                          /*print(HomeCubit.get(context).posts.length);*/
-                          /*if (cubit.isSaveTrue ==
-                        false) {
-                      cubit.isSaveTrueYes();
-                    } else {
-                      cubit.isSaveTrueNo();
-                    }*/
-                        },
-                        child: CircleAvatar(
-                          radius: 17.0,
-                          backgroundColor:
-                              /*cubit.isSaveTrue
-                        ? Color(0xff50B3CF)
+                      child: CircleAvatar(
+                        radius: 17.0,
+                        backgroundColor:
+                            /*cubit.isSaveTrue
+                      ? Color(0xff50B3CF)
+                      : */
+                            Colors.white,
+                        child: SvgPicture.asset(
+                          "assets/icons/bookmark.svg",
+                          height: 15.0,
+                          width: 15.0,
+                          color: /*cubit.isSaveTrue
+                        ? Colors.white
                         : */
-                              Colors.white,
-                          child: SvgPicture.asset(
-                            "assets/icons/bookmark.svg",
-                            height: 15.0,
-                            width: 15.0,
-                            color: /*cubit.isSaveTrue
-                          ? Colors.white
-                          : */
-                                Color(0xff50B3CF),
-                          ),
+                              Color(0xff50B3CF),
                         ),
                       ),
                     ),
@@ -212,14 +212,6 @@ class _SearchScreenState extends State<SearchScreen> {
                 ],
               ),
             ),
-            //     onTap: () {
-            //       Navigator.push(
-            //   context,
-            //   MaterialPageRoute(
-            //     builder: (context) => JobViewScreen(),
-            //   ),
-            // );
-            //     },
           );
           // return ListTile(
           //   // leading: CircleAvatar(
