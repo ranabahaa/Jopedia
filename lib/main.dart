@@ -8,6 +8,7 @@ import 'package:jopedia/bloc/states.dart';
 import 'package:jopedia/modules/login/LoginScreen.dart';
 import 'package:flutter/services.dart';
 import 'bloc/bloc_Observer.dart';
+import 'modules/register/RegisterScreen.dart';
 
   void main() async {
   WidgetsFlutterBinding?.ensureInitialized();

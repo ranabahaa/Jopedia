@@ -68,6 +68,13 @@ class SavedErrorState extends AppState {
 
   SavedErrorState(this.error);
 }
+class DeleteSavedSuccessState extends AppState {}
+
+class DeleteSavedErrorState extends AppState {
+  final String error;
+
+  DeleteSavedErrorState(this.error);
+}
 class GetSavedPostsDataLoading extends AppState {}
 
 class GetSavedPostsDataSuccsess extends AppState {}
@@ -99,3 +106,4 @@ class GetPostUserDataError extends AppState {
 }
 class GetPostUserDataLoading extends AppState {}
 
+class JopViewSuccess extends AppState {}
