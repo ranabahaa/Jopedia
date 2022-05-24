@@ -105,6 +105,7 @@ class AppBloc extends Cubit<AppState> {
     required String StartTime,
     required String EndTime,
     required String PostTime,
+    required String WORKER_ID,
     required bool MORE_THAN_DAY,
   }) {
     final user = FirebaseAuth.instance.currentUser;
@@ -121,6 +122,7 @@ class AppBloc extends Cubit<AppState> {
       PostTime: PostTime,
       MORE_THAN_DAY: MORE_THAN_DAY,
       USER_ID: user!.uid,
+      WORKER_ID: WORKER_ID,
     );
 
     FirebaseFirestore.instance

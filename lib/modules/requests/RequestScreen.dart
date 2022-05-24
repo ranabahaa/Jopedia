@@ -52,6 +52,8 @@ class _RequestScreenState extends State<RequestScreen> {
       itemBuilder: (BuildContext context, int index) {
         print("----- $index");
         print(snapshotData?.docs);
+        var work = snapshotData?.docs[index].get("WORKER_ID").toString();
+        print(work);
         return Container(
           height: 80.0,
           margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
@@ -155,6 +157,7 @@ class _RequestScreenState extends State<RequestScreen> {
                                 .doc(snapshotData?.docs[index].id)
                                 .delete();
                             loadData();
+                            print(snapshotData?.docs[index].get('WORKER_ID'));
                           },
                           child: Icon(
                             Icons.close_rounded,
@@ -189,6 +192,13 @@ class _RequestScreenState extends State<RequestScreen> {
                                 .update({
                               "COMPLETED_JOB": "2",
                             });
+                            await FirebaseFirestore.instance
+                                .collection("post")
+                                .doc(snapshotData?.docs[index].get("JOB_ID"))
+                                .update({
+                              "WORKER_ID": "$work" ,
+                            });
+
                             QuerySnapshot value = await FirebaseFirestore
                                 .instance
                                 .collection("request")
@@ -196,6 +206,7 @@ class _RequestScreenState extends State<RequestScreen> {
                                     isEqualTo:
                                         snapshotData?.docs[index].get("JOB_ID"))
                                 .get();
+
                             value.docs.forEach((element) async {
                               print("Deleting ${element.id}..");
                               await FirebaseFirestore.instance
@@ -203,6 +214,11 @@ class _RequestScreenState extends State<RequestScreen> {
                                   .doc(element.id)
                                   .delete();
                             });
+
+                            FirebaseFirestore.instance
+                                .collection("request")
+                                .doc(snapshotData?.docs[index].id)
+                                .delete();
                             print("Done...");
                             loadData();
                             print("Done all!");
@@ -233,13 +249,12 @@ class _RequestScreenState extends State<RequestScreen> {
         backgroundColor: Color(0xffF6F9FA),
         appBar: AppBar(
           title: Center(
-            child: Text( ' You have $req requests' ,
+            child: Text(' You have $req requests',
                 style: TextStyle(
                   color: Color(0xff50B3CF),
                   fontFamily: 'Poppins',
                 ),
-                textAlign: TextAlign.center
-            ),
+                textAlign: TextAlign.center),
           ),
           backgroundColor: Color(0xffF6F9FA),
           elevation: 5.0,

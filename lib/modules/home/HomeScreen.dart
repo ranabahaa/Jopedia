@@ -312,7 +312,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                               setState(() {
                                                 posts.clear();
                                                 posts.addAll(cubit.posts);
+
                                               });
+
+
                                           },
                                         ),
                                       );
@@ -786,8 +789,7 @@ class _FilterWidgetState extends State<FilterWidget> {
                   ),
                 ),
                 SizedBox(width: 10.0),
-                Expanded(
-                  child: MaterialButton(
+                MaterialButton(
                     color: Color(0x97cf5050),
                     height: 40.0,
                     child: Text(
@@ -804,7 +806,7 @@ class _FilterWidgetState extends State<FilterWidget> {
                       widget.onClear();
                       Navigator.pop(context);
                     },
-                  ),
+
                 ),
               ],
             ),

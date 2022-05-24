@@ -29,6 +29,7 @@ class PostDataModel {
     required this.PostTime,
     required this.MORE_THAN_DAY,
     required this.USER_ID,
+    required this.WORKER_ID,
     this.IMAGE = "",
   });
 

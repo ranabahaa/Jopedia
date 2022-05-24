@@ -240,15 +240,14 @@ class CreateJobScreen extends StatelessWidget {
                                   controller: StartDate_conroller,
                                   keyboardType: TextInputType.datetime,
                                   onTap: () {
-                                    showDatePicker(
-                                      context: context,
+                                    showDatePicker(context: context,
                                       initialDate: DateTime.now(),
                                       firstDate: DateTime.now(),
                                       lastDate: DateTime.parse('2022-07-07'),
                                     ).then((value) {
                                       print(DateFormat.yMMMd().format(value!));
                                       StartDate_conroller.text =
-                                          DateFormat.yMMMd().format(value);
+                                          DateFormat("dd/MM/yyyy").format(value);
                                     });
                                   },
                                   validator: (value) {
@@ -277,15 +276,14 @@ class CreateJobScreen extends StatelessWidget {
                                 controller: EndDate_conroller,
                                 keyboardType: TextInputType.datetime,
                                 onTap: () {
-                                  showDatePicker(
-                                    context: context,
+                                  showDatePicker(context: context,
                                     initialDate: DateTime.now(),
                                     firstDate: DateTime.now(),
                                     lastDate: DateTime.parse('2022-07-07'),
                                   ).then((value) {
-                                    print(DateFormat.yMMMd().format(value!));
+                                    print(DateFormat("dd/MM/yyyy").format(value!));
                                     EndDate_conroller.text =
-                                        DateFormat.yMMMd().format(value);
+                                        DateFormat("dd/MM/yyyy").format(value);
                                   });
                                 },
                                 validator: (value) {
@@ -342,68 +340,69 @@ class CreateJobScreen extends StatelessWidget {
                                 ),
                               ),
                               onPressed: () {
-                                if (user.NatonalId == "") {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      action: SnackBarAction(
-                                        label: 'Edit Profil',
-                                        onPressed: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  EditProfilePage(user),
-                                            ),
-                                          );
-                                        },
-                                      ),
-                                      content: const Text(
-                                          'Please complete your information'),
-                                      duration:
-                                          const Duration(milliseconds: 1550),
-                                      width: 280.0, // Width of the SnackBar.
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal:
-                                            10.0, // Inner padding for SnackBar content.
-                                      ),
-                                      behavior: SnackBarBehavior.floating,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                      ),
-                                    ),
-                                  );
-                                } else if (user.credit == "") {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      action: SnackBarAction(
-                                        label: 'Edit Credit',
-                                        onPressed: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) => YourCard(),
-                                            ),
-                                          );
-                                        },
-                                      ),
-                                      content: const Text(
-                                          'Please complete your information'),
-                                      duration:
-                                          const Duration(milliseconds: 1550),
-                                      width: 280.0, // Width of the SnackBar.
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal:
-                                            10.0, // Inner padding for SnackBar content.
-                                      ),
-                                      behavior: SnackBarBehavior.floating,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                      ),
-                                    ),
-                                  );
-                                } else if (FormKey.currentState!.validate()) {
+                                // if (user.NatonalId == "") {
+                                //   ScaffoldMessenger.of(context).showSnackBar(
+                                //     SnackBar(
+                                //       action: SnackBarAction(
+                                //         label: 'Edit Profile',
+                                //         onPressed: () {
+                                //           Navigator.push(
+                                //             context,
+                                //             MaterialPageRoute(
+                                //               builder: (context) =>
+                                //                   EditProfilePage(user),
+                                //             ),
+                                //           );
+                                //         },
+                                //       ),
+                                //       content: const Text(
+                                //           'Please complete your information'),
+                                //       duration:
+                                //           const Duration(milliseconds: 1550),
+                                //       width: 280.0, // Width of the SnackBar.
+                                //       padding: const EdgeInsets.symmetric(
+                                //         horizontal:
+                                //             10.0, // Inner padding for SnackBar content.
+                                //       ),
+                                //       behavior: SnackBarBehavior.floating,
+                                //       shape: RoundedRectangleBorder(
+                                //         borderRadius:
+                                //             BorderRadius.circular(10.0),
+                                //       ),
+                                //     ),
+                                //   );
+                                // } else if (user.credit == "") {
+                                //   ScaffoldMessenger.of(context).showSnackBar(
+                                //     SnackBar(
+                                //       action: SnackBarAction(
+                                //         label: 'Edit Credit',
+                                //         onPressed: () {
+                                //           Navigator.push(
+                                //             context,
+                                //             MaterialPageRoute(
+                                //               builder: (context) => YourCard(),
+                                //             ),
+                                //           );
+                                //         },
+                                //       ),
+                                //       content: const Text(
+                                //           'Please complete your information'),
+                                //       duration:
+                                //           const Duration(milliseconds: 1550),
+                                //       width: 280.0, // Width of the SnackBar.
+                                //       padding: const EdgeInsets.symmetric(
+                                //         horizontal:
+                                //             10.0, // Inner padding for SnackBar content.
+                                //       ),
+                                //       behavior: SnackBarBehavior.floating,
+                                //       shape: RoundedRectangleBorder(
+                                //         borderRadius:
+                                //             BorderRadius.circular(10.0),
+                                //       ),
+                                //     ),
+                                //   );
+                                // } else
+                                  if (FormKey.currentState!.validate()) {
                                   DateTime start = DateFormat("dd/MM/yyyy")
                                       .parse(StartDate_conroller.text);
                                   DateTime end = DateFormat("dd/MM/yyyy")
@@ -423,6 +422,7 @@ class CreateJobScreen extends StatelessWidget {
                                     EndTime: EndTime_conroller.text,
                                     PostTime: DateTime.now().toString(),
                                     MORE_THAN_DAY: moreThanDay,
+                                    WORKER_ID : '..',
                                   );
                                 }
                                 ScaffoldMessenger.of(context).showSnackBar(
