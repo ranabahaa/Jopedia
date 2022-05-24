@@ -7,6 +7,7 @@ import 'package:jopedia/layout/home_layout_state.dart';
 import 'package:jopedia/models/user/user_model.dart';
 import 'package:jopedia/modules/create_job/CreateJobScreen.dart';
 import 'package:jopedia/modules/home/HomeScreen.dart';
+import 'package:jopedia/modules/job_progress/ViewJobProgressScreen.dart';
 import 'package:jopedia/modules/login/LoginScreen.dart';
 import 'package:jopedia/modules/my_profile/ProfilePage.dart';
 import 'package:jopedia/modules/notification/NotificationScreen.dart';
@@ -230,6 +231,36 @@ class Home_layout extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => SavedJobScreen()),
+                      );
+                    },
+                  ),
+                  SizedBox(height: 5.0,),
+                  ListTile(
+                    leading: IconButton(
+                      onPressed: (){},
+                      icon: Icon(
+                        Icons.timelapse,
+                        color:Color(0xff0F4C5C) ,
+                        size: 20.0,
+                      ),
+                    ),
+                    title: GestureDetector(
+                      child: Text(
+                        'Current Jobs',
+                        style: TextStyle
+                          (
+                          color: Color(0xff0F4C5C),
+                          fontSize: 17.0,
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                    onTap: ()
+                    {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ViewJobProgressScreen()),
                       );
                     },
                   ),
