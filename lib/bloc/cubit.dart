@@ -56,10 +56,13 @@ class AppBloc extends Cubit<AppState> {
   void isDurationNo() {
     isDuration = false;
   }
-
+void JopView(){
+    emit(JopViewSuccess());
+}
   late UserModel post_user_model;
 
-  Future<String> GetPostUserData(String id) async {
+
+  Future<void> GetPostUserData(String id) async {
     emit(GetPostUserDataLoading());
     await FirebaseFirestore.instance
         .collection('users')
@@ -67,22 +70,21 @@ class AppBloc extends Cubit<AppState> {
         .get()
         .then((value) {
       post_user_model = UserModel.fromJson((value.data()!));
-      emit(GetPostUserDataSuccsess());
+        emit(GetPostUserDataSuccsess());
     }).catchError((error) {
       print(error.toString());
       emit(GetPostUserDataError(error.toString()));
     });
-    return post_user_model.name;
   }
 
   late UserModel user_model;
 
   Future<void> GetUserData() async {
     emit(GetUserDataLoading());
-    final user = FirebaseAuth.instance.currentUser;
+    final user = await FirebaseAuth.instance.currentUser;
     await FirebaseFirestore.instance
         .collection('users')
-        .doc(user!.uid)
+        .doc(user?.uid)
         .get()
         .then((value) {
       print(value.data());
@@ -258,6 +260,21 @@ class AppBloc extends Cubit<AppState> {
       emit(SavedErrorState(error.toString()));
     });
   }
+  void deleteSaveJob(String jopId) {
+    final user = FirebaseAuth.instance.currentUser;
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(user?.uid)
+        .collection('savedPosts')
+        .doc(jopId).delete()
+        .then((value) {
+      print('DeleteSavedSuccess');
+      emit(DeleteSavedSuccessState());
+    }).catchError((error) {
+      print('DeleteSavedError');
+      emit(DeleteSavedErrorState(error.toString()));
+    });
+  }
 
   PostDataModel? model;
   Future<void> GetCurrentPost(String jobId) async {
@@ -275,46 +292,45 @@ class AppBloc extends Cubit<AppState> {
 
   List<String>? savedId = [];
   List<PostDataModel>? savedPosts = [];
+  List<bool>? savedColor = [];
 
-  Future<void> GetSavedPostsData() async {
+  void GetSavedPostsData () {
     emit(GetSavedPostsDataLoading());
     final user = FirebaseAuth.instance.currentUser;
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(user!.uid)
-        .collection('savedPosts')
-        .get()
-        .then((value) async {
+    savedId = [];
+    savedPosts = [];
+    FirebaseFirestore.instance.collection('users').doc(user!.uid).collection('savedPosts').get().then((value)
+    {
       value.docs.forEach((element) {
         savedId!.add(element.id);
       });
+      print('saved ${savedId}');
+
 
       emit(GetSavedPostsLoading());
-      await FirebaseFirestore.instance.collection('post').get().then((value) {
-        /* print(savedId?[1]);
-        int i;*/
+      FirebaseFirestore.instance.collection('post').get().then((value)
+      {
+
         value.docs.forEach((element) {
-          /*print(savedId?.length);*/
-          for (int i = 0; i <= 1; i++) {
-            if (element.id == savedId?[i]) {
-              /*print(savedId?[i]);*/
-              savedPosts
-                  ?.add(PostDataModel.fromJson(element.data(), element.id));
-              print('done');
-            }
+
+          if (savedId!.contains(element.id))
+          {
+          savedPosts?.add(PostDataModel.fromJson(element.data(), element.id));
           }
-          /*print(savedPosts);*/
+
         });
         emit(GetSavedPostsSuccsess());
-      }).catchError((error) {
+      }).catchError((error){
         print(error.toString());
         emit(GetSavedPostsError(error.toString()));
-      });
+      }
+      );
       emit(GetSavedPostsDataSuccsess());
-    }).catchError((error) {
+    }).catchError((error){
       print(error.toString());
       emit(GetSavedPostsDataError(error.toString()));
-    });
+    }
+    );
   }
 
   /*void GetSavedPosts (){

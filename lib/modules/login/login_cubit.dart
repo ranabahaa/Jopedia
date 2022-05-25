@@ -1,8 +1,10 @@
 import 'package:bloc/bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../models/user/user_model.dart';
 import 'login_state.dart';
 
 
@@ -12,26 +14,34 @@ class LoginCubit extends Cubit<LoginStates> {
 
   static LoginCubit get(context) => BlocProvider.of(context);
 
-  void userLogin({
+
+  late UserModel userModel;
+  Future<void> userLogin({
     required String email,
     required String password,
-  }) {
+  }) async {
     emit(LoginLoadingState());
 
-    FirebaseAuth.instance
-        .signInWithEmailAndPassword(
-      email: email,
-      password: password,
-    )
-        .then((value) {
-      print(value.user!.email);
-      print(value.user!.uid);
-      emit(LoginSuccessState(value.user!.uid));
-    })
-        .catchError((error)
-    {
+    try {
+      final user =
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      if (user != null) {
+        await FirebaseFirestore.instance
+            .collection("users")
+            .doc(user.user!.uid)
+            .get().then((value) {
+          print(value.data());
+          userModel=UserModel.fromJson(value.data());
+        });
+      }
+      emit(LoginSuccessState(user.user!.uid));
+
+    } catch (error) {
       emit(LoginErrorState(error.toString()));
-    });
+    }
   }
 
   IconData suffix = Icons.visibility_outlined;

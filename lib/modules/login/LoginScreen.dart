@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jopedia/bloc/cubit.dart';
 import 'package:jopedia/layout/home_layout.dart';
+import 'package:jopedia/layout/home_layout_cubit.dart';
 import 'package:jopedia/layout/home_layout_state.dart';
 import 'package:jopedia/models/user/user_model.dart';
 import 'package:jopedia/modules/forget_pass/ForgetPasswordScreen.dart';
@@ -21,7 +22,8 @@ class LoginScreen extends StatelessWidget {
 
   var FormKey = GlobalKey<FormState>();
   final _auth = FirebaseAuth.instance;
-  late UserModel userModel;
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -31,11 +33,11 @@ class LoginScreen extends StatelessWidget {
         listener: (BuildContext context, state) {
           if(state is LoginSuccessState)
           {
+            AppBloc.get(context).GetUserData();
             AppBloc.get(context).GetSavedPostsData();
-            print(AppBloc.get(context).savedPosts?.length);
             navigateAndFinish(
               context,
-              Home_layout(userModel),
+              Home_layout(LoginCubit.get(context).userModel),
             );
           }
         },
@@ -111,28 +113,8 @@ class LoginScreen extends StatelessWidget {
                           if (FormKey.currentState!.validate()) {
                             var email = emailController.text;
                             var password = passwordController.text;
-                            try {
-                              final user =
-                                  await _auth.signInWithEmailAndPassword(
-                                email: email.toString().trim(),
-                                password: password,
-                              );
-                              if (user != null) {
-                                var userJson = await FirebaseFirestore.instance
-                                    .collection("users")
-                                    .doc(user.user?.uid)
-                                    .get();
-                                userModel = UserModel.fromJson(userJson.data());
-                              }
-                            } catch (error) {
-                              print(error);
-                            }
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      Home_layout(userModel)),
-                            );
+                            LoginCubit.get(context).userLogin(email: email, password: password,);
+                            final user = FirebaseAuth.instance.currentUser;
                           }
                         },
                       ),

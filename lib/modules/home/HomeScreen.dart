@@ -357,9 +357,8 @@ Widget buildPostItem (PostDataModel post,context) =>  Column(
   children: <Widget>[
     InkWell(
       onTapDown: (_){
-        AppBloc.get(context).GetUserData();
         UserModel user = AppBloc.get(context).user_model;
-
+        AppBloc.get(context).JopView();
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -431,9 +430,16 @@ Widget buildPostItem (PostDataModel post,context) =>  Column(
                 ),
                 child: GestureDetector(
                   onTap: () {
-                    AppBloc.get(context).SaveJob(post.JOBID);
+                    if(AppBloc.get(context).savedId!.contains(post.JOBID)){
+                      AppBloc.get(context).deleteSaveJob(post.JOBID);
+                    }
+                    else
+                      {
+                        AppBloc.get(context).SaveJob(post.JOBID);
+                      }
+                    AppBloc.get(context).GetSavedPostsData();
                     /*AppBloc.get(context).SavePost(AppBloc.get(context).postsId![index],index);*/
-                    /*if (cubit.isSaveTrue ==
+                   /* if (cubit.isSaveTrue ==
                         false) {
                       cubit.isSaveTrueYes();
                     } else {
@@ -443,16 +449,16 @@ Widget buildPostItem (PostDataModel post,context) =>  Column(
                   child: CircleAvatar(
                     radius: 17.0,
                     backgroundColor:
-                    /*cubit.isSaveTrue
+                    AppBloc.get(context).savedId!.contains(post.JOBID)
                         ? Color(0xff50B3CF)
-                        : */Colors.white,
+                        : Colors.white,
                     child: SvgPicture.asset(
                       "assets/icons/bookmark.svg",
                       height: 15.0,
                       width: 15.0,
-                      color: /*cubit.isSaveTrue
+                      color: AppBloc.get(context).savedId!.contains(post.JOBID)
                           ? Colors.white
-                          : */Color(0xff50B3CF),
+                          : Color(0xff50B3CF),
                     ),
                   ),
                 ),
