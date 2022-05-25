@@ -8,6 +8,7 @@ import 'package:jopedia/widget/profile_widget.dart';
 import 'package:jopedia/widget/textfield_widget.dart';
 import 'package:jopedia/modules/my_profile/ProfilePage.dart';
 import 'package:jopedia/modules/forget_pass/ForgetPasswordScreen.dart';
+
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
@@ -26,17 +27,14 @@ class EditProfilePage extends StatefulWidget {
 class _EditProfilePageState extends State<EditProfilePage> {
   final _auth = FirebaseAuth.instance;
 
-  late File image;
-  late String imageUrl;
-
 
   @override
   void initState() {
     super.initState();
   }
 
-
-
+  late File image;
+  late String imageUrl;
   sendData() async{
     var imageRef = FirebaseStorage.instance.ref().child("profiles/"+widget.user.uId);
     await imageRef.putFile(image);
@@ -46,18 +44,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
       { 'image' : imageUrl.toString()  });
     setState(() {});
   }
-
-
   Future getImage() async {
 
     final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-
     final imageTemp = File(image!.path);
     setState(() => this.image = imageTemp);
     if (image != null){
       sendData();
     }
-
   }
 
 
