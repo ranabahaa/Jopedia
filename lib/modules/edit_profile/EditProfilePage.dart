@@ -206,6 +206,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 'about': _controllerAbout.text,
               });
 
+              widget.user.name = _controllerName.text;
+              widget.user.about = _controllerAbout.text;
+
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   action: SnackBarAction(
