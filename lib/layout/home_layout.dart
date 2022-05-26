@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jopedia/layout/home_layout_cubit.dart';
 import 'package:jopedia/layout/home_layout_state.dart';
 import 'package:jopedia/models/user/user_model.dart';
+import 'package:jopedia/modules/about/AboutScreen.dart';
 import 'package:jopedia/modules/create_job/CreateJobScreen.dart';
 import 'package:jopedia/modules/home/HomeScreen.dart';
 import 'package:jopedia/modules/job_progress/ViewJobProgressScreen.dart';
@@ -323,7 +324,10 @@ class Home_layout extends StatelessWidget {
                     ),
                     onTap: ()
                     {
-
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => AboutScreen()),
+                      );
                     },
                   ),
                   SizedBox(height: 5.0,),

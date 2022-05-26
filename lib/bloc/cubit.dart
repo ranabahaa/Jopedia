@@ -219,11 +219,16 @@ class AppBloc extends Cubit<AppState> {
   }
 
   //this returns a list not one record
-/*
-    Stream<List<PostDataModel>> ShowContract() => FirebaseFirestore.instance.collection('post')
-        .snapshots()
-        .map((snapshot) => snapshot.docs.map((doc) => PostDataModel.fromJson(doc.data())).toList()) ;
-*/
+
+   /* List<PostDataModel> progressPosts=[];
+      Stream<List<PostDataModel>> ShowJobsInProgress() => FirebaseFirestore.instance.collection('post')
+          //.where('COMPLETED_JOB'==2)
+          .snapshots()
+          .map((snapshot) => snapshot.docs.map((doc) => progressPosts.add(PostDataModel.fromJson(doc.data(), doc.id))));
+
+  */
+
+
   List<PostDataModel> posts = [];
 
   void GetPostsData() {
@@ -238,6 +243,21 @@ class AppBloc extends Cubit<AppState> {
       emit(GetPostsDataError(error.toString()));
     });
   }
+/*
+
+  void GetCurrentJobsData() {
+    emit(GetPostsDataLoading());
+    FirebaseFirestore.instance.collection('post').where('COMPLETED_JOB'==2).get().then((value) {
+      value.docs.forEach((element) {
+        posts.add(PostDataModel.fromJson(element.data(), element.id));
+      });
+      emit(GetPostsDataSuccsess());
+    }).catchError((error) {
+      print(error.toString());
+      emit(GetPostsDataError(error.toString()));
+    });
+  }
+*/
 
   void SaveJob(String jopId) {
     final user = FirebaseAuth.instance.currentUser;

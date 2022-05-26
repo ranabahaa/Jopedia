@@ -7,6 +7,7 @@ import 'package:jopedia/bloc/cubit.dart';
 import 'package:jopedia/bloc/states.dart';
 import 'package:jopedia/modules/login/LoginScreen.dart';
 import 'package:flutter/services.dart';
+import 'package:jopedia/modules/progressShowTry.dart';
 import 'bloc/bloc_Observer.dart';
 
   void main() async {

@@ -245,9 +245,6 @@ class _JobProgressScreenState extends State<JobProgressScreen> {
     // 9 transforms to 09
     // 11 stays 11
     String twoDigits (int n) => n.toString().padLeft(2,'0');
-    /*final minutes = twoDigits(duration.inMinutes.remainder(60));
-    final seconds = twoDigits(duration.inSeconds.remainder(60));
-    final hours = twoDigits(duration.inHours.remainder(60));*/
     return MyText(
       text: '$hrs:$mins:$sec',
       colors: color,

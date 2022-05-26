@@ -11,6 +11,8 @@ import 'package:jopedia/modules/job_progress/JobProgressScreen.dart';
 import 'package:jopedia/modules/requests/RequestScreen.dart';
 import '../../bloc/cubit.dart';
 import '../../bloc/states.dart';
+import 'package:jopedia/models/request/request_model.dart';
+import 'package:jopedia/models/services/DataController.dart';
 
 class ContractScreen extends StatelessWidget {
   UserModel user;
