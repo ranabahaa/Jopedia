@@ -30,26 +30,23 @@ class HomeLayoutCubit extends Cubit<HomeLayoutState> {
     currentIndex=index;
     emit(BottomNavigationTrue());
   }
-/*  late UserModel model ;
+  late UserModel user_model;
 
-  Future<void>  GetUserData() async{
+  Future<void> GetUserData() async {
     emit(GetUserDataLoading());
-    final user = FirebaseAuth.instance.currentUser;
+    final user = await FirebaseAuth.instance.currentUser;
     await FirebaseFirestore.instance
         .collection('users')
-        .doc(user!.uid)
+        .doc(user?.uid)
         .get()
-        .then((value)
-    {
-      print (value.data());
-      model = UserModel.fromJson((value.data()!));
+        .then((value) {
+      print(value.data());
+      user_model = UserModel.fromJson((value.data()!));
       emit(GetUserDataSuccsess());
-    })
-        .catchError((error){
-          print(error.toString());
-          emit(GetUserDataError(error.toString()));
-    }
-        );
-  }*/
+    }).catchError((error) {
+      print(error.toString());
+      emit(GetUserDataError(error.toString()));
+    });
+  }
 
 }

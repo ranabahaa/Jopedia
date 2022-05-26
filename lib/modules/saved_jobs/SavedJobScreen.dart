@@ -14,16 +14,10 @@ class SavedJobScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppBloc, AppState>(
-      listener: (BuildContext context, state) {
-        /* if(state is LoginSuccsess)
-          {
-            AppBloc.get(context).GetSavedPostsData();
-          }*/
-      },
+      listener: (BuildContext context, state) {},
       builder: (BuildContext context, state) {
         var cubit = AppBloc.get(context);
-        /*PostDataModel posts = cubit.posts[2];
-          print(posts.DISCREPTION);*/
+
         return Stack(
           alignment: Alignment.bottomCenter,
           children: [
@@ -117,12 +111,13 @@ class SavedJobScreen extends StatelessWidget {
         children: <Widget>[
           InkWell(
             onTapDown: (_) {
-              /*Navigator.push(
+
+              Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => JobViewScreen(jobID: post.JOBID),
+                  builder: (context) => JobViewScreen(job: post,user: AppBloc.get(context).user_model),
                 ),
-              );*/
+              );
               /*print(post.JOBID);*/
               /*print(post.USER_ID);*/
             },
@@ -180,7 +175,8 @@ class SavedJobScreen extends StatelessWidget {
                       ),
                       child: GestureDetector(
                         onTap: () {
-                          AppBloc.get(context).SaveJob(post.JOBID);
+                          AppBloc.get(context).deleteSaveJob(post.JOBID);
+                          AppBloc.get(context).GetSavedPostsData();
                           /*AppBloc.get(context).SavePost(AppBloc.get(context).postsId![index],index);*/
                           /*if (cubit.isSaveTrue ==
                         false) {
@@ -191,116 +187,116 @@ class SavedJobScreen extends StatelessWidget {
                         },
                         child: CircleAvatar(
                           radius: 17.0,
-                          backgroundColor:
-                              /*cubit.isSaveTrue
-                        ? Color(0xff50B3CF)
-                        : */
-                              Colors.white,
+                          backgroundColor:Color(0xff50B3CF),
                           child: SvgPicture.asset(
                             "assets/icons/bookmark.svg",
                             height: 15.0,
                             width: 15.0,
-                            color: /*cubit.isSaveTrue
-                          ? Colors.white
-                          : */
-                                Color(0xff50B3CF),
+                            color: Colors.white,
+
                           ),
                         ),
                       ),
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(
-                      top: 155.0,
-                      right: 200.0,
-                    ),
-                    child: Text(
-                      '${post.JOB_TITLE}',
-                      style: TextStyle(
-                        color: Color(0xff060F27),
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.w600,
-                        fontSize: 15.0,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      top: 185.0,
-                      //left: 30.0,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                    padding: const EdgeInsets.only(top: 155,left: 30.0,),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
-                          children: [
-                            SvgPicture.asset(
-                              "assets/icons/alarm-clock.svg",
-                              height: 10.0,
-                              width: 11.0,
-                              color: Color(0xff50B3CF),
-                            ),
-                            SizedBox(
-                              width: 8.0,
-                            ),
-                            Text(
-                              '${post.StartDate}',
-                              style: TextStyle(
-                                color: Color(0xff818181),
-                                fontFamily: 'Poppins',
-                                fontWeight: FontWeight.w300,
-                                fontSize: 12.0,
-                              ),
-                            ),
-                          ],
+                        Text(
+                          '${post.JOB_TITLE}',
+                          style: TextStyle(
+                            color: Color(0xff060F27),
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.w600,
+                            fontSize: 15.0,
+                          ),
                         ),
                         SizedBox(
-                          width: 20.0,
+                          height: 6.0,
                         ),
                         Row(
+                          /*mainAxisAlignment:
+                    MainAxisAlignment.center,*/
                           children: [
-                            SvgPicture.asset(
-                              "assets/icons/marker.svg",
-                              height: 10.0,
-                              width: 11.0,
-                              color: Color(0xff50B3CF),
+                            Row(
+                              children: [
+                                SvgPicture.asset(
+                                  "assets/icons/alarm-clock.svg",
+                                  height: 10.0,
+                                  width: 11.0,
+                                  color: Color(0xff50B3CF),
+                                ),
+                                SizedBox(
+                                  width: 8.0,
+                                ),
+                                Text(
+                                  '${post.StartDate}',
+                                  style: TextStyle(
+                                    color:
+                                    Color(0xff818181),
+                                    fontFamily: 'Poppins',
+                                    fontWeight:
+                                    FontWeight.w300,
+                                    fontSize: 12.0,
+                                  ),
+                                ),
+                              ],
                             ),
                             SizedBox(
-                              width: 8.0,
+                              width: 25.0,
                             ),
-                            Text(
-                              '${post.JOB_LOCATION}',
-                              style: TextStyle(
-                                color: Color(0xff818181),
-                                fontFamily: 'Poppins',
-                                fontWeight: FontWeight.w300,
-                                fontSize: 12.0,
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          width: 20.0,
-                        ),
-                        Row(
-                          children: [
-                            SvgPicture.asset(
-                              "assets/icons/money.svg",
-                              height: 10.0,
-                              width: 11.0,
-                              color: Color(0xff50B3CF),
+                            Row(
+                              children: [
+                                SvgPicture.asset(
+                                  "assets/icons/marker.svg",
+                                  height: 10.0,
+                                  width: 11.0,
+                                  color: Color(0xff50B3CF),
+                                ),
+                                SizedBox(
+                                  width: 8.0,
+                                ),
+                                Text(
+                                  '${post.JOB_LOCATION}',
+                                  style: TextStyle(
+                                    color:
+                                    Color(0xff818181),
+                                    fontFamily: 'Poppins',
+                                    fontWeight:
+                                    FontWeight.w300,
+                                    fontSize: 12.0,
+                                  ),
+                                ),
+                              ],
                             ),
                             SizedBox(
-                              width: 8.0,
+                              width: 25.0,
                             ),
-                            Text(
-                              '${post.JOB_SALARY}',
-                              style: TextStyle(
-                                color: Color(0xff818181),
-                                fontFamily: 'Poppins',
-                                fontWeight: FontWeight.w300,
-                                fontSize: 12.0,
-                              ),
+                            Row(
+                              children: [
+                                SvgPicture.asset(
+                                  "assets/icons/money.svg",
+                                  height: 10.0,
+                                  width: 11.0,
+                                  color: Color(0xff50B3CF),
+                                ),
+                                SizedBox(
+                                  width: 8.0,
+                                ),
+                                Text(
+                                  '${post.JOB_SALARY}',
+                                  style: TextStyle(
+                                    color:
+                                    Color(0xff818181),
+                                    fontFamily: 'Poppins',
+                                    fontWeight:
+                                    FontWeight.w300,
+                                    fontSize: 12.0,
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
                         ),

@@ -5,6 +5,7 @@ abstract class AppState {}
 
 class InitialState extends AppState {}
 
+
 class CreatJobLoading extends AppState {}
 
 class CreatJobSuccess extends AppState {}

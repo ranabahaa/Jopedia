@@ -329,7 +329,6 @@ void JopView(){
         .get()
         .then((value) {
       model = PostDataModel.fromJson((value.data()), value.id);
-      print(value.data());
     }).catchError((error) {
       print(error.toString());
     });
@@ -337,7 +336,6 @@ void JopView(){
 
   List<String>? savedId = [];
   List<PostDataModel>? savedPosts = [];
-  List<bool>? savedColor = [];
 
   void GetSavedPostsData () {
     emit(GetSavedPostsDataLoading());

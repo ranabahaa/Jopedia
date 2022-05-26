@@ -16,13 +16,11 @@ class CreateJobScreen extends StatelessWidget {
   var description_conroller = TextEditingController();
   var location_conroller = TextEditingController();
   var salary_conroller = TextEditingController();
-
   var StartDate_conroller = TextEditingController();
   var EndDate_conroller = TextEditingController();
   var StartTime_conroller = TextEditingController();
   var EndTime_conroller = TextEditingController();
   var PostTime_conroller = TextEditingController();
-
   var photo_conroller = TextEditingController();
   var duration_conroller = TextEditingController();
   var FormKey = GlobalKey<FormState>();
@@ -37,14 +35,19 @@ class CreateJobScreen extends StatelessWidget {
             var cubit = AppBloc.get(context);
             UserModel model;
             return Scaffold(
+              backgroundColor: Color(0xffF6F9FA),
               appBar: AppBar(
-                title: Text(''),
-                // You can add title here
-                leading: new IconButton(
-                  icon: new Icon(Icons.arrow_back_ios, color: Colors.grey),
-                  onPressed: () => Navigator.of(context).pop(),
+                leading: IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: Icon(
+                    Icons.arrow_back,
+                    color: Color(0xff0F4C5C),
+                    size: 25.0,
+                  ),
                 ),
-                backgroundColor: Colors.blue.withOpacity(0.3),
+                backgroundColor: Color(0xffF6F9FA),
                 //You can make this transparent
                 elevation: 0.0, //No shadow
               ),
@@ -55,13 +58,14 @@ class CreateJobScreen extends StatelessWidget {
                     child: Form(
                       key: FormKey,
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Padding(
                             padding: const EdgeInsets.all(5.0),
                             child: Center(
                               child: MyText(
-                                text: 'Creat Job',
+                                text: 'Create Job',
                                 fontSize: 30.0,
                                 fontWeight: FontWeight.w900,
                                 colors: Color(0xff0F4C5C),
@@ -69,93 +73,46 @@ class CreateJobScreen extends StatelessWidget {
                             ),
                           ),
                           SizedBox(
-                            height: 40.0,
+                            height: 20.0,
                           ),
                           Container(
-                            width: 250,
-                            child: TextFormField(
+                            child: DefaultTextField(
                               controller: title_conroller,
-                              keyboardType: TextInputType.text,
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return 'title must not be empty';
-                                }
-                                return null;
-                              },
-                              decoration: InputDecoration(
-                                hintText: 'title',
-                                fillColor: Colors.white.withOpacity(0.6),
-                                filled: true,
-                                border: InputBorder.none,
-                              ),
+                              type: TextInputType.text,
+                              validateTixt: 'Title',
+                              hint: 'title',
                             ),
                           ),
                           SizedBox(
                             height: 7,
                           ),
                           Container(
-                            //height: 200.0,
-                            child: TextFormField(
-                              maxLines: 7,
-                              //maxLines: null,
-                              keyboardType: TextInputType.multiline,
-
+                            child: DefaultTextField(
+                              maxlines: 7,
+                              type: TextInputType.multiline,
                               controller: description_conroller,
                               //keyboardType : TextInputType.text ,
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return 'Description must not be empty';
-                                }
-                                return null;
-                              },
-                              decoration: InputDecoration(
-                                hintText: 'Description',
-                                fillColor: Colors.white.withOpacity(0.6),
-                                filled: true,
-                                border: InputBorder.none,
-                                //contentPadding: const EdgeInsets.symmetric(vertical: 40.0),
-
-                                //border: InputBorder.none,
-                              ),
+                              validateTixt: 'Description',
+                              hint: 'Description',
                             ),
                           ),
                           SizedBox(
                             height: 7,
                           ),
-                          TextFormField(
+                          DefaultTextField(
                             controller: location_conroller,
-                            keyboardType: TextInputType.text,
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'location must not be empty';
-                              }
-                              return null;
-                            },
-                            decoration: InputDecoration(
-                              hintText: 'location',
-                              fillColor: Colors.white.withOpacity(0.6),
-                              filled: true,
-                              border: InputBorder.none,
-                            ),
+                            type: TextInputType.text,
+                            validateTixt: 'Location',
+                            hint: 'Location',
                           ), //location
                           SizedBox(
                             height: 7,
                           ),
-                          TextFormField(
+                          DefaultTextField(
                             controller: salary_conroller,
-                            keyboardType: TextInputType.number,
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'salary must not be empty';
-                              }
-                              return null;
-                            },
-                            decoration: InputDecoration(
-                              hintText: 'salary',
-                              fillColor: Colors.white.withOpacity(0.6),
-                              filled: true,
-                              border: InputBorder.none,
-                            ),
+                            type: TextInputType.number,
+                            validateTixt: 'Salary',
+                            hint: 'Salary',
                           ), //salary
                           SizedBox(
                             height: 7,
@@ -163,9 +120,9 @@ class CreateJobScreen extends StatelessWidget {
                           Row(
                             children: [
                               Expanded(
-                                child: TextFormField(
+                                child: DefaultTextField(
                                   controller: StartTime_conroller,
-                                  keyboardType: TextInputType.datetime,
+                                  type: TextInputType.datetime,
                                   onTap: () {
                                     showTimePicker(
                                       context: context,
@@ -176,58 +133,33 @@ class CreateJobScreen extends StatelessWidget {
                                       //print(value.format(context));
                                     });
                                   },
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return 'start time must not be empty';
-                                    }
-                                    return null;
-                                  },
-                                  decoration: InputDecoration(
-                                    hintText: 'start time',
-                                    suffixIcon: Icon(
-                                      Icons.watch_later_outlined,
-                                      color: Color(0xff50B3CF),
-                                    ),
-                                    fillColor: Colors.white.withOpacity(0.6),
-                                    filled: true,
-                                    border: InputBorder.none,
-                                  ),
+                                  validateTixt: 'Start time',
+                                  hint: 'Start time',
+                                  SuffixIcon: Icons.watch_later_outlined,
                                 ),
                               ),
                               SizedBox(
                                 width: 5,
                               ),
                               Expanded(
-                                  child: TextFormField(
-                                controller: EndTime_conroller,
-                                keyboardType: TextInputType.datetime,
-                                onTap: () {
-                                  showTimePicker(
-                                    context: context,
-                                    initialTime: TimeOfDay.now(),
-                                  ).then((value) {
-                                    EndTime_conroller.text =
-                                        value!.format(context).toString();
-                                    //print(value.format(context));
-                                  });
-                                },
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return 'End Time must not be empty';
-                                  }
-                                  return null;
-                                },
-                                decoration: InputDecoration(
-                                  hintText: 'End Time',
-                                  suffixIcon: Icon(
-                                    Icons.watch_later_outlined,
-                                    color: Color(0xff50B3CF),
-                                  ),
-                                  fillColor: Colors.white.withOpacity(0.6),
-                                  filled: true,
-                                  border: InputBorder.none,
+                                child: DefaultTextField(
+                                  controller: EndTime_conroller,
+                                  type: TextInputType.datetime,
+                                  onTap: () {
+                                    showTimePicker(
+                                      context: context,
+                                      initialTime: TimeOfDay.now(),
+                                    ).then((value) {
+                                      EndTime_conroller.text =
+                                          value!.format(context).toString();
+                                      //print(value.format(context));
+                                    });
+                                  },
+                                  validateTixt: 'End time',
+                                  hint: 'End time',
+                                  SuffixIcon: Icons.watch_later_outlined,
                                 ),
-                              )),
+                              ),
                             ],
                           ),
                           SizedBox(
@@ -236,214 +168,182 @@ class CreateJobScreen extends StatelessWidget {
                           Row(
                             children: [
                               Expanded(
-                                child: TextFormField(
+                                child: DefaultTextField(
                                   controller: StartDate_conroller,
-                                  keyboardType: TextInputType.datetime,
+                                  type: TextInputType.datetime,
                                   onTap: () {
-                                    showDatePicker(context: context,
+                                    showDatePicker(
+                                      context: context,
                                       initialDate: DateTime.now(),
                                       firstDate: DateTime.now(),
                                       lastDate: DateTime.parse('2022-07-07'),
                                     ).then((value) {
                                       print(DateFormat.yMMMd().format(value!));
                                       StartDate_conroller.text =
-                                          DateFormat("dd/MM/yyyy").format(value);
+                                          DateFormat("dd/MM/yyyy")
+                                              .format(value);
                                     });
                                   },
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return 'Start Date must not be empty';
-                                    }
-                                    return null;
-                                  },
-                                  decoration: InputDecoration(
-                                    hintText: 'Start Date ',
-                                    suffixIcon: Icon(
-                                      Icons.calendar_today,
-                                      color: Color(0xff50B3CF),
-                                    ),
-                                    fillColor: Colors.white.withOpacity(0.6),
-                                    filled: true,
-                                    border: InputBorder.none,
-                                  ),
+                                  validateTixt: 'Start Date',
+                                  hint: 'Start Date ',
+                                  SuffixIcon: Icons.calendar_today,
                                 ),
                               ),
                               SizedBox(
                                 width: 5,
                               ),
                               Expanded(
-                                  child: TextFormField(
-                                controller: EndDate_conroller,
-                                keyboardType: TextInputType.datetime,
-                                onTap: () {
-                                  showDatePicker(context: context,
-                                    initialDate: DateTime.now(),
-                                    firstDate: DateTime.now(),
-                                    lastDate: DateTime.parse('2022-07-07'),
-                                  ).then((value) {
-                                    print(DateFormat("dd/MM/yyyy").format(value!));
-                                    EndDate_conroller.text =
-                                        DateFormat("dd/MM/yyyy").format(value);
-                                  });
-                                },
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return 'End Date must not be empty';
-                                  }
-                                  return null;
-                                },
-                                decoration: InputDecoration(
-                                  hintText: 'End Date ',
-                                  suffixIcon: Icon(
-                                    Icons.calendar_today,
-                                    color: Color(0xff50B3CF),
-                                  ),
-                                  fillColor: Colors.white.withOpacity(0.6),
-                                  filled: true,
-                                  border: InputBorder.none,
+                                child: DefaultTextField(
+                                  controller: EndDate_conroller,
+                                  type: TextInputType.datetime,
+                                  onTap: () {
+                                    showDatePicker(
+                                      context: context,
+                                      initialDate: DateTime.now(),
+                                      firstDate: DateTime.now(),
+                                      lastDate: DateTime.parse('2022-07-07'),
+                                    ).then((value) {
+                                      print(DateFormat.yMMMd().format(value!));
+                                      EndDate_conroller.text =
+                                          DateFormat("dd/MM/yyyy")
+                                              .format(value);
+                                    });
+                                  },
+                                  validateTixt: 'End Date',
+                                  hint: 'End Date ',
+                                  SuffixIcon: Icons.calendar_today,
                                 ),
-                              )),
+                              ),
                             ],
                           ), //date
                           SizedBox(
                             height: 7,
                           ),
-                          TextFormField(
+                          DefaultTextField(
                             controller: photo_conroller,
-                            keyboardType: TextInputType.text,
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'photo must not be empty';
-                              }
-                              return null;
-                            },
-                            decoration: InputDecoration(
-                              hintText: 'Photo',
-                              //prefixIcon: Icon(Icons.title),
-                              fillColor: Colors.white.withOpacity(0.6),
-                              filled: true,
-                              border: InputBorder.none,
-                            ),
+                            type: TextInputType.text,
+                            validateTixt: 'Photo',
+                            hint: 'Photo',
                           ), //photo
                           SizedBox(
-                            height: 7,
+                            height: 15,
                           ),
-                          Container(
-                            width: double.infinity,
-                            child: TextButton(
-                              child: Text(
-                                'Create'.toUpperCase(),
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18.0,
-                                ),
+                          MaterialButton(
+                            color: Color(0xff50B3CF),
+                            minWidth: double.infinity,
+                            height: 50.0,
+                            child: Text(
+                              'Create',
+                              style: TextStyle(
+                                fontFamily: 'Poppins',
+                                fontWeight: FontWeight.w700,
+                                fontSize: 18.0,
+                                color: Colors.white,
                               ),
-                              onPressed: () {
-                                // if (user.NatonalId == "") {
-                                //   ScaffoldMessenger.of(context).showSnackBar(
-                                //     SnackBar(
-                                //       action: SnackBarAction(
-                                //         label: 'Edit Profile',
-                                //         onPressed: () {
-                                //           Navigator.push(
-                                //             context,
-                                //             MaterialPageRoute(
-                                //               builder: (context) =>
-                                //                   EditProfilePage(user),
-                                //             ),
-                                //           );
-                                //         },
-                                //       ),
-                                //       content: const Text(
-                                //           'Please complete your information'),
-                                //       duration:
-                                //           const Duration(milliseconds: 1550),
-                                //       width: 280.0, // Width of the SnackBar.
-                                //       padding: const EdgeInsets.symmetric(
-                                //         horizontal:
-                                //             10.0, // Inner padding for SnackBar content.
-                                //       ),
-                                //       behavior: SnackBarBehavior.floating,
-                                //       shape: RoundedRectangleBorder(
-                                //         borderRadius:
-                                //             BorderRadius.circular(10.0),
-                                //       ),
-                                //     ),
-                                //   );
-                                // } else if (user.credit == "") {
-                                //   ScaffoldMessenger.of(context).showSnackBar(
-                                //     SnackBar(
-                                //       action: SnackBarAction(
-                                //         label: 'Edit Credit',
-                                //         onPressed: () {
-                                //           Navigator.push(
-                                //             context,
-                                //             MaterialPageRoute(
-                                //               builder: (context) => YourCard(),
-                                //             ),
-                                //           );
-                                //         },
-                                //       ),
-                                //       content: const Text(
-                                //           'Please complete your information'),
-                                //       duration:
-                                //           const Duration(milliseconds: 1550),
-                                //       width: 280.0, // Width of the SnackBar.
-                                //       padding: const EdgeInsets.symmetric(
-                                //         horizontal:
-                                //             10.0, // Inner padding for SnackBar content.
-                                //       ),
-                                //       behavior: SnackBarBehavior.floating,
-                                //       shape: RoundedRectangleBorder(
-                                //         borderRadius:
-                                //             BorderRadius.circular(10.0),
-                                //       ),
-                                //     ),
-                                //   );
-                                // } else
-                                  if (FormKey.currentState!.validate()) {
-                                  DateTime start = DateFormat("dd/MM/yyyy")
-                                      .parse(StartDate_conroller.text);
-                                  DateTime end = DateFormat("dd/MM/yyyy")
-                                      .parse(EndDate_conroller.text);
-                                  bool moreThanDay =
-                                      end.difference(start).abs().inMinutes <
-                                          1440;
-                                  AppBloc.get(context).CreatJob(
-                                    JOBID: "",
-                                    DISCREPTION: description_conroller.text,
-                                    JOB_LOCATION: location_conroller.text,
-                                    JOB_TITLE: title_conroller.text,
-                                    JOB_SALARY: salary_conroller.text,
-                                    StartDate: StartDate_conroller.text,
-                                    EndDate: EndDate_conroller.text,
-                                    StartTime: StartTime_conroller.text,
-                                    EndTime: EndTime_conroller.text,
-                                    PostTime: DateTime.now().toString(),
-                                    MORE_THAN_DAY: moreThanDay,
-                                    WORKER_ID : '..',
-                                  );
-                                }
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: const Text('Job Created !'),
-                                    duration:
-                                        const Duration(milliseconds: 1550),
-                                    width: 280.0, // Width of the SnackBar.
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal:
-                                          10.0, // Inner padding for SnackBar content.
-                                    ),
-                                    behavior: SnackBarBehavior.floating,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10.0),
-                                    ),
-                                  ),
-                                );
-                                Navigator.pop(context);
-                              },
                             ),
+                            onPressed: () {
+                              // if (user.NatonalId == "") {
+                              //   ScaffoldMessenger.of(context).showSnackBar(
+                              //     SnackBar(
+                              //       action: SnackBarAction(
+                              //         label: 'Edit Profile',
+                              //         onPressed: () {
+                              //           Navigator.push(
+                              //             context,
+                              //             MaterialPageRoute(
+                              //               builder: (context) =>
+                              //                   EditProfilePage(user),
+                              //             ),
+                              //           );
+                              //         },
+                              //       ),
+                              //       content: const Text(
+                              //           'Please complete your information'),
+                              //       duration:
+                              //           const Duration(milliseconds: 1550),
+                              //       width: 280.0, // Width of the SnackBar.
+                              //       padding: const EdgeInsets.symmetric(
+                              //         horizontal:
+                              //             10.0, // Inner padding for SnackBar content.
+                              //       ),
+                              //       behavior: SnackBarBehavior.floating,
+                              //       shape: RoundedRectangleBorder(
+                              //         borderRadius:
+                              //             BorderRadius.circular(10.0),
+                              //       ),
+                              //     ),
+                              //   );
+                              // } else if (user.credit == "") {
+                              //   ScaffoldMessenger.of(context).showSnackBar(
+                              //     SnackBar(
+                              //       action: SnackBarAction(
+                              //         label: 'Edit Credit',
+                              //         onPressed: () {
+                              //           Navigator.push(
+                              //             context,
+                              //             MaterialPageRoute(
+                              //               builder: (context) => YourCard(),
+                              //             ),
+                              //           );
+                              //         },
+                              //       ),
+                              //       content: const Text(
+                              //           'Please complete your information'),
+                              //       duration:
+                              //           const Duration(milliseconds: 1550),
+                              //       width: 280.0, // Width of the SnackBar.
+                              //       padding: const EdgeInsets.symmetric(
+                              //         horizontal:
+                              //             10.0, // Inner padding for SnackBar content.
+                              //       ),
+                              //       behavior: SnackBarBehavior.floating,
+                              //       shape: RoundedRectangleBorder(
+                              //         borderRadius:
+                              //             BorderRadius.circular(10.0),
+                              //       ),
+                              //     ),
+                              //   );
+                              // } else
+                              if (FormKey.currentState!.validate()) {
+                                DateTime start = DateFormat("dd/MM/yyyy")
+                                    .parse(StartDate_conroller.text);
+                                DateTime end = DateFormat("dd/MM/yyyy")
+                                    .parse(EndDate_conroller.text);
+                                bool moreThanDay =
+                                    end.difference(start).abs().inMinutes <
+                                        1440;
+                                AppBloc.get(context).CreatJob(
+                                  JOBID: "",
+                                  DISCREPTION: description_conroller.text,
+                                  JOB_LOCATION: location_conroller.text,
+                                  JOB_TITLE: title_conroller.text,
+                                  JOB_SALARY: salary_conroller.text,
+                                  StartDate: StartDate_conroller.text,
+                                  EndDate: EndDate_conroller.text,
+                                  StartTime: StartTime_conroller.text,
+                                  EndTime: EndTime_conroller.text,
+                                  PostTime: DateTime.now().toString(),
+                                  MORE_THAN_DAY: moreThanDay,
+                                  WORKER_ID: '..',
+                                );
+                              }
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: const Text('Job Created !'),
+                                  duration: const Duration(milliseconds: 1550),
+                                  width: 280.0, // Width of the SnackBar.
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal:
+                                        10.0, // Inner padding for SnackBar content.
+                                  ),
+                                  behavior: SnackBarBehavior.floating,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                ),
+                              );
+                              Navigator.pop(context);
+                            },
                           ),
                         ],
                       ),

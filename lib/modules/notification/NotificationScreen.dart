@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:jopedia/shared/components/component.dart';
 
 
@@ -15,69 +16,98 @@ class _NotificationScreenState extends State<NotificationScreen> {
     super.initState();
   }
   int notificationNumber=4;
-  var color = Color(0xff50B3CF);
+  var color = Color(0xff0F4C5C);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color(0xffF6F9FA),
-      appBar: AppBar(
-        backgroundColor: Color(0xffF6F9FA),
-        elevation: 0.0,
-        titleSpacing: 20.0,
-        leading: IconButton(
-          onPressed: (){
-            Navigator.pop(context);
-          },
-          icon: Icon(
-            Icons.arrow_back_ios_outlined,
-            color: color,
-          ),
-        ),
-
-      ),
-      body: Padding(
-        padding: EdgeInsets.only(left: 18.0,top:25 ,right:18.0 ,bottom:0.0 ),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  MyText(
-                    text:'You Have ',
-                    colors: color,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  MyText(
-                    text:'$notificationNumber ',
-                    colors: Color(0xff0CA6B7),
-                    fontWeight: FontWeight.bold,
-                  ),
-                  MyText(
-                    text:'New Notifications ',
-                    colors: color,
-                    fontWeight: FontWeight.bold,
-                  ),
+    return Stack(
+      alignment: Alignment.bottomCenter,
+      children: [
+        Container(
+          width: double.infinity,
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+                colors: [
+                  Color(0xff50B3CF),
+                  Color(0xff0F4C5C),
                 ],
+              )),
+          child:  Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: 5.0,
+              ),
+              Text(
+                'you have ${notificationNumber}',
+                style: TextStyle(
+                  color: Color(0xffC6DFE8),
+                  fontSize: 18.0,
+                  fontFamily: 'Poppins',
+                  fontWeight: FontWeight.w600,
+                ),
               ),
               SizedBox(
-                height: 50.0,
+                height: 8.0,
               ),
-              ListView.separated(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                scrollDirection: Axis.vertical,
-                itemBuilder: (BuildContext context, int index)=>BuildChatItem(),
-                separatorBuilder: (BuildContext context, int index)=>SizedBox(
-                  height: 20.0,
-                ),
-                itemCount: 15,
+              Text(
+                'New Notifications',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontFamily: 'Poppins',
+                    fontSize: 30.0,
+                    fontWeight: FontWeight.w800,
+                    shadows: [
+                      Shadow(
+                          color: Colors.black.withOpacity(0.3),
+                          offset: const Offset(3, 3),
+                          blurRadius: 15),
+                    ]),
               ),
             ],
           ),
         ),
-      ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Container(
+              height: 600.0,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(30.0),
+                  topRight: Radius.circular(30.0),
+                ),
+                color: Colors.white,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 15.0,
+                      ),
+                      ListView.separated(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        scrollDirection: Axis.vertical,
+                        itemBuilder: (BuildContext context, int index)=>BuildChatItem(),
+                        separatorBuilder: (BuildContext context, int index)=>SizedBox(
+                          height: 25.0,
+                        ),
+                        itemCount: 15,
+                      ),
+                      SizedBox(height: 18.0,),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 
@@ -91,8 +121,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
           borderRadius: BorderRadius.circular(10.0),
           boxShadow: [
             BoxShadow(
-              color: Color(0xff26A4BD),
-              offset: Offset(0, 2), //(x,y)
+              color: Color(0xff26A4BD).withOpacity(0.3),
+              offset: Offset(0, 3), //(x,y)
               blurRadius: 6.0,
             ),
           ],
@@ -112,88 +142,46 @@ class _NotificationScreenState extends State<NotificationScreen> {
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    margin: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
-                    child: Text(
-                      'Rana Bahaa',
-                      maxLines: 1,
+                    child: MyText(
+                      text: 'Rana Bahaa',
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        color: color,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16.0,
-                      ),
+                      colors: color,
+                      fontSize: 15.0,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
-                  SizedBox(height:12),
-                  Row(
-                    children: [
+                  SizedBox(height:1.0),
+                  Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(5.0),
 
-                      Container(
-                          margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
-                          width: 150,
-                          height: 35,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(5.0),
-
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 4,top: 2),
-                            child: Text(
-                              'transfered 250 LE to you',
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                color: Color(0xff0CA6B7),
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          )
                       ),
-
-                    ],
+                      child: MyText(
+                        text: 'transfered 250 LE to you',
+                        overflow: TextOverflow.ellipsis,
+                        colors: Color(0xff26A4BD),
+                        fontSize: 15.0,
+                        fontWeight: FontWeight.w500,
+                      )
                   ),
                 ],
               ),
             ),
-            Column(
-              children: [
-                Row(
-                  children: [
-                    Container(
-                      width: 22.0,
-                      height: 22.0,
-                      margin: EdgeInsets.fromLTRB(0.0, 10.0, 15.0, 0.0),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(20.0),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey,
-                            //offset: Offset(0.5, 0.5), //(x,y)
-                            blurRadius: 4.0,
-                          ),
-                        ],
-                      ),
-                      child:MaterialButton(
-                        padding: EdgeInsets.all(0),
-                        minWidth: 0,
-                        onPressed: (){
-
-                        },
-                        child: Icon(
-                          Icons.close_rounded,
-                          color: Color(0xffBB0B0B),
-                          size: 20.0,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+            Padding(
+              padding: const EdgeInsets.only(right: 4.0),
+              child: IconButton(
+                onPressed: (){},
+                icon:SvgPicture.asset(
+                "assets/icons/cross-small.svg",
+                height: 18.0,
+                width: 18.0,
+                color:Colors.red,
+              ),
+              ),
             ),
           ],
         ),

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:jopedia/models/request/request_model.dart';
 import 'package:jopedia/models/services/DataController.dart';
 import 'package:jopedia/models/user/user_model.dart';
@@ -10,7 +11,6 @@ import '../../shared/components/component.dart';
 class RequestScreen extends StatefulWidget {
   UserModel user;
   RequestScreen(this.user);
-
   @override
   _RequestScreenState createState() => _RequestScreenState();
 }
@@ -29,8 +29,8 @@ class _RequestScreenState extends State<RequestScreen> {
   //   super.initState();
   // }
 
-  int requestsNumber = 4;
-  var color = Color(0xff50B3CF);
+
+  var color = Color(0xff0F4C5C);
 
   void loadData() async {
     var queryStringgg = widget.user.uId;
@@ -42,7 +42,7 @@ class _RequestScreenState extends State<RequestScreen> {
 
   @override
   void initState() {
-    loadData();
+    /*loadData();*/
     super.initState();
   }
 
@@ -54,187 +54,133 @@ class _RequestScreenState extends State<RequestScreen> {
         print(snapshotData?.docs);
         var work = snapshotData?.docs[index].get("WORKER_ID").toString();
         print(work);
-        return Container(
-          height: 80.0,
-          margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10.0),
-            boxShadow: [
-              BoxShadow(
-                color: Color(0xff26A4BD),
-                offset: Offset(0, 2), //(x,y)
-                blurRadius: 6.0,
-              ),
-            ],
-          ),
-          child: Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: CircleAvatar(
-                  radius: 30.0,
-                  backgroundImage: AssetImage('assets/images/profile.JPG'),
+        return Padding(
+          padding: const EdgeInsets.only(top: 40,left: 15.0,right: 15.0),
+          child: Container(
+            height: 100.0,
+            margin: EdgeInsets.symmetric(vertical: 1.0, horizontal: 5.0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10.0),
+              boxShadow: [
+                BoxShadow(
+                  color: Color(0xff26A4BD).withOpacity(0.3),
+                  offset: Offset(0, 3), //(x,y)
+                  blurRadius: 6.0,
                 ),
-              ),
-              SizedBox(
-                width: 20.0,
-              ),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Container(
-                      margin: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
-                      child: Text(
-                        snapshotData?.docs[index].get('JOB_ID') ?? "N/A",
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          color: color,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16.0,
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 12),
-                    Row(
-                      children: [
-                        Container(
-                            margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
-                            width: 55,
-                            height: 30,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(5.0),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey,
-                                  //offset: Offset(0.5, 0.5), //(x,y)
-                                  blurRadius: 3.5,
-                                ),
-                              ],
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 4, top: 2),
-                              child: MyText(
-                                  text: snapshotData?.docs[index]
-                                          .get('JOB_SALARY') ??
-                                      "N/A",
-                                  colors: color),
-                            )),
-                      ],
-                    ),
-                  ],
+              ],
+            ),
+            child: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10.0,horizontal: 12.0,),
+                  child: CircleAvatar(
+                    radius: 30.0,
+                    backgroundImage: AssetImage('assets/images/profile.JPG'),
+                  ),
                 ),
-              ),
-              Column(
-                children: [
-                  Row(
+                SizedBox(
+                  width: 20.0,
+                ),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                        width: 25.0,
-                        height: 25.0,
-                        margin: EdgeInsets.fromLTRB(0.0, 10.0, 15.0, 0.0),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(20.0),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey,
-                              //offset: Offset(0.5, 0.5), //(x,y)
-                              blurRadius: 4.0,
-                            ),
-                          ],
-                        ),
-                        child: MaterialButton(
-                          padding: EdgeInsets.all(0),
-                          minWidth: 0,
-                          onPressed: () async {
-                            await FirebaseFirestore.instance
-                                .collection("request")
-                                .doc(snapshotData?.docs[index].id)
-                                .delete();
-                            loadData();
-                            print(snapshotData?.docs[index].get('WORKER_ID'));
-                          },
-                          child: Icon(
-                            Icons.close_rounded,
-                            color: Color(0xffBB0B0B),
-                            size: 22.0,
-                          ),
+                        child: MyText(
+                          text: snapshotData?.docs[index].get('JOB_ID') ?? "N/A",
+                          overflow: TextOverflow.ellipsis,
+                          colors: color,
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
-                      Container(
-                        width: 25.0,
-                        height: 25.0,
-                        margin: EdgeInsets.fromLTRB(0.0, 10.0, 15.0, 0.0),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(20.0),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey,
-                              //  offset: Offset(0.5, 1.0), //(x,y)
-                              blurRadius: 4.0,
-                            ),
-                          ],
+                      SizedBox(height: 1.0),
+                      MyText(
+                          text: snapshotData?.docs[index]
+                                  .get('JOB_SALARY') ??
+                              "N/A",
+                          colors: Color(0xff26A4BD),
+                        fontSize: 15.0,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      IconButton(
+                        onPressed: () async {
+                          await FirebaseFirestore.instance
+                              .collection("request")
+                              .doc(snapshotData?.docs[index].id)
+                              .delete();
+                          loadData();
+                          print(snapshotData?.docs[index].get('WORKER_ID'));
+                        },
+                        icon: SvgPicture.asset(
+                          "assets/icons/cross-small.svg",
+                          height: 30.0,
+                          width: 30.0,
+                          color:Colors.red,
                         ),
-                        child: MaterialButton(
-                          padding: EdgeInsets.all(0),
-                          minWidth: 0,
-                          onPressed: () async {
-                            print("Started..");
+                      ),
+                      IconButton(
+                        onPressed: () async {
+                          print("Started..");
+                          await FirebaseFirestore.instance
+                              .collection("post")
+                              .doc(snapshotData?.docs[index].get("JOB_ID"))
+                              .update({
+                            "COMPLETED_JOB": "2",
+                          });
+                          await FirebaseFirestore.instance
+                              .collection("post")
+                              .doc(snapshotData?.docs[index].get("JOB_ID"))
+                              .update({
+                            "WORKER_ID": "$work" ,
+                          });
+
+                          QuerySnapshot value = await FirebaseFirestore
+                              .instance
+                              .collection("request")
+                              .where("JOB_ID",
+                                  isEqualTo:
+                                      snapshotData?.docs[index].get("JOB_ID"))
+                              .get();
+
+                          value.docs.forEach((element) async {
+                            print("Deleting ${element.id}..");
                             await FirebaseFirestore.instance
-                                .collection("post")
-                                .doc(snapshotData?.docs[index].get("JOB_ID"))
-                                .update({
-                              "COMPLETED_JOB": "2",
-                            });
-                            await FirebaseFirestore.instance
-                                .collection("post")
-                                .doc(snapshotData?.docs[index].get("JOB_ID"))
-                                .update({
-                              "WORKER_ID": "$work" ,
-                            });
-
-                            QuerySnapshot value = await FirebaseFirestore
-                                .instance
                                 .collection("request")
-                                .where("JOB_ID",
-                                    isEqualTo:
-                                        snapshotData?.docs[index].get("JOB_ID"))
-                                .get();
-
-                            value.docs.forEach((element) async {
-                              print("Deleting ${element.id}..");
-                              await FirebaseFirestore.instance
-                                  .collection("request")
-                                  .doc(element.id)
-                                  .delete();
-                            });
-
-                            FirebaseFirestore.instance
-                                .collection("request")
-                                .doc(snapshotData?.docs[index].id)
+                                .doc(element.id)
                                 .delete();
-                            print("Done...");
-                            loadData();
-                            print("Done all!");
-                          },
-                          child: Icon(
-                            Icons.check,
-                            color: Colors.green,
-                            size: 22.0,
-                          ),
+                          });
+
+                          FirebaseFirestore.instance
+                              .collection("request")
+                              .doc(snapshotData?.docs[index].id)
+                              .delete();
+                          print("Done...");
+                          loadData();
+                          print("Done all!");
+                        },
+                        icon: SvgPicture.asset(
+                          "assets/icons/check (1).svg",
+                          height: 20.0,
+                          width: 30.0,
+                          color:Colors.green,
                         ),
                       ),
                     ],
                   ),
-                ],
-              ),
-            ],
+                ),
+              ],
+            ),
           ),
         );
       },
@@ -257,8 +203,8 @@ class _RequestScreenState extends State<RequestScreen> {
                 textAlign: TextAlign.center),
           ),
           backgroundColor: Color(0xffF6F9FA),
-          elevation: 5.0,
-          titleSpacing: 20.0,
+          elevation: 0,
+
           leading: IconButton(
             onPressed: () {
               print(widget.user.uId);

@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:jopedia/bloc/cubit.dart';
 import 'package:jopedia/layout/home_layout.dart';
 import 'package:jopedia/layout/home_layout_cubit.dart';
@@ -60,16 +62,20 @@ class LoginScreen extends StatelessWidget {
                       Center(
                         child: MyText(
                           text: 'Login',
-                          fontSize: 30.0,
+                          fontSize: 40.0,
                           fontWeight: FontWeight.w900,
                           colors: Color(0xff0F4C5C),
                         ),
                       ),
                       SizedBox(
-                        height: 40.0,
+                        height: 30.0,
+                      ),
+                      Center(
+                        child: Image(image:AssetImage('assets/images/LoginnScreen.png'),height: 300,width: 250,),
                       ),
 
                       DefaultTextField(
+                        maxlines: 1,
                         controller: emailController,
                         type: TextInputType.emailAddress,
                         PrefixIcon: Icons.email,
@@ -81,6 +87,7 @@ class LoginScreen extends StatelessWidget {
                         height: 20.0,
                       ),
                       DefaultTextField(
+                          maxlines: 1,
                           controller: passwordController,
                           type: TextInputType.visiblePassword,
                           PrefixIcon: Icons.lock,
@@ -96,28 +103,33 @@ class LoginScreen extends StatelessWidget {
                       SizedBox(
                         height: 20.0,
                       ),
-                      MaterialButton(
-                        color: Color(0xff50B3CF),
-                        minWidth: double.infinity,
-                        height: 50.0,
-                        child: Text(
-                          'Login',
-                          style: TextStyle(
-                            fontFamily: 'Poppins',
-                            fontWeight: FontWeight.w700,
-                            fontSize: 18.0,
-                            color: Colors.white,
+                      ConditionalBuilder(
+                        condition: state is! LoginLoadingState,
+                        builder: (context) =>  MaterialButton(
+                          color: Color(0xff50B3CF),
+                          minWidth: double.infinity,
+                          height: 50.0,
+                          child: Text(
+                            'Login',
+                            style: TextStyle(
+                              fontFamily: 'Poppins',
+                              fontWeight: FontWeight.w700,
+                              fontSize: 18.0,
+                              color: Colors.white,
+                            ),
                           ),
+                          onPressed: () async {
+                            if (FormKey.currentState!.validate()) {
+                              var email = emailController.text;
+                              var password = passwordController.text;
+                              LoginCubit.get(context).userLogin(email: email, password: password,);
+                            }
+                          },
                         ),
-                        onPressed: () async {
-                          if (FormKey.currentState!.validate()) {
-                            var email = emailController.text;
-                            var password = passwordController.text;
-                            LoginCubit.get(context).userLogin(email: email, password: password,);
-                            final user = FirebaseAuth.instance.currentUser;
-                          }
-                        },
+                        fallback: (context) =>
+                            Center(child: CircularProgressIndicator()),
                       ),
+
                       SizedBox(
                         height: 10.0,
                       ),

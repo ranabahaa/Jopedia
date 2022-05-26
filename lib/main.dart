@@ -5,11 +5,15 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jopedia/bloc/cubit.dart';
 import 'package:jopedia/bloc/states.dart';
+import 'package:jopedia/layout/home_layout.dart';
+import 'package:jopedia/modules/create_job/CreateJobScreen.dart';
 import 'package:jopedia/modules/login/LoginScreen.dart';
 import 'package:flutter/services.dart';
-import 'package:jopedia/modules/progressShowTry.dart';
+import 'package:jopedia/modules/notification/NotificationScreen.dart';
+import 'package:jopedia/modules/requests/RequestScreen.dart';
 import 'bloc/bloc_Observer.dart';
 import 'modules/register/RegisterScreen.dart';
+import 'modules/start_app/start_App.dart';
 
   void main() async {
   WidgetsFlutterBinding?.ensureInitialized();
@@ -51,7 +55,7 @@ class MyApp extends StatelessWidget {
               return MaterialApp(
                 debugShowCheckedModeBanner: false,
                 title: title,
-                home: LoginScreen(),
+                home: StartApp(),
               );
             }),
 

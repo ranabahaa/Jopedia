@@ -17,6 +17,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:rate_in_stars/rate_in_stars.dart';
 
+import '../../shared/components/component.dart';
+import '../login/LoginScreen.dart';
+import '../requests/RequestScreen.dart';
+import '../saved_jobs/SavedJobScreen.dart';
+
 
 class ProfilePage extends StatefulWidget {
   UserModel user;
@@ -416,74 +421,54 @@ class _ProfilePageState extends State<ProfilePage>
                   SizedBox(
                     width: 10.0,
                   ),
-                  CircleAvatar(
-                    backgroundImage: AssetImage(
-                      'assets/images/drawer.jpeg',
+                  GestureDetector(
+                    child: CircleAvatar(
+                      backgroundImage: AssetImage(widget.user.image),
+                      radius: 36.0,
                     ),
-                    radius: 35.0,
+                    onTap: () {
+                      Navigator.pop(context);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ProfilePage(widget.user)),
+                      );
+                    },
                   ),
                   SizedBox(
                     width: 10.0,
                   ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Welcome Bakr',
-                        style: TextStyle(
-                          color: Color(0xff0F4C5C),
-                          fontSize: 15.0,
-                          fontFamily: 'Poppins',
-                          fontWeight: FontWeight.w600,
+                  Container(
+                    width: 150.0,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          /*'Welcome ${user.name}'*/'a',
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            color: Color(0xff0F4C5C),
+                            fontSize: 15.0,
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
-                      ),
-                      Text(
-                        'aboubakrahmed@gmail.com',
-                        style: TextStyle(
-                          color: Color(0xffA2BBCD),
-                          fontSize: 10.0,
-                          fontFamily: 'Poppins',
-                          fontWeight: FontWeight.w300,
+                        Text(
+                          '${widget.user.email}',
+                          style: TextStyle(
+                            color: Color(0xffA2BBCD),
+                            fontSize: 10.0,
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.w300,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ],
               ),
-            ),
-            SizedBox(
-              height: 5.0,
-            ),
-            ListTile(
-              leading: IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                  Navigator.pop(context);
-                },
-                icon: SvgPicture.asset(
-                  "assets/icons/home.svg",
-                  height: 17.0,
-                  width: 17.0,
-                  color: Color(0xff0F4C5C),
-                ),
-              ),
-              title: GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
-                  Navigator.pop(context);
-                },
-                child: Text(
-                  'Home',
-                  style: TextStyle(
-                    color: Color(0xff0F4C5C),
-                    fontSize: 17.0,
-                    fontFamily: 'Poppins',
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-              onTap: () {},
             ),
             SizedBox(
               height: 5.0,
@@ -498,16 +483,23 @@ class _ProfilePageState extends State<ProfilePage>
                   color: Color(0xff0F4C5C),
                 ),
               ),
-              title: Text(
-                'Saved Jobs',
-                style: TextStyle(
-                  color: Color(0xff0F4C5C),
-                  fontSize: 17.0,
-                  fontFamily: 'Poppins',
-                  fontWeight: FontWeight.w600,
+              title: GestureDetector(
+                child: Text(
+                  'Saved Jobs',
+                  style: TextStyle(
+                    color: Color(0xff0F4C5C),
+                    fontSize: 17.0,
+                    fontFamily: 'Poppins',
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SavedJobScreen()),
+                );
+              },
             ),
             SizedBox(
               height: 5.0,
@@ -521,16 +513,29 @@ class _ProfilePageState extends State<ProfilePage>
                   color: Color(0xff0F4C5C),
                 ),
               ),
-              title: Text(
-                'Requests',
-                style: TextStyle(
-                  color: Color(0xff0F4C5C),
-                  fontSize: 17.0,
-                  fontFamily: 'Poppins',
-                  fontWeight: FontWeight.w600,
+              title: GestureDetector(
+                child: Text(
+                  'Requests',
+                  style: TextStyle(
+                    color: Color(0xff0F4C5C),
+                    fontSize: 17.0,
+                    fontFamily: 'Poppins',
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
-              onTap: () {},
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => RequestScreen(widget.user)),
+
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(builder: (context) => RequestScreen(user)),
+                );
+              },
             ),
             SizedBox(
               height: 5.0,
@@ -539,13 +544,13 @@ class _ProfilePageState extends State<ProfilePage>
               leading: IconButton(
                 onPressed: () {},
                 icon: Icon(
-                  Icons.live_tv_rounded,
+                  Icons.add_location_rounded,
                   size: 20.0,
                   color: Color(0xff0F4C5C),
                 ),
               ),
               title: Text(
-                'Live',
+                'About Us',
                 style: TextStyle(
                   color: Color(0xff0F4C5C),
                   fontSize: 17.0,
@@ -576,7 +581,13 @@ class _ProfilePageState extends State<ProfilePage>
                   fontWeight: FontWeight.w600,
                 ),
               ),
-              onTap: () {},
+              onTap: () async {
+                await FirebaseAuth.instance.signOut();
+                navigateAndFinish(
+                  context,
+                  LoginScreen(),
+                );
+              },
             ),
           ],
         ),
