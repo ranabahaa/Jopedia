@@ -86,6 +86,7 @@ class RegisterScreen extends StatelessWidget {
                       height: 20.0,
                     ),
                     DefaultTextField(
+                      maxlines: 1,
                       controller: emailController,
                       type: TextInputType.emailAddress,
                       SuffixIcon: Icons.email,
@@ -95,6 +96,7 @@ class RegisterScreen extends StatelessWidget {
                       height: 20.0,
                     ),
                     DefaultTextField(
+                      maxlines: 1,
                       controller: passwordController,
                       type: TextInputType.visiblePassword,
                       hint: 'Password',
@@ -104,6 +106,7 @@ class RegisterScreen extends StatelessWidget {
                       height: 20.0,
                     ),
                     DefaultTextField(
+                      maxlines: 1,
                       controller: confirmPasswordController,
                       type: TextInputType.visiblePassword,
                       hint: 'Re-Password',
@@ -113,6 +116,7 @@ class RegisterScreen extends StatelessWidget {
                       height: 20.0,
                     ),
                     DefaultTextField(
+                      maxlines: 1,
                       controller: PhoneNumberController,
                       type: TextInputType.number,
                       SuffixIcon: Icons.phone,

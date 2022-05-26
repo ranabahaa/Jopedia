@@ -1,5 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+
+import '../../modules/requests/RequestScreen.dart';
+import '../../modules/saved_jobs/SavedJobScreen.dart';
 
 Widget DefaultButton({
   double width = double.infinity,
@@ -37,9 +41,11 @@ Widget DefaultTextField({
   PrefixIcon,
   validateTixt,
   SuffixPress,
+  maxlines
 }) =>
     Container(
       child: TextFormField(
+        maxLines: maxlines,
         onTap: onTap,
         onChanged: onChange,
         controller: controller,
@@ -80,9 +86,13 @@ Widget MyText({
   FontWeight fontWeight = FontWeight.w500,
   double fontSize = 18.0,
   Color colors = Colors.white,
+  int maxlines =1,
+  TextOverflow overflow = TextOverflow.ellipsis,
 }) =>
     Text(
       '$text',
+      maxLines: maxlines,
+      overflow: overflow,
       style: TextStyle(
         fontFamily: '$fontFamily',
         fontWeight: fontWeight,
@@ -113,3 +123,4 @@ Widget myDivider() => Padding(
     color: Colors.grey[300],
   ),
 );
+

@@ -21,19 +21,18 @@ class LoginCubit extends Cubit<LoginStates> {
     required String password,
   }) async {
     emit(LoginLoadingState());
-
     try {
       final user =
           await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
+      emit(LoginLoadingState());
       if (user != null) {
         await FirebaseFirestore.instance
             .collection("users")
             .doc(user.user!.uid)
             .get().then((value) {
-          print(value.data());
           userModel=UserModel.fromJson(value.data());
         });
       }
