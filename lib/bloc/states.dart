@@ -44,6 +44,18 @@ class GetPostsDataError extends AppState {
 
   GetPostsDataError(this.error);
 }
+
+class GetCurrentPostsDataLoading extends AppState {}
+
+class GetCurrentPostsDataSuccsess extends AppState {}
+
+class GetCurrentPostsDataError extends AppState {
+  final String error;
+
+  GetCurrentPostsDataError(this.error);
+}
+
+
 class HomeInitialState extends AppState {}
 
 class SavedJobs extends AppState {}

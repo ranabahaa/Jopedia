@@ -96,33 +96,14 @@ class _progressShowTryState extends State<progressShowTry> {
                             height: 20.0,
                           ),
                           Container(
-                            child: buildprogress(),
-                          ),
-                          /*StreamBuilder<List<PostDataModel?>>(
-                            stream:GetCurrentJobsData(),
-                            builder: (context,snapshot){
-                              if (snapshot.hasError) {
-                                return Text('something went wrong ! ${snapshot.error}');
-                              }
-                              else if (snapshot.hasData) {
-                               final post = snapshot.data!;
-                                return buildpostprogress(post);
-                                  //buildpostprogress(post);
-                                  //post.map(buildpostprogress).toList();
-                              }
-                              else {
-                                return Center(child: CircularProgressIndicator(),);
-                              }
-                            },
-                          ),*/
-                         /* ListView.separated(
-                              itemCount: cubit.posts.length,
+                            child: ListView.separated(
+                              itemCount: AppBloc.get(context).currentPosts.length,
                               shrinkWrap: true,
                               physics: NeverScrollableScrollPhysics(),
                               separatorBuilder:(context, index) => myDivider(),
-                              itemBuilder: (context, index) => buildPostItem (cubit.posts[index],context)
-
-                          ),*/
+                              itemBuilder: (context, index) => buildPostItem (AppBloc.get(context).currentPosts[index],context)
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -134,18 +115,6 @@ class _progressShowTryState extends State<progressShowTry> {
         );
   }
 
-/*  Future<Column> Progress() async =>Column(
-    children: [
-      StreamBuilder(
-        stream: ShowJobsInProgress() ,
-        builder: (context,snapshot),
-      ),
-    ],
-  );*/
- /* Widget buildpostprogress(PostDataModel post)=> ListTile(
-    title: MyText(text: post.JOB_TITLE,colors: color),
-    subtitle: MyText(text: post.COMPLETED_JOB,colors: color),
-  );*/
   Widget buildprogress(){
     //ReadTime();
     GetCurrentJobsData();
@@ -160,17 +129,14 @@ class _progressShowTryState extends State<progressShowTry> {
     children: <Widget>[
       InkWell(
         onTapDown: (_){
-          UserModel? user;
-          AppBloc.get(context).GetUserData();
-          user = AppBloc.get(context).user_model;
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => JobProgressScreen(),
+              builder: (context) => JobProgressScreen(jobId: post.JOBID),
             ),
           );
           /*print(post.JOBID);
-        print(post.USER_ID);*/
+          print(post.USER_ID);*/
         },
         child: Padding(
           padding: const EdgeInsets.only(left: 0,top: 10,right: 0,bottom: 10),

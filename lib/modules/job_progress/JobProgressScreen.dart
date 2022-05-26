@@ -12,7 +12,9 @@ import '../../shared/components/component.dart';
 import 'package:jopedia/models/job/job_model.dart';
 
 class JobProgressScreen extends StatefulWidget {
-  const JobProgressScreen({Key? key}) : super(key: key);
+
+  String? jobId;
+  JobProgressScreen({this.jobId});
 
   @override
   _JobProgressScreenState createState() => _JobProgressScreenState();
@@ -87,7 +89,7 @@ class _JobProgressScreenState extends State<JobProgressScreen> {
     startJobVisibility =false;
   }
   Future<PostDataModel?> ReadTime() async {
-    final DocPost = FirebaseFirestore.instance.collection('post').doc('bARLIywCJSgrYXQnQil5');
+    final DocPost = FirebaseFirestore.instance.collection('post').doc(widget.jobId);
     final snapshot = await DocPost.get();
     if(snapshot.exists){
       //final post = snapshot.data!;

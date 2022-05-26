@@ -299,7 +299,7 @@ class Home_layout extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => RequestScreen(cubit.user_model)),
+                                builder: (context) => RequestScreen(user)),
 
                             // Navigator.push(
                             //   context,

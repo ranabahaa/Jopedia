@@ -16,7 +16,8 @@ import 'package:jopedia/models/services/DataController.dart';
 
 class ContractScreen extends StatelessWidget {
   UserModel user;
-  ContractScreen(this.user);
+  String jobId;
+  ContractScreen(this.user,this.jobId);
   var color = Color(0xff50B3CF);
   @override
   Widget build(BuildContext context) {
@@ -78,7 +79,7 @@ class ContractScreen extends StatelessWidget {
                               child: Column(
                                 children: [
                                   FutureBuilder<PostDataModel?>(
-                                    future: AppBloc.get(context).ShowContract(),
+                                    future: AppBloc.get(context).ShowContract(jobId),
                                     //AppBloc.get(context).ShowContract(),
                                     builder: (context,snapshot){
                                       if (snapshot.hasError) {

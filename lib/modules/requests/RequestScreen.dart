@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -7,6 +8,7 @@ import 'package:jopedia/models/services/DataController.dart';
 import 'package:jopedia/models/user/user_model.dart';
 import 'package:jopedia/modules/contract/ContractScreen.dart';
 import '../../shared/components/component.dart';
+import '../job_progress/progressShowTry.dart';
 
 class RequestScreen extends StatefulWidget {
   UserModel user;
@@ -38,6 +40,7 @@ class _RequestScreenState extends State<RequestScreen> {
     setState(() {
       snapshotData = data;
     });
+   // print(snapshotData?.docs.length);
   }
 
   @override
@@ -168,6 +171,10 @@ class _RequestScreenState extends State<RequestScreen> {
                           print("Done...");
                           loadData();
                           print("Done all!");
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => ContractScreen(widget.user,snapshotData?.docs[index].get("JOB_ID"))),
+                          );
                         },
                         icon: SvgPicture.asset(
                           "assets/icons/check (1).svg",

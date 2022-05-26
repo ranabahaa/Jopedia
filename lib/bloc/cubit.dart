@@ -237,10 +237,10 @@ void JopView(){
     });
   }
 
-  Future<PostDataModel?> ShowContract() async {
+  Future<PostDataModel?> ShowContract(String jobId) async {
     final DocPost = FirebaseFirestore.instance
         .collection('post')
-        .doc('bARLIywCJSgrYXQnQil5');
+        .doc(jobId);
     final snapshot = await DocPost.get();
     if (snapshot.exists) {
       return PostDataModel.fromJson(snapshot.data()!, snapshot.id);
@@ -272,21 +272,23 @@ void JopView(){
       emit(GetPostsDataError(error.toString()));
     });
   }
-/*
 
+
+  List<PostDataModel> currentPosts = [];
   void GetCurrentJobsData() {
-    emit(GetPostsDataLoading());
-    FirebaseFirestore.instance.collection('post').where('COMPLETED_JOB'==2).get().then((value) {
+    final user = FirebaseAuth.instance.currentUser;
+    emit(GetCurrentPostsDataLoading());
+    FirebaseFirestore.instance.collection('post').where('COMPLETED_JOB', isEqualTo: '2').where('WORKER_ID', isEqualTo: user!.uid).get().then((value) {
       value.docs.forEach((element) {
-        posts.add(PostDataModel.fromJson(element.data(), element.id));
+        currentPosts.add(PostDataModel.fromJson(element.data(), element.id));
       });
-      emit(GetPostsDataSuccsess());
+      emit(GetCurrentPostsDataSuccsess());
     }).catchError((error) {
       print(error.toString());
-      emit(GetPostsDataError(error.toString()));
+      emit(GetCurrentPostsDataError(error.toString()));
     });
   }
-*/
+
 
   void SaveJob(String jopId) {
     final user = FirebaseAuth.instance.currentUser;

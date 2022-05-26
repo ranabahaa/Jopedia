@@ -37,6 +37,7 @@ class LoginScreen extends StatelessWidget {
           {
             AppBloc.get(context).GetUserData();
             AppBloc.get(context).GetSavedPostsData();
+            AppBloc.get(context).GetCurrentJobsData();
             navigateAndFinish(
               context,
               Home_layout(LoginCubit.get(context).userModel),
