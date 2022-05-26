@@ -11,7 +11,9 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jopedia/modules/home/home_states.dart';
-
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 import '../models/job/job_model.dart';
 import '../models/request/request_model.dart';
 import '../models/user/user_model.dart';
@@ -24,6 +26,29 @@ class AppBloc extends Cubit<AppState> {
   static AppBloc get(BuildContext context) {
     return BlocProvider.of(context);
   }
+
+/*
+  late File image;
+  late String imageUrl;
+  sendData() async{
+    var imageRef = FirebaseStorage.instance.ref().child("profiles/"+widget.user.uId);
+    await imageRef.putFile(image);
+    imageUrl = await imageRef.getDownloadURL();
+    widget.user.image = imageUrl;
+    await FirebaseFirestore.instance.collection('users').doc(widget.user.uId).update(
+        { 'image' : imageUrl.toString()  });
+    setState(() {});
+  }
+  Future getImage() async {
+
+    final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+    final imageTemp = File(image!.path);
+    setState(() => this.image = imageTemp);
+    if (image != null){
+      sendData();
+    }
+  }*/
+
 
   bool isAllTrue = true;
   bool isSaveTrue = false;

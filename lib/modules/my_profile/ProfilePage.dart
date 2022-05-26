@@ -2,10 +2,13 @@ import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:jopedia/bloc/cubit.dart';
 import 'package:jopedia/layout/home_layout.dart';
+import 'package:jopedia/models/job/job_model.dart';
 import 'package:jopedia/models/user/user.dart';
 import 'package:jopedia/models/user/user_model.dart';
 import 'package:jopedia/modules/edit_profile/EditProfilePage.dart';
+import 'package:jopedia/shared/components/component.dart';
 import 'package:jopedia/utils/user_preferences.dart';
 import 'package:jopedia/widget/numbers_widget.dart';
 import 'package:jopedia/widget/profile_widget.dart';
@@ -22,8 +25,9 @@ import '../saved_jobs/SavedJobScreen.dart';
 
 class ProfilePage extends StatefulWidget {
   UserModel user;
-
   ProfilePage(this.user);
+
+
 
   @override
   _ProfilePageState createState() => _ProfilePageState();
@@ -32,16 +36,231 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage>
     with TickerProviderStateMixin {
 
+  List<PostDataModel> posts = [];
+  QuerySnapshot? snapshotData;
+
+  void loadData() async{
+    print(posts.length);
+    posts = [];
+    posts.clear();
+    setState(() {
+      posts.addAll(AppBloc.get(context).posts.where((element) => element.WORKER_ID == widget.user.uId
+      ));
+    });
+    print(posts.length);
+  }
+
 
   @override
   void initState(){
+    posts = [];
+    posts.clear();
+    setState(() {
+      posts.addAll(AppBloc.get(context).posts.where((element) => element.WORKER_ID == widget.user.uId
+      ));
+    });
     super.initState();
   }
-
+  // Widget searchedData() {
+  //   return ListView.builder(
+  //     itemCount: snapshotData?.docs.length ?? 0,
+  //     itemBuilder: (BuildContext context, int index) {
+  //       print("----- $index");
+  //       print(snapshotData?.docs);
+  //       var work = snapshotData?.docs[index].get("WORKER_ID").toString();
+  //       print(work);
+  //       return Container(
+  //         height: 80.0,
+  //         margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
+  //         decoration: BoxDecoration(
+  //           color: Colors.white,
+  //           borderRadius: BorderRadius.circular(10.0),
+  //           boxShadow: [
+  //             BoxShadow(
+  //               color: Color(0xff26A4BD),
+  //               offset: Offset(0, 2), //(x,y)
+  //               blurRadius: 6.0,
+  //             ),
+  //           ],
+  //         ),
+  //         child: Row(
+  //           children: [
+  //             Padding(
+  //               padding: const EdgeInsets.all(8.0),
+  //               child: CircleAvatar(
+  //                 radius: 30.0,
+  //                 backgroundImage: AssetImage('assets/images/profile.JPG'),
+  //               ),
+  //             ),
+  //             SizedBox(
+  //               width: 20.0,
+  //             ),
+  //             Expanded(
+  //               child: Column(
+  //                 crossAxisAlignment: CrossAxisAlignment.start,
+  //                 mainAxisAlignment: MainAxisAlignment.start,
+  //                 children: [
+  //                   Container(
+  //                     margin: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
+  //                     child: Text(
+  //                       snapshotData?.docs[index].get('JOB_ID') ?? "N/A",
+  //                       maxLines: 1,
+  //                       overflow: TextOverflow.ellipsis,
+  //                       style: TextStyle(
+  //                         //color: color,
+  //                         fontWeight: FontWeight.bold,
+  //                         fontSize: 16.0,
+  //                       ),
+  //                     ),
+  //                   ),
+  //                   SizedBox(height: 12),
+  //                   Row(
+  //                     children: [
+  //                       Container(
+  //                           margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
+  //                           width: 55,
+  //                           height: 30,
+  //                           decoration: BoxDecoration(
+  //                             color: Colors.white,
+  //                             borderRadius: BorderRadius.circular(5.0),
+  //                             boxShadow: [
+  //                               BoxShadow(
+  //                                 color: Colors.grey,
+  //                                 //offset: Offset(0.5, 0.5), //(x,y)
+  //                                 blurRadius: 3.5,
+  //                               ),
+  //                             ],
+  //                           ),
+  //                           child: Padding(
+  //                             padding: const EdgeInsets.only(left: 4, top: 2),
+  //                             child: MyText(
+  //                                 text: snapshotData?.docs[index]
+  //                                     .get('JOB_SALARY') ??
+  //                                     "N/A",
+  //                                 ),
+  //                           )),
+  //                     ],
+  //                   ),
+  //                 ],
+  //               ),
+  //             ),
+  //             Column(
+  //               children: [
+  //                 Row(
+  //                   children: [
+  //                     Container(
+  //                       width: 25.0,
+  //                       height: 25.0,
+  //                       margin: EdgeInsets.fromLTRB(0.0, 10.0, 15.0, 0.0),
+  //                       decoration: BoxDecoration(
+  //                         color: Colors.white,
+  //                         borderRadius: BorderRadius.circular(20.0),
+  //                         boxShadow: [
+  //                           BoxShadow(
+  //                             color: Colors.grey,
+  //                             //offset: Offset(0.5, 0.5), //(x,y)
+  //                             blurRadius: 4.0,
+  //                           ),
+  //                         ],
+  //                       ),
+  //                       child: MaterialButton(
+  //                         padding: EdgeInsets.all(0),
+  //                         minWidth: 0,
+  //                         onPressed: () async {
+  //                           await FirebaseFirestore.instance
+  //                               .collection("request")
+  //                               .doc(snapshotData?.docs[index].id)
+  //                               .delete();
+  //                           loadData();
+  //                           print(snapshotData?.docs[index].get('WORKER_ID'));
+  //                         },
+  //                         child: Icon(
+  //                           Icons.close_rounded,
+  //                           color: Color(0xffBB0B0B),
+  //                           size: 22.0,
+  //                         ),
+  //                       ),
+  //                     ),
+  //                     Container(
+  //                       width: 25.0,
+  //                       height: 25.0,
+  //                       margin: EdgeInsets.fromLTRB(0.0, 10.0, 15.0, 0.0),
+  //                       decoration: BoxDecoration(
+  //                         color: Colors.white,
+  //                         borderRadius: BorderRadius.circular(20.0),
+  //                         boxShadow: [
+  //                           BoxShadow(
+  //                             color: Colors.grey,
+  //                             //  offset: Offset(0.5, 1.0), //(x,y)
+  //                             blurRadius: 4.0,
+  //                           ),
+  //                         ],
+  //                       ),
+  //                       child: MaterialButton(
+  //                         padding: EdgeInsets.all(0),
+  //                         minWidth: 0,
+  //                         onPressed: () async {
+  //                           print("Started..");
+  //                           await FirebaseFirestore.instance
+  //                               .collection("post")
+  //                               .doc(snapshotData?.docs[index].get("JOB_ID"))
+  //                               .update({
+  //                             "COMPLETED_JOB": "2",
+  //                           });
+  //                           await FirebaseFirestore.instance
+  //                               .collection("post")
+  //                               .doc(snapshotData?.docs[index].get("JOB_ID"))
+  //                               .update({
+  //                             "WORKER_ID": "$work" ,
+  //                           });
+  //
+  //                           QuerySnapshot value = await FirebaseFirestore
+  //                               .instance
+  //                               .collection("request")
+  //                               .where("JOB_ID",
+  //                               isEqualTo:
+  //                               snapshotData?.docs[index].get("JOB_ID"))
+  //                               .get();
+  //
+  //                           value.docs.forEach((element) async {
+  //                             print("Deleting ${element.id}..");
+  //                             await FirebaseFirestore.instance
+  //                                 .collection("request")
+  //                                 .doc(element.id)
+  //                                 .delete();
+  //                           });
+  //
+  //                           FirebaseFirestore.instance
+  //                               .collection("request")
+  //                               .doc(snapshotData?.docs[index].id)
+  //                               .delete();
+  //                           print("Done...");
+  //                           loadData();
+  //                           print("Done all!");
+  //                         },
+  //                         child: Icon(
+  //                           Icons.check,
+  //                           color: Colors.green,
+  //                           size: 22.0,
+  //                         ),
+  //                       ),
+  //                     ),
+  //                   ],
+  //                 ),
+  //               ],
+  //             ),
+  //           ],
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
   @override
   Widget build(BuildContext context) {
-    TabController _tabController = TabController(length: 3, vsync: this);
+    TabController _tabController = TabController(length: 2, vsync: this);
 
+    print(posts.length);
+    var h=3.2;
 
     return Scaffold(
 
@@ -116,14 +335,14 @@ class _ProfilePageState extends State<ProfilePage>
                 ),
               ),
               Expanded(
-                flex: 5,
+                flex: 6,
                 child: Container(
                   color: Colors.grey[200],
                   child: Center(
                       child: Card(
                           child: Container(
                               width: 450.0,
-                              height: 335.0,
+                              height: 500.0,
                               child: Padding(
                                 padding: EdgeInsets.all(10.0),
                                 child: Column(
@@ -131,27 +350,38 @@ class _ProfilePageState extends State<ProfilePage>
                                   children: [
                                     Container(
                                       child: TabBar(
+
                                           controller: _tabController,
                                           labelColor: Colors.black,
                                           indicatorColor: Color(0xff50B3CF),
                                           unselectedLabelColor: Colors.grey,
                                           tabs: [
                                             Tab(text: "About Me"),
-                                            Tab(text: "Jobs"),
-                                            Tab(text: "Reviews"),
+                                            Tab(text: "Jobs & Reviews"),
+                                            //Tab(text: "Reviews"),
                                           ]),
                                     ),
                                     Container(
                                       width: double.maxFinite,
-                                      height: 200,
+                                      height: 320,
                                       child: Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: TabBarView(
                                             controller: _tabController,
                                             children: [
                                               buildAbout(),
-                                              Text('Previous Jobs'),
-                                              Text('Reviews'),
+                                              SingleChildScrollView(
+                                               child: ListView.separated(
+                                                padding: EdgeInsets.zero,
+                                                itemCount: posts.length,
+                                                shrinkWrap: true,
+                                                physics: NeverScrollableScrollPhysics(),
+                                                separatorBuilder:(context, index) => myDivider(),
+                                                itemBuilder: (context, index) => buildRateItem (posts[index],context)
+
+                                            ),
+                                          ),
+                                              //Text('Reviews'),
                                             ]),
                                       ),
                                     ),
@@ -173,6 +403,8 @@ class _ProfilePageState extends State<ProfilePage>
               icon: const Icon(Icons.edit),
               tooltip: 'Edit Profile',
               onPressed: () {
+                print(posts.length);
+                print(widget.user.uId);
                 Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) => EditProfilePage(widget.user)),
                 );
@@ -361,7 +593,101 @@ class _ProfilePageState extends State<ProfilePage>
         ),
       ),
     );
+
+
   }
+  Widget buildRateItem (PostDataModel post,context) =>  Container(
+    height: 80.0,
+    margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
+    decoration: BoxDecoration(
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(10.0),
+      boxShadow: [
+        BoxShadow(
+          color: Color(0xff26A4BD),
+          offset: Offset(0, 2), //(x,y)
+          blurRadius: 6.0,
+        ),
+      ],
+    ),
+    child: Row(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: CircleAvatar(
+            radius: 30.0,
+            backgroundImage: AssetImage('assets/images/WallPainter.jpg'),
+          ),
+        ),
+        SizedBox(
+          width: 20.0,
+        ),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Container(
+                    margin: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
+                    child: Text(
+                      '${post.JOB_TITLE}',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16.0,
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 10),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(10.0, 7.0, 0.0, 0.0),
+
+                    child: RatingStars(
+                      iconSize: 15,
+                      rating: double.parse(post.WORKER_RATE),
+                      editable: false,
+                      color: Colors.amber,
+                    ),
+                  )
+                ],
+              ),
+              SizedBox(height: 3),
+              Row(
+                children: [
+                  Container(
+
+                      margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
+                      width: 80,
+                      height: 30,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(5.0),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey,
+                            //offset: Offset(0.5, 0.5), //(x,y)
+                            blurRadius: 3.5,
+                          ),
+                        ],
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 4, top: 2),
+                        child: MyText(
+                          colors: Colors.black,
+                            text: '${post.WORKER_REVIEW}',
+                            ),
+                      )),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ],
+    ),
+  );
 
   // Widget buildName() => Column(
   //       children: [

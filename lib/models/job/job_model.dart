@@ -15,6 +15,11 @@ class PostDataModel {
   late String WORKER_ID ="";
   late String COMPLETED_JOB = "1";
   late String IMAGE;
+  late String USER_RATE="";
+  late String WORKER_RATE ="";
+  late String USER_REVIEW="";
+  late String WORKER_REVIEW ="";
+  late String FLAG='0';
 
   PostDataModel({
     required this.JOBID,
@@ -50,6 +55,11 @@ class PostDataModel {
     COMPLETED_JOB = json?['COMPLETED_JOB'] ?? '';
     IMAGE = json?['IMAGE'] ?? '';
 
+    USER_RATE= json?['USER_RATE'] ?? '';
+    WORKER_RATE = json?['WORKER_RATE'] ?? '';
+    USER_REVIEW= json?['USER_REVIEW'] ?? '';
+    WORKER_REVIEW = json?['WORKER_REVIEW'] ?? '';
+    FLAG= json?['FLAG'] ?? '';
   }
 
   Map<String, dynamic> toJson() {
@@ -69,6 +79,11 @@ class PostDataModel {
       'WORKER_ID': WORKER_ID,
       'COMPLETED_JOB': COMPLETED_JOB,
       'IMAGE': IMAGE,
+      'USER_RATE': USER_RATE,
+      'WORKER_RATE': WORKER_RATE,
+      'USER_REVIEW': USER_REVIEW ,
+      'WORKER_REVIEW' : WORKER_REVIEW ,
+      'FLAG': FLAG ,
     };
   }
 }
