@@ -8,6 +8,7 @@ import 'package:jopedia/layout/home_layout_state.dart';
 import 'package:jopedia/models/user/user_model.dart';
 import 'package:jopedia/modules/create_job/CreateJobScreen.dart';
 import 'package:jopedia/modules/home/HomeScreen.dart';
+import 'package:jopedia/modules/job_progress/progressShowTry.dart';
 import 'package:jopedia/modules/login/LoginScreen.dart';
 import 'package:jopedia/modules/my_profile/ProfilePage.dart';
 import 'package:jopedia/modules/notification/NotificationScreen.dart';
@@ -183,7 +184,7 @@ class Home_layout extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    /*'Welcome ${user.name}'*/'a',
+                                    'Welcome ${user.name}',
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
@@ -236,6 +237,37 @@ class Home_layout extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => SavedJobScreen()),
+                          );
+                        },
+                      ),
+                      SizedBox(
+                        height: 5.0,
+                      ),
+                      ListTile(
+                        leading: IconButton(
+                          onPressed: () {},
+                          icon: SvgPicture.asset(
+                            "assets/icons/bookmark.svg",
+                            height: 17.0,
+                            width: 17.0,
+                            color: Color(0xff0F4C5C),
+                          ),
+                        ),
+                        title: GestureDetector(
+                          child: Text(
+                            'Current Jobs',
+                            style: TextStyle(
+                              color: Color(0xff0F4C5C),
+                              fontSize: 17.0,
+                              fontFamily: 'Poppins',
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => progressShowTry()),
                           );
                         },
                       ),

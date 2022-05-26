@@ -5,11 +5,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:jopedia/bloc/cubit.dart';
 import 'package:jopedia/modules/job_progress/JobProgressScreen.dart';
-import '../../bloc/cubit.dart';
-import '../../bloc/states.dart';
+import '../../../bloc/cubit.dart';
+import '../../../bloc/states.dart';
 import 'package:jopedia/shared/components/component.dart';
-import '../../models/job/job_model.dart';
-import '../../models/user/user_model.dart';
+import '../../../models/job/job_model.dart';
+import '../../../models/user/user_model.dart';
 
 class progressShowTry extends StatefulWidget {
   @override
