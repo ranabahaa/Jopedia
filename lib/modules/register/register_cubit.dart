@@ -56,7 +56,7 @@ class register_cubit extends Cubit<RegisterStates> {
       about: 'Write About Yourself',
       balance: 0.0,
       NatonalId: '',
-      credit: '',
+      card_number: '',
     );
     user = model;
     FirebaseFirestore.instance

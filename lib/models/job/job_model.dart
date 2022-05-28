@@ -10,7 +10,7 @@ class PostDataModel {
   late String EndTime;
   late String PostTime;
   late String JOBID;
-  late bool MORE_THAN_DAY;
+  late bool   MORE_THAN_DAY;
   late String USER_ID;
   late String WORKER_ID ="";
   late String COMPLETED_JOB = "1";
@@ -54,7 +54,6 @@ class PostDataModel {
     WORKER_ID = json?['WORKER_ID'] ?? '';
     COMPLETED_JOB = json?['COMPLETED_JOB'] ?? '';
     IMAGE = json?['IMAGE'] ?? '';
-
     USER_RATE= json?['USER_RATE'] ?? '';
     WORKER_RATE = json?['WORKER_RATE'] ?? '';
     USER_REVIEW= json?['USER_REVIEW'] ?? '';

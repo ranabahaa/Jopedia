@@ -9,7 +9,11 @@ class UserModel {
   late String about;
   late double balance;
   late String NatonalId;
-  late String credit;
+  late String card_name;
+  late String CVV;
+  late String card_number;
+  late String PIN;
+  late String EXPIRATION_DATE;
 
   UserModel (
       {
@@ -21,7 +25,7 @@ class UserModel {
         required this.about,
         required this.balance,
         this.NatonalId="",
-        this.credit = "",
+        this.card_number="",
 
 });
 
@@ -34,7 +38,12 @@ class UserModel {
     about = json?['about'];
     balance = json?['balance'] as double;
     NatonalId = json?['NatonalId'];
-    credit = json?['credit'];
+    card_number = json?['card_number'];
+    card_name = json?['card_name'];
+    CVV = json?['CVV'];
+    PIN = json?['PIN'];
+    EXPIRATION_DATE = json?['EXPIRATION_DATE'];
+
   }
 
   Map<String, dynamic> toMap()
@@ -48,7 +57,11 @@ class UserModel {
       'about':about,
       'balance':balance,
       'NatonalId':NatonalId,
-      'credit':credit,
+      'card_name':card_name,
+      'CVV':CVV,
+      'EXPIRATION_DATE':EXPIRATION_DATE,
+      'PIN':PIN,
+      'card_number':card_number,
     };
   }
 

@@ -289,7 +289,7 @@ class _JobViewScreenState extends State<JobViewScreen> {
                                 ),
                               );
                             }
-                            else if(widget.user!.credit == ""){
+                            else if(widget.user!.card_number == ""){
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   action: SnackBarAction(
