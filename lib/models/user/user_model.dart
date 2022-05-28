@@ -9,11 +9,11 @@ class UserModel {
   late String about;
   late double balance;
   late String NatonalId;
-  late String card_name;
-  late String CVV;
-  late String card_number;
-  late String PIN;
-  late String EXPIRATION_DATE;
+  late String card_name="";
+  late String CVV="";
+  late String card_number="";
+  late String PIN="";
+  late String EXPIRATION_DATE="";
 
   UserModel (
       {
