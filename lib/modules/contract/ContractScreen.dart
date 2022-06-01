@@ -136,7 +136,7 @@ class ContractScreen extends StatelessWidget {
                                             onPressed: () {
                                               Navigator.push(
                                                 context,
-                                                MaterialPageRoute(builder: (context) => JobProgressScreen()),
+                                                MaterialPageRoute(builder: (context) => JobProgressScreen(user,jobId)),
                                               );
                                             },
                                             child: MyText(

@@ -12,6 +12,8 @@ import '../../../models/job/job_model.dart';
 import '../../../models/user/user_model.dart';
 
 class ViewJobProgressScreen extends StatefulWidget {
+  String jobId;
+  ViewJobProgressScreen(this.jobId);
   @override
   State<ViewJobProgressScreen> createState() => _ViewJobProgressScreenState();
 }
@@ -129,13 +131,13 @@ class _ViewJobProgressScreenState extends State<ViewJobProgressScreen> {
     children: <Widget>[
       InkWell(
         onTapDown: (_){
-          UserModel? user;
+          UserModel user;
           AppBloc.get(context).GetUserData();
           user = AppBloc.get(context).user_model;
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => JobProgressScreen(),
+              builder: (context) => JobProgressScreen(user,widget.jobId),
             ),
           );
           /*print(post.JOBID);

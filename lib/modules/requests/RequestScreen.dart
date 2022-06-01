@@ -8,7 +8,6 @@ import 'package:jopedia/models/services/DataController.dart';
 import 'package:jopedia/models/user/user_model.dart';
 import 'package:jopedia/modules/contract/ContractScreen.dart';
 import '../../shared/components/component.dart';
-import '../job_progress/progressShowTry.dart';
 
 class RequestScreen extends StatefulWidget {
   UserModel user;
@@ -23,13 +22,6 @@ class _RequestScreenState extends State<RequestScreen> {
   QuerySnapshot? snapshotData;
   bool isExecuted = true;
 
-  // @override
-  // void initState() {
-  //   // for (int i = 0; i < 8; i++){
-  //   //   chatItems.insert(i, BuildChatItem());
-  //   // }
-  //   super.initState();
-  // }
 
 
   var color = Color(0xff0F4C5C);
@@ -45,7 +37,7 @@ class _RequestScreenState extends State<RequestScreen> {
 
   @override
   void initState() {
-    /*loadData();*/
+    loadData();
     super.initState();
   }
 
