@@ -22,7 +22,12 @@ class ViewJobProgressScreen extends StatefulWidget {
 class _ViewJobProgressScreenState extends State<ViewJobProgressScreen> {
   var color = Color(0xff50B3CF);
 
-  List<PostDataModel> posts = [];
+
+   void initState() {
+     print(AppBloc.get(context).currentPosts.length);
+     super.initState();
+   }
+ /* List<PostDataModel> posts = [];
   GetCurrentJobsData() {
     FirebaseFirestore.instance.collection('post').where('COMPLETED_JOB',isEqualTo: 2).get().then((value) {
       value.docs.forEach((element) {
@@ -32,7 +37,7 @@ class _ViewJobProgressScreenState extends State<ViewJobProgressScreen> {
     }).catchError((error) {
       print(error.toString());
     });
-  }
+  }*/
 
 
   @override
@@ -119,7 +124,7 @@ class _ViewJobProgressScreenState extends State<ViewJobProgressScreen> {
 
   Widget buildprogress(){
     //ReadTime();
-    GetCurrentJobsData();
+    //GetCurrentJobsData();
     return Column(
       children: [
         MyText(text:'hello',colors: color),
@@ -132,8 +137,8 @@ class _ViewJobProgressScreenState extends State<ViewJobProgressScreen> {
       InkWell(
         onTapDown: (_){
           UserModel user;
-          AppBloc.get(context).GetUserData();
           user = AppBloc.get(context).user_model;
+          AppBloc.get(context).GetCurrentJobsData();
           Navigator.push(
             context,
             MaterialPageRoute(

@@ -62,7 +62,7 @@ class _JobProgressScreenState extends State<JobProgressScreen> {
     timer = Timer.periodic(Duration(seconds: 1 ), (_) {
 
       visible=true;
-      if (sec==0){
+     /* if (sec==0){
         if (mounted) {
           setState(
                   () => mins--);
@@ -70,7 +70,7 @@ class _JobProgressScreenState extends State<JobProgressScreen> {
           setState(()=> sec--);
         }
       }
-      if(sec>0){
+     else if(sec>0){
         if (mounted) {
           setState(() => sec--);
         }
@@ -90,7 +90,7 @@ class _JobProgressScreenState extends State<JobProgressScreen> {
           percentage = (progressFraction*100).floor();
 
         });
-      }
+      }*/
 
 
     });
@@ -102,10 +102,11 @@ class _JobProgressScreenState extends State<JobProgressScreen> {
   Future<PostDataModel?> ReadTime() async {
     final DocPost = FirebaseFirestore.instance.collection('post').doc(widget.jobId);
     print('----------');
+    print("${widget.jobId}rana");
     final snapshot = await DocPost.get();
     //if(snapshot.exists){
       //final post = snapshot.data!;
-      final data = PostDataModel.fromJson(snapshot.data()!, snapshot.id);
+      final data = PostDataModel.fromJson(snapshot.data(), snapshot.id);
       print(data.JOB_TITLE);
       final startTime = data.StartTime;
       final endTime = data.EndTime;
