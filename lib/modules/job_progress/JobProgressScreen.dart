@@ -62,7 +62,7 @@ class _JobProgressScreenState extends State<JobProgressScreen> {
     timer = Timer.periodic(Duration(seconds: 1 ), (_) {
 
       visible=true;
-     /* if (sec==0){
+      if (sec==0){
         if (mounted) {
           setState(
                   () => mins--);
@@ -90,7 +90,7 @@ class _JobProgressScreenState extends State<JobProgressScreen> {
           percentage = (progressFraction*100).floor();
 
         });
-      }*/
+      }
 
 
     });

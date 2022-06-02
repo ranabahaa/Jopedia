@@ -279,7 +279,8 @@ void JopView(){
     final user = FirebaseAuth.instance.currentUser;
     currentPosts = [];
     emit(GetCurrentPostsDataLoading());
-    FirebaseFirestore.instance.collection('post').where('COMPLETED_JOB', isEqualTo: '2').where('WORKER_ID', isEqualTo: user!.uid).get().then((value) {
+    FirebaseFirestore.instance.collection('post').where('COMPLETED_JOB', isEqualTo: '2').where('USER_ID', isEqualTo: user!.uid).get().then((value) {
+      //where(user!.uid, whereIn: ['WORKER_ID','USER_ID'])
       value.docs.forEach((element) {
         currentPosts.add(PostDataModel.fromJson(element.data(), element.id));
       });

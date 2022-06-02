@@ -426,7 +426,7 @@ Widget _buildPopupDialog(BuildContext context, PostDataModel? post ) {
                         else {
                           AppBloc.get(context).SendRequest(
                             JOB_ID:  post!.JOBID,
-                            JOB_SALARY: post!.JOB_SALARY ,
+                            JOB_SALARY: post.JOB_SALARY ,
                             USER_ID: post.USER_ID,
                           );
                         }
