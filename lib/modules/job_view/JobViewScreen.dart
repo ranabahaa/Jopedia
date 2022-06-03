@@ -1,6 +1,8 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -259,14 +261,17 @@ class _JobViewScreenState extends State<JobViewScreen> {
                           minWidth: double.infinity,
                           height: 50.0,
                           child: MyText(text: "apply"),
-                          onPressed: () {
+                          onPressed: () async{
+                            final user = FirebaseAuth.instance.currentUser;
+                            final Wallet =FirebaseFirestore.instance.collection('users').doc(user!.uid);
+                            final snapshot= await Wallet.get() ;
+                            final data = UserModel.fromJson(snapshot.data()!);
                             /*print(AppBloc.get(context).model);*/
-                            if(widget.user!.NatonalId == ""){
-
+                            if(data!.NatonalId == ""){
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   action: SnackBarAction(
-                                    label: 'Edit Profil',
+                                    label: 'Edit Profile',
                                     onPressed: () {
                                       Navigator.push(
                                         context,
@@ -289,7 +294,7 @@ class _JobViewScreenState extends State<JobViewScreen> {
                                 ),
                               );
                             }
-                            else if(widget.user!.card_number == ""){
+                            else if(data!.card_number == ""){
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   action: SnackBarAction(

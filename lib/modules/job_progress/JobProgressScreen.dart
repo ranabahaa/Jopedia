@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
@@ -8,8 +9,19 @@ import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:jopedia/modules/button_widget.dart';
 import '../../bloc/cubit.dart';
+import '../../layout/home_layout.dart';
+import '../../models/user/user_model.dart';
 import '../../shared/components/component.dart';
 import 'package:jopedia/models/job/job_model.dart';
+import 'package:smooth_star_rating_null_safety/smooth_star_rating_null_safety.dart';
+
+var CommentController = TextEditingController();
+double rating=3;
+var mod;
+var dataJob;
+var dataUser;
+var dataWorker;
+
 
 class JobProgressScreen extends StatefulWidget {
 
@@ -230,7 +242,7 @@ class _JobProgressScreenState extends State<JobProgressScreen> {
                         fontWeight: FontWeight.bold,
                       ),
                       onPressed:(){
-                        //stopTimer();
+                        CompleteJob();
                       },
 
                     ),
@@ -400,6 +412,329 @@ class _JobProgressScreenState extends State<JobProgressScreen> {
       ],
     );
   }
+
+
+  Future<UserModel?> CompleteJob() async {
+
+    final user = FirebaseAuth.instance.currentUser;
+    //read job data
+
+    final Docjob = FirebaseFirestore.instance.collection('post').doc(
+        widget.jobId);
+    final snapshot = await Docjob.get();
+    dataJob = PostDataModel.fromJson(snapshot.data()!, widget.jobId);
+    print(dataJob.JOB_SALARY);
+
+    //read user data
+
+    final Docuser = FirebaseFirestore.instance.collection('users').doc(
+        dataJob.USER_ID);
+    final snapshot2 = await Docuser.get();
+    dataUser = UserModel.fromJson(snapshot2.data()!);
+    print(dataUser.balance);
+    print(dataUser.balance + int.parse(dataJob.JOB_SALARY));
+
+    // read worker data
+
+    final Docworker = FirebaseFirestore.instance.collection('users').doc(
+        dataJob.WORKER_ID);
+    final snapshot3 = await Docworker.get();
+    dataWorker = UserModel.fromJson(snapshot3.data()!);
+
+    // update the user data
+
+    final Userupdate = FirebaseFirestore.instance.collection('users').doc(
+        dataJob.USER_ID);
+
+    // update the job data
+
+    final jobupdate = FirebaseFirestore.instance.collection('post').doc(
+        widget.jobId);
+
+    // update the worker data
+
+    final Workerupdate = FirebaseFirestore.instance.collection('users').doc(
+        dataJob.WORKER_ID);
+    print(dataJob.FLAG);
+
+    //Conditions
+    if (dataJob.FLAG == '0') {
+      // update the job data
+      jobupdate.update({
+        'FLAG':user!.uid.toString(),
+      });
+      print(dataJob.FLAG);
+      // Rate and review pop up
+      showDialog(
+          context: context,
+          builder: ( context) {
+            return StatefulBuilder(
+              builder: (context,setState){
+                return  AlertDialog(
+                  title: Center(
+                    child: Text(
+                      'Rate Your Previous Job',
+                      style: TextStyle(
+                        color: Color(0xffF087874),
+                      ),
+                    ),
+                  ),
+                  content: Container(
+                    width: 300,
+                    height: 230,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children:[
+                        SizedBox(
+                          height: 20,
+                        ),
+                        SmoothStarRating(
+                          size: 40,
+                          spacing: 15,
+                          starCount: 5,
+                          rating: rating ,
+                          filledIconData: Icons.star,
+                          borderColor: Colors.yellow,
+                          color: Colors.yellow,
+                          onRatingChanged: (v){
+                            setState(() {
+                              rating=v;
+                            });
+                          },
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        TextFormField(
+                          controller: CommentController,
+                          maxLines: 6,
+                          decoration: InputDecoration(
+                              hintText: 'Comments',
+                              border: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      style: BorderStyle.solid,
+                                      color: Color(0xffF087874)
+                                  )
+                              ),
+                              hintStyle: TextStyle(
+                                  color: Color(0xffF087874)
+                              )
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  actions:[
+                    Row(
+                      mainAxisAlignment:MainAxisAlignment.center ,
+                      children: [
+                        FlatButton(
+                          onPressed: () {
+
+                            Navigator.of(context).pop();
+                          },
+                          textColor: Color(0xffF087874),
+                          child: Text('Close'),
+                        ),
+                        SizedBox(
+                          width: 40,
+                        ),
+                        FlatButton(
+                          onPressed: () {
+                            if(user!.uid== dataJob.USER_ID) {
+                              print('user rated worker');
+                              jobupdate.update({
+                                'WORKER_RATE': rating.toString(),
+                                'WORKER_REVIEW': CommentController.text,
+                              });
+                            }
+                            else{
+                              print('worker rated user');
+                              jobupdate.update({
+                                'USER_RATE': rating.toString(),
+                                'USER_REVIEW': CommentController.text,
+                              });
+                            }
+                            print(CommentController.text);
+                            print(rating);
+                            showDialog(
+                                context: context,
+                                builder: ( context) {
+                                  return StatefulBuilder(
+                                    builder: (context,setState){
+                                      return  AlertDialog(
+                                        title: Center(
+                                          child: Text(
+                                            'Thank you for Rating',
+                                            style: TextStyle(
+                                              color: Color(0xffF087874),
+                                            ),
+                                          ),
+                                        ),
+                                        actions:[
+                                          Row(
+                                            mainAxisAlignment:MainAxisAlignment.center ,
+                                            children: [
+                                              FlatButton(
+                                                onPressed: () async {
+                                                  final Docuser = FirebaseFirestore.instance.collection('users').doc(
+                                                      user!.uid);
+                                                  final snapshot2 = await Docuser.get();
+                                                  dataUser = UserModel.fromJson(snapshot2.data()!);
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(builder: (context) => Home_layout(dataUser)),
+                                                  );
+                                                },
+                                                textColor: Color(0xffF087874),
+                                                child: Text('Close'),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                });
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(builder: (context) => WalletScreen()),
+                            // );
+                          },
+                          textColor: Color(0xffF087874),
+                          child: Text('Submit'),
+                        ),
+                      ],
+                    ),
+                  ],
+                );
+              },
+            );
+          }
+      );
+    }
+    else if(dataJob.FLAG == user!.uid.toString()){
+      print ('you already submit wait for other party');
+    }
+    else  {
+      // update the worker data
+      Workerupdate.update({
+        'balance': dataWorker.balance + int.parse(dataJob.JOB_SALARY),
+      });
+      // update the job data
+      jobupdate.update({
+        'COMPLETED_JOB': '3',
+      });
+      // update the user data
+      Userupdate.update({
+        'balance': dataUser.balance - int.parse(dataJob.JOB_SALARY),
+      });
+      //Rate and reviw pop up
+      showDialog(
+          context: context,
+          builder: ( context) {
+            return StatefulBuilder(
+              builder: (context,setState){
+                return  AlertDialog(
+                  title: Center(
+                    child: Text(
+                      'Rate Your Previous Job',
+                      style: TextStyle(
+                        color: Color(0xffF087874),
+                      ),
+                    ),
+                  ),
+                  content: Container(
+                    width: 300,
+                    height: 230,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children:[
+                        SizedBox(
+                          height: 20,
+                        ),
+                        SmoothStarRating(
+                          size: 40,
+                          spacing: 15,
+                          starCount: 5,
+                          rating: rating ,
+                          filledIconData: Icons.star,
+                          borderColor: Colors.yellow,
+                          color: Colors.yellow,
+                          onRatingChanged: (v){
+                            setState(() {
+                              rating=v;
+                            });
+                          },
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        TextFormField(
+                          controller: CommentController,
+                          maxLines: 6,
+                          decoration: InputDecoration(
+                              hintText: 'Comments',
+                              border: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      style: BorderStyle.solid,
+                                      color: Color(0xffF087874)
+                                  )
+                              ),
+                              hintStyle: TextStyle(
+                                  color: Color(0xffF087874)
+                              )
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  actions:[
+                    Row(
+                      mainAxisAlignment:MainAxisAlignment.center ,
+                      children: [
+                        FlatButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          textColor: Color(0xffF087874),
+                          child: Text('Close'),
+                        ),
+                        SizedBox(
+                          width: 40,
+                        ),
+                        FlatButton(
+                          onPressed: () {
+                            if(user!.uid== dataJob.USER_ID) {
+                              print('user rated worker');
+                              jobupdate.update({
+                                'WORKER_RATE': rating.toString(),
+                                'WORKER_REVIEW': CommentController.text,
+                              });
+                            }
+                            else{
+                              print('worker rated user');
+                              jobupdate.update({
+                                'USER_RATE': rating.toString(),
+                                'USER_REVIEW': CommentController.text,
+                              });
+                            }
+                          },
+                          textColor: Color(0xffF087874),
+                          child: Text('Submit'),
+                        ),
+                      ],
+                    ),
+
+                  ],
+                );
+              },
+            );
+          }
+      );
+    }
+  }
+
 }
 
 

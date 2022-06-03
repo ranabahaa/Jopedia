@@ -52,6 +52,8 @@ dependencies:
   file_picker: ^4.5.1
   rate_in_stars: ^0.0.2
   conditional_builder_null_safety: ^0.0.6
+  smooth_star_rating_null_safety: 1.0.4+2
+
 
 
 

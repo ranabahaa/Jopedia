@@ -412,4 +412,105 @@ void JopView(){
       print('Failed');
     }
   }
+
+
+  late UserModel modele;
+  var mod;
+  var dataJob;
+  var dataUser;
+  var dataWorker;
+
+
+  void DepositToWallet(TextEditingController data) {
+    final user = FirebaseAuth.instance.currentUser;
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(user!.uid)
+        .get()
+        .then((value) {
+      dataUser = UserModel.fromJson((value.data()!));
+      final DocWallet = FirebaseFirestore.instance.collection('users').doc(
+          dataUser.uId);
+        DocWallet.update({
+          'balance': dataUser.balance + int.parse(data.text),
+        });
+    });
+  }
+
+
+  void WithdrawlFromWallet(TextEditingController data) {
+    final user = FirebaseAuth.instance.currentUser;
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(user!.uid)
+        .get()
+        .then((value) {
+      modele = UserModel.fromJson((value.data()!));
+      final DocWallet = FirebaseFirestore.instance.collection('users').doc(
+          modele.uId);
+      DocWallet.update({
+        'balance': modele.balance - int.parse(data.text),
+      });
+    });
+  }
+
+
+  Future<void> AddWallet(TextEditingController name,
+      TextEditingController number,
+      TextEditingController cvv,
+      TextEditingController expdate,
+      TextEditingController PIN,) async {
+    final user = FirebaseAuth.instance.currentUser;
+
+    final Docuser = FirebaseFirestore.instance.collection('users').doc(
+        user!.uid);
+    final snapshot2 = await Docuser.get();
+    dataUser = UserModel.fromJson(snapshot2.data()!);
+
+    final DocWallet = FirebaseFirestore.instance.collection('users').doc(
+        user!.uid);
+    if(dataUser.card_name =='' && dataUser.card_number==''
+        && dataUser.CVV=='' && dataUser.EXPIRATION_DATE== ''
+        && dataUser.PIN=='') {
+      DocWallet.update({
+        'card_name': name.text,
+        'card_number': number.text,
+        'CVV': cvv.text,
+        'EXPIRATION_DATE': expdate.text,
+        'PIN': PIN.text,
+      });
+    }
+    else {
+      print('You already Added a card');
+    }
+  }
+
+  Future<void> deleteWallet() async {
+    final user = FirebaseAuth.instance.currentUser;
+    final DocWallet = FirebaseFirestore.instance.collection('users').doc(
+        user!.uid);
+      DocWallet.update({
+        'card_name': '',
+        'card_number': '',
+        'CVV': '',
+        'EXPIRATION_DATE': '',
+        'PIN': '',
+      });
+
+    // else {
+    //   print('you dont have wallet to delete');
+    //
+    // }
+  }
+
+  Future<UserModel?> Readbalance() async {
+    final user = FirebaseAuth.instance.currentUser;
+    final Docuser = FirebaseFirestore.instance.collection('users').doc(
+        user!.uid);
+    final snapshot2 = await Docuser.get();
+    if (snapshot2.exists) {
+      return UserModel.fromJson(snapshot2.data()!);
+    }
+  }
+
 }
