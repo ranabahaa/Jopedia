@@ -24,9 +24,9 @@ var dataWorker;
 
 
 class JobProgressScreen extends StatefulWidget {
-
+  UserModel user;
   String? jobId;
-  JobProgressScreen({this.jobId});
+  JobProgressScreen(this.user, this.jobId);
 
   @override
   _JobProgressScreenState createState() => _JobProgressScreenState();
@@ -53,27 +53,36 @@ class _JobProgressScreenState extends State<JobProgressScreen> {
   Timer? timer;
   var color = Color(0xff50B3CF);
 
+  // @override
+  // void initState() {
+  //   print(widget.jobId);
+  //
+  //   super.initState();
+  // }
+
 /*void initState(){
 
 }*/
   //void resetTimer() => setState(()=>seconds = maxSeconds);
+
+
   void startTimer() {
     ReadTime();
 
     timer = Timer.periodic(Duration(seconds: 1 ), (_) {
 
       visible=true;
-      if(sec>0){
-        if (mounted) {
-          setState(() => sec--);
-        }
-      }
       if (sec==0){
         if (mounted) {
           setState(
                   () => mins--);
           setState(()=> sec=60);
           setState(()=> sec--);
+        }
+      }
+     else if(sec>0){
+        if (mounted) {
+          setState(() => sec--);
         }
       }
       if ((sec==0 && mins==0 ) || mins<0){
@@ -102,31 +111,40 @@ class _JobProgressScreenState extends State<JobProgressScreen> {
   }
   Future<PostDataModel?> ReadTime() async {
     final DocPost = FirebaseFirestore.instance.collection('post').doc(widget.jobId);
+    print('----------');
+    print("${widget.jobId}rana");
     final snapshot = await DocPost.get();
-    if(snapshot.exists){
+    //if(snapshot.exists){
       //final post = snapshot.data!;
-      final data = PostDataModel.fromJson(snapshot.data()!, snapshot.id);
+      final data = PostDataModel.fromJson(snapshot.data(), snapshot.id);
+      print(data.JOB_TITLE);
       final startTime = data.StartTime;
       final endTime = data.EndTime;
       var format = DateFormat("hh:mm a");
-      var one = format.parse(startTime);
+      print(format);
+      print(startTime);
+    print(endTime);
+
+    var one = format.parse(startTime);
       var two = format.parse(endTime);
+      print(one);
       var jobDuration = two.difference(one);
       hrs = jobDuration.inHours;
       var minscalc = jobDuration.inMinutes;
       mins = minscalc%60;
       var seccalc = jobDuration.inSeconds;
       sec = seccalc%mins;
-
+print('-----------');
       print(startTime);
       print(endTime);
       print(jobDuration);
+      print('---------');
       print(hrs);
       print(mins);
       print(seccalc);
       print(minscalc);
       print(sec);
-    }
+    //}
   }
 
   @override
@@ -288,7 +306,7 @@ class _JobProgressScreenState extends State<JobProgressScreen> {
             startTimer();
             jobCompletedVisisbility=true;
             FirebaseFirestore.instance.collection('post')
-                .doc("ov7WJUtAdwxYG7rBv311").get().then((value) {
+                .doc(widget.jobId).get().then((value) {
               print("true");
             }).catchError((onError) {
               print(onError.toString());
@@ -397,9 +415,14 @@ class _JobProgressScreenState extends State<JobProgressScreen> {
                 onPressed: (){
                   stopTimer();
                   FirebaseFirestore.instance.collection('post')
-                      .doc("ov7WJUtAdwxYG7rBv311").delete().then((value) {
+                      .doc(widget.jobId).delete().then((value) {
                     print("true");
-                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Home_layout(widget.user),
+                      ),
+                    );
                   }).catchError((onError) {
                     print(onError.toString());
                     print("false");

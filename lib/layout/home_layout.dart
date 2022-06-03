@@ -8,7 +8,7 @@ import 'package:jopedia/layout/home_layout_state.dart';
 import 'package:jopedia/models/user/user_model.dart';
 import 'package:jopedia/modules/create_job/CreateJobScreen.dart';
 import 'package:jopedia/modules/home/HomeScreen.dart';
-import 'package:jopedia/modules/job_progress/progressShowTry.dart';
+import 'package:jopedia/modules/job_progress/ViewJobProgressScreen.dart';
 import 'package:jopedia/modules/login/LoginScreen.dart';
 import 'package:jopedia/modules/my_profile/ProfilePage.dart';
 import 'package:jopedia/modules/notification/NotificationScreen.dart';
@@ -267,7 +267,7 @@ class Home_layout extends StatelessWidget {
                         onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => progressShowTry()),
+                            MaterialPageRoute(builder: (context) => ViewJobProgressScreen(user.toString())),
                           );
                         },
                       ),

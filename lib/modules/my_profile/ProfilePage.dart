@@ -39,16 +39,16 @@ class _ProfilePageState extends State<ProfilePage>
   List<PostDataModel> posts = [];
   QuerySnapshot? snapshotData;
 
-  void loadData() async{
-    print(posts.length);
-    posts = [];
-    posts.clear();
-    setState(() {
-      posts.addAll(AppBloc.get(context).posts.where((element) => element.WORKER_ID == widget.user.uId
-      ));
-    });
-    print(posts.length);
-  }
+  // void loadData() async{
+  //   print(posts.length);
+  //   posts = [];
+  //   posts.clear();
+  //   setState(() {
+  //     posts.addAll(AppBloc.get(context).posts.where((element) => element.WORKER_ID == widget.user.uId
+  //     ));
+  //   });
+  //   print(posts.length);
+  // }
 
 
   @override
