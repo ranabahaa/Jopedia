@@ -248,7 +248,7 @@ class WalletScreen extends StatelessWidget{
                                                   onPressed: () {
                                                     Navigator.push(
                                                       context,
-                                                      MaterialPageRoute(builder: (context) =>JobProgressScreen()),
+                                                      MaterialPageRoute(builder: (context) =>YourCard()),
                                                     );
                                                   },
                                                   child: Row(
