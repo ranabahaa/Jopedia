@@ -84,7 +84,7 @@ class _RequestScreenState extends State<RequestScreen> {
                     children: [
                       Container(
                         child: MyText(
-                          text: snapshotData?.docs[index].get('JOB_ID') ?? "N/A",
+                          text: '${snapshotData?.docs[index].get('JOB_TITLE')} ',
                           overflow: TextOverflow.ellipsis,
                           colors: color,
                           fontSize: 18.0,
@@ -92,11 +92,8 @@ class _RequestScreenState extends State<RequestScreen> {
                         ),
                       ),
                       SizedBox(height: 1.0),
-                      MyText(
-                          text: snapshotData?.docs[index]
-                                  .get('JOB_SALARY') ??
-                              "N/A",
-                          colors: Color(0xff26A4BD),
+                      MyText(text:' ${snapshotData?.docs[index].get('name')} -> ${snapshotData?.docs[index].get('JOB_SALARY')}',
+                        colors: Color(0xff26A4BD),
                         fontSize: 15.0,
                         fontWeight: FontWeight.w700,
                       ),
@@ -193,13 +190,15 @@ class _RequestScreenState extends State<RequestScreen> {
     return Scaffold(
         backgroundColor: Color(0xffF6F9FA),
         appBar: AppBar(
-          title: Center(
-            child: Text(' You have $req requests',
-                style: TextStyle(
-                  color: Color(0xff50B3CF),
-                  fontFamily: 'Poppins',
-                ),
-                textAlign: TextAlign.center),
+          title: Padding(
+            padding: const EdgeInsets.only(right: 10.0),
+            child: Text('You have $req requests',
+                  style: TextStyle(
+                    color: color,
+                    fontFamily: 'Poppins',
+                    fontWeight: FontWeight.w600,
+                  ),
+                  textAlign: TextAlign.center),
           ),
           backgroundColor: Color(0xffF6F9FA),
           elevation: 0,

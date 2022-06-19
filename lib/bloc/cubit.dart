@@ -193,6 +193,8 @@ void JopView(){
     required String JOB_ID,
     required String JOB_SALARY,
     required String USER_ID,
+    String? name,
+    required String JOB_TITLE,
   }) {
     final user = FirebaseAuth.instance.currentUser;
     RequestDataModel model = RequestDataModel(
@@ -200,6 +202,8 @@ void JopView(){
       JOB_SALARY: JOB_SALARY,
       USER_ID: USER_ID,
       WORKER_ID: user!.uid,
+      name: "Ahmed",
+      JOB_TITLE: JOB_TITLE,
     );
 
     FirebaseFirestore.instance

@@ -16,15 +16,16 @@ import 'modules/register/RegisterScreen.dart';
 import 'modules/start_app/start_App.dart';
 
   void main() async {
-  WidgetsFlutterBinding?.ensureInitialized();
+
   Bloc.observer = SimpleBlocObserver();
 
+  WidgetsFlutterBinding?.ensureInitialized();
   await Firebase.initializeApp(
     options: FirebaseOptions(
-        apiKey: "AIzaSyAEs7gK2EC-rTaFUSTuAPI5Vp7nsb2HMTc",
-        appId: "1:819907602066:android:9b2ebd5b9ef2bb4767a84b",
-        messagingSenderId: "819907602066",
-        projectId: "jopedia-921b1",
+      apiKey: "AIzaSyAEs7gK2EC-rTaFUSTuAPI5Vp7nsb2HMTc",
+      appId: "1:819907602066:android:9b2ebd5b9ef2bb4767a84b",
+      messagingSenderId: "819907602066",
+      projectId: "jopedia-921b1",
     ),
   );
   await SystemChrome.setPreferredOrientations([

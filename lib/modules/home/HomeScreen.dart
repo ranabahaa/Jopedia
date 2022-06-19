@@ -81,35 +81,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    SizedBox(
-                      height: 5.0,
-                    ),
-                    Text(
-                      'Total Balance',
-                      style: TextStyle(
-                        color: Color(0xffC6DFE8),
-                        fontSize: 18.0,
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.w600,
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 50.0),
+                      child: Image(
+                        width: 300.0,
+                        /*fit: BoxFit.cover,*/
+                        image: AssetImage(
+                            "assets/images/final.png"),
                       ),
                     ),
-                    SizedBox(
-                      height: 8.0,
-                    ),
-                    Text(
-                      '1732.00 LE',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'Poppins',
-                          fontSize: 35.0,
-                          fontWeight: FontWeight.w800,
-                          shadows: [
-                            Shadow(
-                                color: Colors.black.withOpacity(0.3),
-                                offset: const Offset(3, 3),
-                                blurRadius: 15),
-                          ]),
-                    ),
+                    SizedBox(height: 20.0,),
                   ],
                 ),
               ),
@@ -117,7 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Container(
-                    height: 600.0,
+                    height: 580.0,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(30.0),
@@ -319,7 +300,7 @@ Widget buildPostItem (PostDataModel post,context) =>  Column(
                   child: Image(
                     fit: BoxFit.cover,
                     image: AssetImage(
-                        "assets/images/painter.jpg"),
+                        '${post.IMAGE}'),
                   ),
                 ),
               ),

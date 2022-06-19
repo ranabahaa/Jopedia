@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "819907602066",
-    "project_id": "jopedia-921b1",
-    "storage_bucket": "jopedia-921b1.appspot.com"
+    "project_number": "925108373898",
+    "project_id": "final-2d5bb",
+    "storage_bucket": "final-2d5bb.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:819907602066:android:9b2ebd5b9ef2bb4767a84b",
+        "mobilesdk_app_id": "1:925108373898:android:5f97b499c8cf75acdde073",
         "android_client_info": {
-          "package_name": "com.gp.jopedia"
+          "package_name": "com.example.jopedia"
         }
       },
       "oauth_client": [
         {
-          "client_id": "819907602066-4kv5uj34bm4rvpeetash0neq9p6if6k5.apps.googleusercontent.com",
+          "client_id": "925108373898-emgi9vf4dk8988q6sksd3mt8ftd0g889.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAEs7gK2EC-rTaFUSTuAPI5Vp7nsb2HMTc"
+          "current_key": "AIzaSyARCt3mt0MLMZCDbK5OLLdU2c4GJS3M7NM"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "819907602066-4kv5uj34bm4rvpeetash0neq9p6if6k5.apps.googleusercontent.com",
+              "client_id": "925108373898-emgi9vf4dk8988q6sksd3mt8ftd0g889.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

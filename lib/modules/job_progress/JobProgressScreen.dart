@@ -13,7 +13,7 @@ import '../../layout/home_layout.dart';
 import '../../models/user/user_model.dart';
 import '../../shared/components/component.dart';
 import 'package:jopedia/models/job/job_model.dart';
-import 'package:smooth_star_rating_null_safety/smooth_star_rating_null_safety.dart';
+/*import 'package:smooth_star_rating_null_safety/smooth_star_rating_null_safety.dart';*/
 
 var CommentController = TextEditingController();
 double rating=3;
@@ -511,7 +511,7 @@ print('-----------');
                         SizedBox(
                           height: 20,
                         ),
-                        SmoothStarRating(
+                       /* SmoothStarRating(
                           size: 40,
                           spacing: 15,
                           starCount: 5,
@@ -524,7 +524,7 @@ print('-----------');
                               rating=v;
                             });
                           },
-                        ),
+                        ),*/
                         SizedBox(
                           height: 20,
                         ),
@@ -676,7 +676,7 @@ print('-----------');
                         SizedBox(
                           height: 20,
                         ),
-                        SmoothStarRating(
+                        /*SmoothStarRating(
                           size: 40,
                           spacing: 15,
                           starCount: 5,
@@ -689,7 +689,7 @@ print('-----------');
                               rating=v;
                             });
                           },
-                        ),
+                        ),*/
                         SizedBox(
                           height: 20,
                         ),

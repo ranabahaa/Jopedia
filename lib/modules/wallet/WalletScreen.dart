@@ -81,14 +81,7 @@ class WalletScreen extends StatelessWidget{
                                             fit: BoxFit.fitWidth,
                                             child: Container(
                                               decoration: BoxDecoration(
-                                                gradient: LinearGradient(
-                                                  begin: Alignment.centerLeft,
-                                                  end: Alignment.centerRight,
-                                                  colors: [
-                                                    Color(0xff50B3CF),
-                                                    Color(0xff0F4C5C),
-                                                  ],
-                                                ),
+                                                color: Color(0xff50B3CF),
                                                 borderRadius: BorderRadius.circular(10.0),
                                               ),
                                               child: Material(
@@ -307,26 +300,40 @@ class WalletScreen extends StatelessWidget{
     padding: const EdgeInsets.only(left:0 ,top:3 ,right:0 ,bottom: 20),
     child: Column(
       children: [
+        SizedBox(
+          height: 5.0,
+        ),
         Text(
-          'Your Balance',
+          'Total Balance',
           style: TextStyle(
-            fontSize: 20.0,
-            fontWeight: FontWeight.bold,
-            color: Colors.white54,
+            color: Color(0xffC6DFE8),
+            fontSize: 18.0,
+            fontFamily: 'Poppins',
+            fontWeight: FontWeight.w600,
           ),
+        ),
+        SizedBox(
+          height: 8.0,
         ),
         Text(
           '${user.balance.toString()}',
           style: TextStyle(
-            fontSize: 30.0,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
+              color: Colors.white,
+              fontFamily: 'Poppins',
+              fontSize: 35.0,
+              fontWeight: FontWeight.w800,
+              shadows: [
+                Shadow(
+                    color: Colors.black.withOpacity(0.3),
+                    offset: const Offset(3, 3),
+                    blurRadius: 15),
+              ]),
         ),
       ],
     ),
   );
 
 }
+
 
 

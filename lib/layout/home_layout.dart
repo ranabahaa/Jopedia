@@ -110,14 +110,14 @@ class Home_layout extends StatelessWidget {
                         ),
                         BottomNavigationBarItem(
                           icon: SvgPicture.asset(
-                            "assets/icons/comment (1).svg",
-                            height: 23.0,
-                            width: 23.0,
+                              "assets/icons/bookmark.svg",
+                            height: 20.0,
+                            width: 20.0,
                             color:
                             cubit.currentIndex == 2 ? Color(0xff50B3CF) : Color(0xffA2BBCD),
                           ),
                           label:
-                          'Messages',
+                          'Saved',
                         ),
                         BottomNavigationBarItem(
                           icon: SvgPicture.asset(
@@ -208,37 +208,6 @@ class Home_layout extends StatelessWidget {
                             ),
                           ],
                         ),
-                      ),
-                      SizedBox(
-                        height: 5.0,
-                      ),
-                      ListTile(
-                        leading: IconButton(
-                          onPressed: () {},
-                          icon: SvgPicture.asset(
-                            "assets/icons/bookmark.svg",
-                            height: 17.0,
-                            width: 17.0,
-                            color: Color(0xff0F4C5C),
-                          ),
-                        ),
-                        title: GestureDetector(
-                          child: Text(
-                            'Saved Jobs',
-                            style: TextStyle(
-                              color: Color(0xff0F4C5C),
-                              fontSize: 17.0,
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => SavedJobScreen()),
-                          );
-                        },
                       ),
                       SizedBox(
                         height: 5.0,
