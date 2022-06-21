@@ -15,7 +15,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
   void initState() {
     super.initState();
   }
-  int notificationNumber=4;
+  int notificationNumber=1;
   var color = Color(0xff0F4C5C);
 
   @override
@@ -97,7 +97,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                         separatorBuilder: (BuildContext context, int index)=>SizedBox(
                           height: 25.0,
                         ),
-                        itemCount: 15,
+                        itemCount: 1,
                       ),
                       SizedBox(height: 18.0,),
                     ],

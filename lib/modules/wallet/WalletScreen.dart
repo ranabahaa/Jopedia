@@ -85,7 +85,6 @@ class WalletScreen extends StatelessWidget{
                                                 borderRadius: BorderRadius.circular(10.0),
                                               ),
                                               child: Material(
-                                                elevation: 10.0,
                                                 borderRadius: BorderRadius.circular(15.0),
                                                 color: Colors.transparent,
                                                 child: MaterialButton(
@@ -142,18 +141,10 @@ class WalletScreen extends StatelessWidget{
                                             fit: BoxFit.fitWidth,
                                             child: Container(
                                               decoration: BoxDecoration(
-                                                gradient: LinearGradient(
-                                                  begin: Alignment.centerLeft,
-                                                  end: Alignment.centerRight,
-                                                  colors: [
-                                                    Color(0xff50B3CF),
-                                                    Color(0xff0F4C5C),
-                                                  ],
-                                                ),
+                                                color: Color(0xff50B3CF),
                                                 borderRadius: BorderRadius.circular(10.0),
                                               ),
                                               child: Material(
-                                                elevation: 10.0,
                                                 borderRadius: BorderRadius.circular(15.0),
                                                 color: Colors.transparent,
                                                 child: MaterialButton(
@@ -171,6 +162,9 @@ class WalletScreen extends StatelessWidget{
                                                   child: Row(
                                                     textBaseline: TextBaseline.alphabetic,
                                                     children: <Widget>[
+                                                      SizedBox(
+                                                        width: 5.0,
+                                                      ),
                                                       Text(
                                                         'Withdrawal',
                                                         textAlign: TextAlign.start,
@@ -180,7 +174,7 @@ class WalletScreen extends StatelessWidget{
                                                         ),
                                                       ),
                                                       SizedBox(
-                                                        width: 30.0,
+                                                        width: 25.0,
                                                       ),
                                                       Icon(
                                                         Icons.credit_card,
@@ -209,7 +203,7 @@ class WalletScreen extends StatelessWidget{
                                     height: 30.0,
                                   ),
                                   FractionallySizedBox(
-                                    widthFactor: 0.57,
+                                    widthFactor: 0.7,
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: <Widget>[
@@ -218,18 +212,11 @@ class WalletScreen extends StatelessWidget{
                                             fit: BoxFit.fitWidth,
                                             child: Container(
                                               decoration: BoxDecoration(
-                                                gradient: LinearGradient(
-                                                  begin: Alignment.centerLeft,
-                                                  end: Alignment.centerRight,
-                                                  colors: [
-                                                    Color(0xff50B3CF),
-                                                    Color(0xff0F4C5C),
-                                                  ],
-                                                ),
+                                                color: Colors.white,
                                                 borderRadius: BorderRadius.circular(10.0),
                                               ),
                                               child: Material(
-                                                elevation: 10.0,
+                                                elevation: 3.0,
                                                 borderRadius: BorderRadius.circular(15.0),
                                                 color: Colors.transparent,
                                                 child: MaterialButton(
@@ -249,7 +236,7 @@ class WalletScreen extends StatelessWidget{
                                                     children: <Widget>[
                                                       Icon(
                                                         Icons.credit_card,
-                                                        color: Colors.white,
+                                                        color: Color(0xff0F4C5C).withOpacity(0.5),
                                                         size: 38,
                                                       ),
                                                       SizedBox(
@@ -260,6 +247,7 @@ class WalletScreen extends StatelessWidget{
                                                         textAlign: TextAlign.start,
                                                         overflow: TextOverflow.ellipsis,
                                                         style: TextStyle(
+                                                          color: Color(0xff0F4C5C).withOpacity(0.5),
                                                           fontSize: 28.0,
                                                         ),
                                                       ),
@@ -269,7 +257,7 @@ class WalletScreen extends StatelessWidget{
 
                                                       Icon(
                                                         Icons.double_arrow,
-                                                        color: Colors.white,
+                                                        color: Color(0xff0F4C5C).withOpacity(0.8),
                                                         size: 28,
                                                       ),
                                                     ],

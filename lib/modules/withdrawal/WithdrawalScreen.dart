@@ -25,8 +25,20 @@ class WithdrawalScreen extends StatelessWidget {
             listener: (BuildContext context, state) {},
             builder: (BuildContext context, state) {
               return Scaffold(
+                backgroundColor: Color(0xffF6F9FA),
                 appBar: AppBar(
-                  backgroundColor: Color(0xff50B3CF),
+                  leading: IconButton(
+                    onPressed: (){
+                      Navigator.pop(context);
+                    },
+                    icon: Icon(
+                      Icons.arrow_back,
+                      color: Color(0xff0F4C5C),
+                      size: 25.0,
+                    ),
+                  ),
+                  backgroundColor: Color(0xffF6F9FA),
+                  elevation: 0,
                 ),
                 body: Container(
                   width: double.infinity,
@@ -67,22 +79,25 @@ class WithdrawalScreen extends StatelessWidget {
                         SizedBox(
                           height: 20.0,
                         ),
-                        Container(
-                          width: 220.0,
-                          decoration: BoxDecoration(
-                            color: Color(0xff50B3CF),
-                            borderRadius: BorderRadius.circular(10.0),
-                          ) ,
+                        Padding(
+                          padding: const EdgeInsets.only(left: 20.0,right: 20.0),
                           child: MaterialButton(
-                              child:MyText(
-                                text:"Submit".toUpperCase(),
-                                fontSize: 19.0,
-                                fontWeight: FontWeight.bold,
+                              color: Color(0xff50B3CF),
+                              minWidth: double.infinity,
+                              height: 50.0,
+                              child: Text(
+                                'SUBMIT',
+                                style: TextStyle(
+                                  fontFamily: 'Poppins',
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 18.0,
+                                  color: Colors.white,
+                                ),
                               ),
                               onPressed: () async {
                                 if(formkey.currentState!.validate()) {
                                   final user = FirebaseAuth.instance.currentUser;
-                                  // user data read
+// user data read
                                   final Docuser = FirebaseFirestore.instance.collection('users').doc(
                                       user!.uid);
                                   final snapshot2 = await Docuser.get();
@@ -172,4 +187,5 @@ class WithdrawalScreen extends StatelessWidget {
     );
   }
 }
+
 
